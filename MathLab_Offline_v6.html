@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=5">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="Self-contained offline math tools for algebra, geometry, trigonometry and calculus, with an on-screen math keyboard and built-in symbolic engine.">
+<title>MathLab v6 — Offline Math Toolkit</title>
+<style>
+:root{--bg:#080e1c;--layer:#111b2c;--layer2:#17233a;--line:#293753;--txt:#edf4ff;--muted:#9eb0c9;--blue:#86a7ff;--indigo:#6676f6;--mint:#6de7c2;--danger:#ffa9ae;--radius:19px;--keyboard:0px;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse 85% 30% at 40% -5%,#1c3563 0%,transparent 90%),var(--bg);color:var(--txt);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100dvh}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--mint);outline-offset:3px}button:disabled{opacity:.4;cursor:default}a{color:var(--mint)}.shell{max-width:1260px;margin:auto;display:grid;grid-template-columns:230px minmax(0,1fr);min-height:100dvh}.sidebar{background:#0d1728cc;border-right:1px solid var(--line);padding:28px 15px;display:flex;flex-direction:column;gap:26px;position:sticky;top:0;height:100dvh}.brand{display:flex;align-items:center;gap:12px;padding:0 12px}.brand-mark{display:grid;place-items:center;width:43px;height:43px;border-radius:15px;color:#0a1629;font-size:26px;font-weight:800;background:linear-gradient(140deg,var(--mint),#91aaff)}.brand h1{font-size:20px;letter-spacing:-.5px;margin:0}.brand small{display:block;margin-top:2px;color:var(--muted);font-weight:500;font-size:11px;letter-spacing:1.5px}.side-label{text-transform:uppercase;font-size:11px;font-weight:800;letter-spacing:1.9px;color:#7e90ac;padding:0 14px}.nav{display:grid;gap:5px}.nav-btn{display:flex;align-items:center;gap:12px;width:100%;border:1px solid transparent;border-radius:12px;padding:13px;color:#b7c5df;background:transparent;text-align:left;font-weight:650}.nav-btn .ic{font-size:20px;min-width:25px;text-align:center}.nav-btn:hover{background:#202d43}.nav-btn.active{background:linear-gradient(95deg,#283961,#1d2c47);color:#fff;border-color:#425681;box-shadow:inset 3px 0 var(--mint)}.side-foot{margin-top:auto;border:1px solid #2b3d57;background:#15243a;border-radius:17px;padding:15px}.offline{display:flex;align-items:center;gap:8px;font-size:12px;color:#b8c9de;font-weight:750}.dot{width:9px;height:9px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 4px #6de7c220}.side-foot p{color:var(--muted);font-size:12px;line-height:1.6;margin:12px 0 0}.main{min-width:0;padding:30px 33px calc(45px + var(--keyboard));transition:padding-bottom .17s}.topbar{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:25px}.crumb{font-size:13px;color:var(--muted);font-weight:750;letter-spacing:.4px}.toolbar{display:flex;gap:8px;align-items:center}.tiny-btn{background:#192841;border:1px solid #344362;color:#c8d6ea;border-radius:10px;padding:8px 12px;font-size:12px;font-weight:700;min-height:36px}.tiny-btn:hover{border-color:var(--mint)}.hero{padding-bottom:22px}.eyebrow{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;color:var(--mint);font-weight:850;margin-bottom:8px}.hero h2{font-size:clamp(27px,3.5vw,38px);letter-spacing:-1.3px;line-height:1.2;margin:0 0 10px;font-weight:800}.hero p{color:var(--muted);font-size:14px;line-height:1.6;max-width:700px;margin:0}.screen{display:none;animation:appear .2s ease}.screen.active{display:block}@keyframes appear{from{opacity:.6;transform:translateY(4px)}to{opacity:1;transform:none}}.layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(255px,.9fr);gap:17px}.stack{display:grid;gap:17px;align-content:start}.card{background:linear-gradient(145deg,#152138,#111b2e);border:1px solid #293956;box-shadow:0 10px 32px #01050d28;border-radius:var(--radius);padding:22px;min-width:0}.card h3{margin:0 0 6px;font-size:17px;letter-spacing:-.3px}.card .sub{font-size:12px;color:var(--muted);line-height:1.55;margin:0 0 18px}.card-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:16px}.card-head h3{margin:0}.tag{border:1px solid #3b5071;color:var(--mint);background:#1b3440;font-size:10px;font-weight:850;letter-spacing:1px;border-radius:100px;padding:6px 9px;white-space:nowrap}.label{display:block;color:#bbcce0;font-size:12px;font-weight:750;margin:0 0 8px}.math-input{display:block;width:100%;min-width:0;padding:14px 15px;font-size:18px;min-height:56px;color:#eaf6ff;background:#0c1626;border:1.5px solid #385072;border-radius:12px;outline:none;letter-spacing:.3px;font-family:ui-monospace,"SFMono-Regular",Consolas,monospace;caret-color:var(--mint);text-overflow:clip}.math-input:focus{border-color:var(--mint);box-shadow:0 0 0 3px #6de7c213}.math-input::placeholder{color:#6b7b97}.math-input.sm{font-size:16px;min-height:46px;padding:11px}.field{margin-bottom:14px}.hint{font-size:11px;color:#8396b2;margin-top:6px;line-height:1.45}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.actions{margin-top:17px}.btn{border-radius:11px;border:1px solid #3a4d6e;padding:12px 16px;background:#23334e;color:#e5f0fc;font-size:13px;font-weight:750;min-height:43px}.btn:hover{filter:brightness(1.13)}.btn.primary{background:linear-gradient(110deg,#718af8,#57bdaf);border:0;color:#071427;box-shadow:0 4px 18px #628fff25}.btn.ghost{background:transparent}.btn.small{padding:9px 12px;min-height:34px;font-size:12px}.btn.highlight{border-color:#4ca99e}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.chip{border:1px solid #344967;border-radius:100px;background:#192942;color:#bfcfeb;font-size:12px;padding:8px 11px}.chip:hover{border-color:var(--blue);color:white}.result{min-height:90px;padding:17px;background:linear-gradient(135deg,#132b35,#172340);border:1px solid #2f6170;border-radius:14px;overflow-wrap:anywhere}.result.empty{background:#101b2d;border:1px dashed #344563}.result-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:#81d5c3;margin-bottom:12px}.result-main{font-size:22px;font-weight:700;letter-spacing:-.6px;font-family:ui-monospace,Consolas,monospace;white-space:pre-wrap;line-height:1.6}.result-main.smaller{font-size:16px}.result-note{color:#b0c2dc;font-size:12px;line-height:1.6;margin-top:12px;white-space:pre-wrap}.error .result-main{color:#ffb6be}.error{background:#36202c;border-color:#764253}.row-space{display:flex;align-items:center;justify-content:space-between;gap:10px}.history{display:grid;gap:7px;max-height:310px;overflow:auto}.hist-row{background:#101c30;border:1px solid #273852;border-radius:10px;text-align:left;padding:10px 12px;color:inherit;width:100%}.hist-row:hover{border-color:#6d8df1}.hist-expression{font:12px ui-monospace,monospace;color:#a6b4d0;overflow-wrap:anywhere}.hist-answer{font:14px ui-monospace,monospace;color:#bff8e3;margin-top:5px;overflow-wrap:anywhere}.muted{color:var(--muted)}.pill-label{color:#a5b9d5;font-size:12px;font-weight:750}.tool-strip{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:17px}.tool-choice{border:1px solid #3a4b69;background:#1a2940;color:#d0dcee;border-radius:10px;font-size:12px;font-weight:750;padding:10px 13px}.tool-choice.active{background:#324782;border-color:#90aaff;color:white}.select{background:#0c1626;color:#e6f3ff;border:1px solid #385072;border-radius:11px;padding:10px 13px;font-size:13px;min-height:40px;max-width:100%}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.thirds{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.graphic{display:block;width:100%;height:auto;aspect-ratio:1.7;background:#0b1728;border:1px solid #314461;border-radius:13px;touch-action:none}.graphic.square{aspect-ratio:1.2}.legend{display:flex;gap:14px;align-items:center;flex-wrap:wrap;font-size:12px;color:#afbed7}.swatch{display:inline-block;width:11px;height:11px;border-radius:4px;margin-right:5px}.graph-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:11px}.toggle{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:12px}.toggle input{accent-color:var(--mint)}.tool-section{margin-bottom:15px}.formula-panel{border-radius:12px;background:#0e1a2b;border:1px solid #2a3e5b;padding:15px;color:#d5e3f7;font-size:13px;line-height:1.8}.formula-panel strong{color:var(--mint)}.mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.mini-stat{border:1px solid #34465e;background:#0f1a2c;padding:15px;border-radius:13px}.mini-stat .k{font-size:11px;font-weight:750;color:#96b5cb;text-transform:uppercase;letter-spacing:.8px}.mini-stat .v{font:19px ui-monospace,monospace;color:#ddf7f0;margin-top:8px;overflow-wrap:anywhere}.steps{display:grid;gap:10px}.step{display:flex;gap:12px;background:#111f33;border-radius:13px;padding:12px;border:1px solid #283850}.step-num{min-width:27px;height:27px;border-radius:9px;display:grid;place-items:center;background:#28465b;color:var(--mint);font-size:12px;font-weight:900}.step div:last-child{font-size:12px;color:#b7c9df;line-height:1.55}.code{font-family:ui-monospace,monospace;color:#dceafa}.keyboard{position:fixed;z-index:40;bottom:0;left:0;right:0;background:#0b1425f7;border-top:1px solid #465a78;box-shadow:0 -15px 50px #0009;padding:10px max(12px,env(safe-area-inset-left)) calc(10px + env(safe-area-inset-bottom));backdrop-filter:blur(16px);display:none}.keyboard.visible{display:block}.key-inner{max-width:830px;margin:auto}.key-top{display:flex;gap:7px;align-items:center;justify-content:space-between;margin-bottom:8px}.key-pages{display:flex;gap:6px}.key-page{padding:6px 12px;font-size:11px;border:1px solid #3a4c69;background:#17233b;border-radius:9px;color:#b8c9de;font-weight:800}.key-page.active{color:#081d25;border-color:var(--mint);background:var(--mint)}.key-dismiss{padding:6px 10px;color:#bed5eb;border:1px solid #385070;background:#1b2a43;border-radius:9px;font-size:12px}.key-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}.key{min-width:0;border:1px solid #394e70;background:#1d2e49;border-radius:10px;color:#f2f8ff;min-height:43px;padding:4px 2px;font-size:17px;font-weight:650;box-shadow:0 2px 0 #070c16;touch-action:manipulation}.key:active{transform:translateY(1px);box-shadow:none}.key.fn{color:#a6d7ff;background:#1a314e;font-size:13px}.key.op{background:#2f3863;color:#ccd9ff}.key.accent{background:#2b6f70;color:#eafff7;border-color:#4d9c98}.key.warn{background:#473245;color:#ffd3df}.key.wide{grid-column:span 2}.mobile-nav{display:none}.bottom-bubble{position:fixed;z-index:30;right:18px;bottom:20px;background:var(--mint);color:#071b24;border:0;box-shadow:0 8px 30px #0008;border-radius:15px;font-size:22px;width:53px;height:50px;display:none}.scroll-helper{font-size:11px;color:var(--muted)}.only-graph{display:none}@media(min-width:1350px){.main{padding:36px 45px calc(45px + var(--keyboard))}}@media(max-width:1040px){.shell{grid-template-columns:195px minmax(0,1fr)}.main{padding:23px 20px calc(40px + var(--keyboard))}.layout{grid-template-columns:1fr}.sidebar{padding:22px 10px}}@media(max-width:700px){.shell{display:block}.sidebar{display:none}.main{padding:18px 14px calc(90px + var(--keyboard))}.hero h2{font-size:28px}.hero{padding-bottom:18px}.card{padding:17px;border-radius:17px}.topbar{margin-bottom:17px}.mobile-nav{position:fixed;z-index:25;display:grid;grid-template-columns:repeat(6,1fr);left:0;right:0;bottom:0;height:calc(69px + env(safe-area-inset-bottom));padding:5px 4px env(safe-area-inset-bottom);border-top:1px solid #31435f;background:#0d192bf6;backdrop-filter:blur(18px)}.mobile-nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:transparent;border:0;border-radius:9px;color:#8497b1;font-size:9px;font-weight:700;padding:5px 2px}.mobile-nav button .ic{font-size:19px}.mobile-nav button.active{color:var(--mint);background:#23354d}.mobile-nav.hide{display:none}.key{min-height:42px;border-radius:8px}.keyboard{padding:8px 7px calc(8px + env(safe-area-inset-bottom))}.two{gap:9px}.thirds{grid-template-columns:repeat(2,1fr)}.bottom-bubble{bottom:78px}.bottom-bubble.visible{display:block}.mini-grid{gap:8px}.mini-stat{padding:12px}.tiny-btn{padding:7px 9px}}@media(max-width:350px){.key{min-height:40px;font-size:15px}.key.fn{font-size:11px}.card{padding:14px}.chip{font-size:11px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* MathLab 2: visible custom caret and multi-function graphing */
+.math-editor{position:relative;min-width:0;width:100%}.math-editor>.math-input{color:transparent!important;caret-color:transparent!important;position:relative;z-index:1}.math-editor>.math-input::selection{background:transparent}.math-editor>.math-input::placeholder{color:transparent}.math-visual{position:absolute;z-index:2;inset:1.5px;border-radius:11px;display:flex;align-items:center;overflow:hidden;white-space:pre;pointer-events:none;padding:0 14px;color:#eaf6ff;font-size:18px;letter-spacing:.3px;font-family:ui-monospace,"SFMono-Regular",Consolas,monospace}.math-visual.small{font-size:16px;padding:0 10px}.math-copy{display:inline-flex;align-items:center;white-space:pre;flex-shrink:0;will-change:transform}.math-selected{background:#42766dcc;border-radius:2px}.math-caret{height:1.42em;border-left:2.5px solid #78f5c8;margin-left:-1px;flex:none;animation:mlblink 1s steps(1,end) infinite;display:none}.math-editor.focused .math-caret{display:inline-block}.math-placeholder{color:#76859c}@keyframes mlblink{50%{border-color:transparent}}.math-editor:focus-within .math-visual{color:#f3fbff}
+.key-help{color:#8ca3ba;font-size:10px;text-align:center;margin-top:7px}.graph-layout{grid-template-columns:minmax(260px,.82fr) minmax(0,1.18fr)}.y-list{display:grid;gap:9px}.y-row{display:grid;grid-template-columns:20px 17px minmax(0,1fr) 31px;align-items:center;gap:7px;border:1px solid #304463;border-radius:12px;background:#101e32;padding:8px}.y-row .math-input{min-height:44px;padding:9px 11px}.y-row .math-visual{padding:0 10px}.y-row label{font:700 12px ui-monospace,monospace;white-space:nowrap}.y-row input[type=checkbox]{width:17px;height:17px;accent-color:var(--mint)}.y-delete{width:30px;height:34px;border-radius:8px;border:1px solid #354762;background:#222e42;color:#c1cadb}.y-delete:hover{color:#ffa9ae;border-color:#ff9aa2}.graph-large{aspect-ratio:1.30}.graph-layout .legend{gap:10px;max-width:100%}.calc-graph-tools{gap:6px}.calc-graph-tools .tool-choice{padding:9px 10px}.graph-layout #graph-coord{max-width:100%;overflow-wrap:anywhere}.graph-layout .row-space{flex-wrap:wrap}@media(max-width:1040px){.key-help{color:#8ca3ba;font-size:10px;text-align:center;margin-top:7px}.graph-layout{grid-template-columns:1fr}.graph-large{aspect-ratio:1.6}}@media(max-width:700px){.graph-large{aspect-ratio:1.15}.y-row{gap:5px;padding:7px}.y-row label{font-size:11px}.calc-graph-tools .tool-choice{flex:1 0 28%}}
+/* V3: the insertion marker remains visible on mobile instead of blinking away. */
+.math-editor>.math-input{touch-action:manipulation;user-select:text;-webkit-user-select:text}
+.math-visual{overflow:hidden;isolation:isolate}
+.math-caret,.math-editor.focused .math-caret{display:none;animation:none!important;border:0!important;margin-left:0;width:3px;min-width:3px;height:1.48em;border-radius:2px;background:#ffe18a;box-shadow:0 0 0 1px #061322,0 0 10px #ffd36cb3;position:relative;z-index:5;opacity:1!important}
+.math-editor.focused .math-caret{display:inline-block}
+.math-editor.focused>.math-input{border-color:#f8d57c;box-shadow:0 0 0 2px #f8d57c30}
+.graph-pick-controls{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin:12px 0 10px}
+.graph-pick-status{font-size:12px;color:#bcd0e8;line-height:1.55;flex:1 1 160px}
+.graph-pick-status.active{color:#ffe18a;font-weight:700}
+.graph-pick-banner{border:1px solid #b99745;background:#302a1c;color:#ffe6a8;border-radius:11px;padding:10px 12px;font-size:12px;font-weight:750;line-height:1.5;margin-bottom:10px}
+.graph-tap-settings{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:flex-end;margin:0 0 10px}
+.graph-tap-settings .select{min-height:32px;padding:6px 8px;font-size:12px}
+.graph-tap-settings .toggle{color:#c8d8ed;font-size:12px}
+#graph-canvas.picking{cursor:crosshair;border-color:#e9c579;box-shadow:0 0 0 2px #d0a95035}
+@media(max-width:700px){.math-caret,.math-editor.focused .math-caret{width:4px;min-width:4px;height:1.6em;box-shadow:0 0 0 1px #081323,0 0 14px #ffcb60}.graph-pick-controls .btn{flex:1 1 auto}.graph-tap-settings{justify-content:flex-start}.graph-pick-banner{position:sticky;top:0;z-index:4}}
+
+/* MathLab v4 additions: local clipboard, symbolic factoring and 3D surface plotting. */
+.math-clipboard{display:flex;gap:6px;align-items:center;padding:7px 9px;border:1px solid #476078;border-radius:10px;background:#162d39;min-width:0;max-width:350px}
+.math-clipboard .clip-value{font:11px ui-monospace,monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#b1f3d6;max-width:130px}
+.math-clipboard .tiny-btn{padding:5px 8px;min-height:28px}
+.copy-tools{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:13px;padding-top:10px;border-top:1px solid #325266}
+.copy-tools button{border:1px solid #426077;background:#153145;border-radius:8px;color:#b4f4df;padding:7px 10px;font-size:12px;font-weight:700}
+.copy-tools button:hover{border-color:#84e6d0}
+.clip-toast{position:fixed;z-index:80;top:15px;right:15px;max-width:min(370px,90vw);border:1px solid #4c998d;background:#142d35;padding:11px 15px;border-radius:12px;color:#defaf0;font-size:12px;box-shadow:0 10px 30px #0008;pointer-events:none}
+.math3d-controls{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.math3d-controls .btn{padding:8px 10px;min-height:37px}
+.math3d-canvas{aspect-ratio:1.36;touch-action:none;cursor:grab;min-height:250px}.math3d-canvas:active{cursor:grabbing}
+.math3d-info{font-size:11px;color:#9ab7d6;line-height:1.6}.math3d-stats{font:12px ui-monospace,monospace;color:#d1f5f5;line-height:1.7;overflow-wrap:anywhere}
+#graph3d-color{width:100%}.math3d-presets{margin-top:12px}
+@media(max-width:700px){.mobile-nav{grid-template-columns:repeat(7,minmax(0,1fr))}.mobile-nav button{font-size:8px}.mobile-nav button .ic{font-size:17px}.math-clipboard{max-width:100%;flex:1 0 100%;order:3}.topbar{flex-wrap:wrap}.topbar .toolbar{flex-wrap:wrap}.math3d-canvas{aspect-ratio:1;min-height:280px}.math3d-controls .btn{flex:1 1 23%}}
+
+/* V5: stable three-column numeric pad, separate Paste action, atomic math glyphs. */
+.key-top{flex-wrap:wrap}.key-paste{color:#b8ffe7;border-color:#468c85;background:#1d3d42}.key-grid{grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-flow:row}.key{white-space:nowrap;overflow:hidden;text-overflow:clip}.math-atom{color:#aad7ff;display:inline;white-space:pre}.math-selected .math-atom{color:inherit}
+@media(max-width:700px){#keyboard-hide{font-size:0;padding:6px 9px;min-width:34px;min-height:30px}#keyboard-hide::after{content:"⌄";font-size:20px;line-height:1}.key-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:5px}.key{min-height:45px;padding:4px 1px;font-size:17px}.key.fn{font-size:12px}.key-page{padding:6px 8px}.key-top{gap:5px}.key-paste{margin-left:auto}}
+@media(max-width:370px){.key-page{font-size:10px;padding:6px 7px}.key-dismiss{font-size:11px;padding:6px 7px}.key{min-height:41px}}
+
+/* V6: Preferences, responsive known-dimension geometry, persistence status. */
+.geo-input-fields{display:grid;gap:12px}.geo-input-fields>.two,.geo-input-fields .geo-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}.geo-input-fields .field{min-width:0}.geo-input-fields .select{width:100%}.geo-measure-card{border:1px solid var(--line);padding:12px;border-radius:12px;background:#0d1b2e}.geo-measure-card .field + .field{margin-top:9px}.geo-known-blurb{color:#a9bfd6;font-size:12px;line-height:1.6}
+.settings-layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:17px;align-items:start}.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:15px}.settings-grid .select{width:100%}.settings-toggles{display:grid;gap:14px;border-top:1px solid var(--line);padding-top:18px;margin-top:20px}.settings-toggles .toggle,.settings-layout .toggle{color:var(--txt);font-size:13px}.save-status{font-size:12px;color:var(--mint);border:1px solid var(--line);background:#0c1b2e;padding:12px;border-radius:10px;line-height:1.5}.settings-warning{font-size:12px;color:var(--muted);line-height:1.65;margin-top:15px}
+body[data-density=compact] .card{padding:13px}body[data-density=compact] .hero{margin-bottom:10px}body[data-density=compact] .stack{gap:10px}
+@media(max-width:900px){.settings-layout{grid-template-columns:1fr}}@media(max-width:520px){.settings-grid,.geo-input-fields .geo-pair{grid-template-columns:1fr}.geo-input-fields .two{grid-template-columns:1fr 1fr;gap:8px}.settings-grid .field{min-width:0}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="sidebar">
+  <div class="brand"><div class="brand-mark">∑</div><div><h1>MathLab</h1><small>OFFLINE TOOLKIT · V6</small></div></div>
+  <div><div class="side-label">Explore</div><nav class="nav" id="side-nav"></nav></div>
+  <div class="side-foot"><div class="offline"><span class="dot"></span> Fully offline · Private</div><p>Built-in math engine. No accounts, internet, trackers, or external libraries.</p></div>
+</aside>
+<main class="main">
+ <header class="topbar"><div class="crumb">MATHLAB <span style="color:#4d627e"> / </span><span id="crumb-name">Calculator</span></div><div class="toolbar"><button class="tiny-btn" id="angle-toggle" title="Toggle degree or radian mode">DEG</button><button class="tiny-btn" id="settings-button" title="General settings" aria-label="Open settings">⚙ Settings</button><button class="tiny-btn" id="keyboard-toggle" title="Show on-screen math keyboard">⌨ Math keys</button><div class="math-clipboard"><span class="clip-value" id="clipboard-preview">Clipboard empty</span><button class="tiny-btn" data-action="clipboard-paste" title="Paste into active math field">Paste</button></div></div></header>
+ <section class="screen active" id="screen-calc">
+  <div class="hero"><div class="eyebrow">WORKSPACE / 01</div><h2>Smart calculator</h2><p>Evaluate exact expressions, simplify symbols, and explore results—all with your own mathematical keyboard.</p></div>
+  <div class="layout">
+   <div class="stack"><div class="card"><div class="card-head"><h3>Expression</h3><span class="tag">CAS ENGINE</span></div>
+     <div class="field"><label class="label" for="calc-input">Enter an expression</label><input class="math-input" data-math id="calc-input" value="(2+3)^2 + sqrt(16)" autocomplete="off" spellcheck="false" readonly aria-label="Math expression; use on-screen keyboard"></div>
+     <div class="row actions"><button class="btn primary" data-action="calculate">= Calculate</button><button class="btn" data-action="simplify-calc">Simplify</button><button class="btn ghost" data-action="copy-calc">Copy result</button></div>
+     <div class="chips"><button class="chip" data-set="calc-input|sin(pi/6) + cos(pi/3)">Trig values</button><button class="chip" data-set="calc-input|(x+2)(x-3)">Symbolic expression</button><button class="chip" data-set="calc-input|sqrt(50)+sqrt(8)">Radicals</button></div>
+    </div><div class="card"><div class="card-head"><h3>Result</h3><button class="tiny-btn" data-action="copy-calc">⧉ Copy</button></div><div id="calc-result" class="result empty"><div class="result-label">READY</div><div class="result-main">Your answer appears here.</div></div></div></div>
+   <div class="stack"><div class="card"><div class="card-head"><h3>Recent calculations</h3><button class="tiny-btn" data-action="clear-history">Clear</button></div><div id="history" class="history"></div></div><div class="card"><h3>Try these tools</h3><p class="sub">Full working tools, not just formula references.</p><div class="steps"><div class="step"><span class="step-num">ƒ</span><div><strong>Algebra</strong><br>Simplify, expand, factor, and solve equations.</div></div><div class="step"><span class="step-num">∫</span><div><strong>Calculus</strong><br>Differentiate symbolically and integrate.</div></div><div class="step"><span class="step-num">⌁</span><div><strong>Graph</strong><br>Plot and explore functions interactively.</div></div></div></div></div>
+  </div>
+ </section>
+ <section class="screen" id="screen-algebra"><div class="hero"><div class="eyebrow">WORKSPACE / 02</div><h2>Algebra studio</h2><p>Manipulate expressions and solve polynomial equations using the built-in computer algebra system.</p></div>
+ <div class="layout"><div class="stack"><div class="card"><div class="card-head"><h3>Symbolic workspace</h3><span class="tag">EXACT + NUMERIC</span></div><div class="tool-strip" id="algebra-modes"><button class="tool-choice active" data-mode="simplify">Simplify</button><button class="tool-choice" data-mode="expand">Expand</button><button class="tool-choice" data-mode="factor">Factor</button><button class="tool-choice" data-mode="solve">Solve</button><button class="tool-choice" data-mode="standard">Standard</button><button class="tool-choice" data-mode="vertex">Vertex</button><button class="tool-choice" data-mode="roots">Roots</button></div>
+ <label class="label" for="algebra-input">Expression or equation</label><input class="math-input" id="algebra-input" data-math value="2(x+3) + 3x" readonly autocomplete="off" spellcheck="false"><div class="two" style="margin-top:14px"><div><label class="label" for="algebra-var">Variable</label><input id="algebra-var" class="math-input sm" data-math value="x" readonly></div><div class="hint" style="padding-top:18px">For Solve, use <span class="code">2x+3=9</span>. Any polynomial degree is accepted; high-degree roots may be numerical. Exact factoring is attempted first. Vertex form applies to quadratics.</div></div>
+ <div class="row" style="margin-top:14px"><label class="toggle" for="algebra-decimal-factors"><input type="checkbox" id="algebra-decimal-factors"> Decimal factors <span class="muted">(off by default)</span></label></div><div class="row actions"><button class="btn primary" data-action="algebra-go">Run algebra tool</button><button class="btn" data-action="algebra-graph">Graph expression</button></div><div class="chips"><button class="chip" data-set="algebra-input|(x+2)(x-3)">Expand a product</button><button class="chip" data-set="algebra-input|x^2-5x+6=0">Quadratic</button><button class="chip" data-set="algebra-input|2x+7=19">Linear equation</button><button class="chip" data-set="algebra-input|2(x-3)^2+5">Vertex form</button><button class="chip" data-set="algebra-input|(x-1)(x+2)(x^2+1)">Degree 4</button><button class="chip" data-set="algebra-input|(x^2)/x">Cancel x</button></div></div><div class="card"><h3>CAS output</h3><p class="sub">Results respect standard order of operations.</p><div id="algebra-result" class="result empty"><div class="result-label">AWAITING EXPRESSION</div><div class="result-main">Select a tool and tap Run.</div></div></div></div>
+ <div class="stack"><div class="card"><h3>Algebra reference</h3><div class="formula-panel"><strong>Distributive law</strong><br>a(b + c) = ab + ac<br><br><strong>Quadratic formula</strong><br>x = (−b ± √(b² − 4ac)) / 2a<br><br><strong>Difference of squares</strong><br>a² − b² = (a − b)(a + b)</div></div><div class="card"><h3>Scope of the CAS</h3><p class="sub" style="margin:0">Polynomial tools accept arbitrary nonnegative integer powers, subject to a practical complexity limit. Real and complex higher-degree roots and factors may be approximate. Vertex form exists specifically for quadratics. Cancellation preserves equality only where the original denominator is nonzero.</p></div></div></div>
+ </section>
+ <section class="screen" id="screen-graph"><div class="hero"><div class="eyebrow">WORKSPACE / 03</div><h2>Function grapher</h2><p>Plot a full Y= list, then explore value, zeros, intersections, derivatives and extrema with the CALC menu. Graph angles use radians.</p></div>
+ <div class="layout graph-layout"><div class="stack">
+ <div class="card"><div class="card-head"><h3>Y= function list</h3><span class="tag">MULTI-PLOT</span></div><div id="graph-functions" class="y-list"></div><div class="row" style="margin-top:12px"><button class="btn small" data-action="graph-add">＋ Add Y=</button><button class="btn primary small" data-action="graph-plot">Plot all enabled</button></div><p class="hint">Tap an expression to open the custom math keyboard. Toggle visibility with the checkbox. Up to 12 functions.</p></div>
+ <div class="card"><div class="card-head"><h3>CALC menu</h3><span class="tag">TI-STYLE</span></div><div class="tool-strip calc-graph-tools" id="graph-calc-choices"><button class="tool-choice active" data-graph-calc="value">Value</button><button class="tool-choice" data-graph-calc="zero">Zero</button><button class="tool-choice" data-graph-calc="intersect">Intersect</button><button class="tool-choice" data-graph-calc="derivative">dy/dx</button><button class="tool-choice" data-graph-calc="max">Max</button><button class="tool-choice" data-graph-calc="min">Min</button></div>
+ <div class="two"><div class="field"><label class="label" for="graph-calc-function">Function</label><select id="graph-calc-function" class="select" style="width:100%"></select></div><div class="field" id="graph-other-wrap" style="display:none"><label class="label" for="graph-calc-other">Second function</label><select id="graph-calc-other" class="select" style="width:100%"></select></div></div>
+ <div class="two" id="graph-at-wrap"><div class="field"><label class="label" for="graph-calc-at">x =</label><input class="math-input sm" data-math id="graph-calc-at" value="1" readonly></div></div>
+ <div class="two" id="graph-interval-wrap" style="display:none"><div class="field"><label class="label" for="graph-calc-low">Lower bound</label><input class="math-input sm" data-math id="graph-calc-low" value="-10" readonly></div><div class="field"><label class="label" for="graph-calc-high">Upper bound</label><input class="math-input sm" data-math id="graph-calc-high" value="10" readonly></div></div>
+ <div class="field" id="graph-guess-wrap" style="display:none"><label class="label" for="graph-calc-guess">Guess x (selects the closest solution)</label><input class="math-input sm" data-math id="graph-calc-guess" value="0" readonly></div>
+ <div class="graph-pick-controls"><button class="btn small highlight" data-action="graph-pick" id="graph-pick-button">◎ Pick points on graph</button><button class="btn small ghost" data-action="graph-pick-cancel" id="graph-pick-cancel" hidden>Cancel picking</button><div class="graph-pick-status" id="graph-pick-status" aria-live="polite">Tap this button to choose x, or left bound → right bound → guess directly on the graph.</div></div>
+ <button class="btn primary" data-action="graph-calculate">Calculate on graph</button><div id="graph-calc-result" class="result empty" style="margin-top:14px;min-height:70px"><div class="result-label">CALC RESULT</div><div class="result-main smaller">Select an operation.</div></div><p class="hint">Zero, intersect, max and min search the entered interval. Select a guess to choose between multiple answers; extrema are local. Results are numerical approximations.</p></div></div>
+ <div class="stack"><div class="card"><div class="row" style="margin-bottom:13px"><button class="btn small" data-action="graph-zoom-in">＋ Zoom</button><button class="btn small" data-action="graph-zoom-out">− Zoom</button><button class="btn small ghost" data-action="graph-reset">Reset</button><label class="toggle"><input type="checkbox" id="graph-grid" checked>Grid</label></div>
+ <div class="graph-tap-settings"><label class="toggle" for="graph-tap-round"><input type="checkbox" id="graph-tap-round" checked> Round tapped x-coordinates</label><label class="pill-label" for="graph-tap-precision">Decimal places</label><select id="graph-tap-precision" class="select" aria-label="Tapped coordinate decimal places"><option value="0">0</option><option value="1">1</option><option value="2" selected>2</option><option value="3">3</option><option value="4">4</option></select></div>
+ <div id="graph-pick-banner" class="graph-pick-banner" role="status" aria-live="polite" hidden></div>
+ <canvas class="graphic graph-large" id="graph-canvas" width="1000" height="600" aria-label="Interactive graph of all enabled mathematical functions" role="img"></canvas><div class="row-space" style="margin-top:11px"><div id="graph-legend" class="legend"></div><span class="scroll-helper" id="graph-coord">Drag to pan · tap to trace · use Pick points for bounds</span></div>
+ <div class="chips"><button class="chip" data-preset="x^2-4|x+2">Parabola &amp; line</button><button class="chip" data-preset="sin(x)|cos(x)">Sin &amp; cos</button><button class="chip" data-preset="1/x|">Hyperbola</button><button class="chip" data-preset="exp(-x^2)|">Bell curve</button></div></div></div></div></section>
+
+ <section class="screen" id="screen-graph3d"><div class="hero"><div class="eyebrow">WORKSPACE / 04</div><h2>3D surface grapher</h2><p>Graph z = f(x, y) as an interactive three-dimensional surface. Rotate, pan, zoom, inspect coordinates and switch camera views—all offline.</p></div>
+ <div class="layout graph-layout"><div class="stack">
+ <div class="card"><div class="card-head"><h3>Surface equation</h3><span class="tag">3D / OFFLINE</span></div><label class="label" for="graph3d-input">z =</label><input class="math-input" id="graph3d-input" data-math readonly value="sin(sqrt(x^2+y^2))" aria-label="3D surface function z equals f(x,y)"><div class="chips math3d-presets"><button class="chip" data-surface="sin(sqrt(x^2+y^2))">Radial waves</button><button class="chip" data-surface="sin(x)*cos(y)">Sine waves</button><button class="chip" data-surface="(x^2-y^2)/5">Saddle</button><button class="chip" data-surface="4*exp(-(x^2+y^2)/9)">Gaussian hill</button><button class="chip" data-surface="(x^2+y^2)/5">Paraboloid</button></div><div class="row actions"><button class="btn primary" data-action="graph3d-plot">Plot 3D surface</button><button class="btn" data-action="graph3d-reset">Reset camera</button></div></div>
+ <div class="card"><h3>View &amp; quality</h3><div class="two" style="margin-top:12px"><div class="field"><label class="label" for="graph3d-range">X/Y range (±)</label><input id="graph3d-range" data-math readonly class="math-input sm" value="6"></div><div class="field"><label class="label" for="graph3d-quality">Mesh quality</label><select class="select" id="graph3d-quality" style="width:100%"><option value="20">Fast</option><option value="34" selected>Balanced</option><option value="56">Detailed</option></select></div></div><label class="label" for="graph3d-height">Vertical exaggeration: <span id="graph3d-height-value">1.0×</span></label><input type="range" id="graph3d-height" min="0.2" max="3" step="0.1" value="1" style="width:100%;accent-color:var(--mint)"><div class="row" style="margin:12px 0"><label class="toggle"><input type="checkbox" id="graph3d-wire" checked> Mesh lines</label><label class="toggle"><input type="checkbox" id="graph3d-axes" checked> Axes/grid</label></div><label class="label" for="graph3d-color">Surface colors</label><select id="graph3d-color" class="select"><option value="height">Height gradient</option><option value="blue">Ocean blue</option><option value="mint">Mint</option><option value="mono">Monochrome</option></select></div>
+ <div class="card"><h3>How to navigate</h3><p class="math3d-info">Drag one finger to orbit · use two fingers to pan and pinch to zoom · mouse drag to rotate · Shift + drag to pan · mouse wheel to zoom. Select Front, Top or Side for fixed viewpoints. Tap the graph without dragging to probe a point on the surface.</p><p class="math3d-info">The 3D renderer uses an embedded perspective-free projected mesh and requires no 3D library or internet. Surfaces must be explicit real-valued functions of x and y.</p></div></div>
+ <div class="stack"><div class="card"><div class="math3d-controls"><button class="btn small" data-action="graph3d-zoom-in">＋ Zoom</button><button class="btn small" data-action="graph3d-zoom-out">− Zoom</button><button class="btn small" data-action="graph3d-top">Top</button><button class="btn small" data-action="graph3d-front">Front</button><button class="btn small" data-action="graph3d-side">Side</button><button class="btn small" data-action="graph3d-home">Isometric</button></div><canvas id="graph3d-canvas" class="graphic math3d-canvas" width="950" height="710" role="img" aria-label="Interactive 3D surface plot"></canvas><div id="graph3d-status" class="math3d-stats" style="margin-top:11px">Surface ready · drag to rotate</div><div id="graph3d-probe-copy" class="row" style="margin-top:9px" hidden><button class="tiny-btn" data-graph3d-copy="x">⧉ Copy x</button><button class="tiny-btn" data-graph3d-copy="y">⧉ Copy y</button><button class="tiny-btn" data-graph3d-copy="z">⧉ Copy z</button></div></div><div class="card"><h3>Camera</h3><div id="graph3d-camera" class="math3d-stats">Azimuth: −40° · Elevation: 28° · Zoom: 1×</div></div></div></div></section>
+ <section class="screen" id="screen-geometry"><div class="hero"><div class="eyebrow">WORKSPACE / 05</div><h2>Geometry desk</h2><p>Solve shapes from the measurements you know, with optional exact π expressions and a live dimension sketch.</p></div><div class="layout"><div class="stack"><div class="card"><label class="label" for="geo-shape">Choose a shape</label><select id="geo-shape" class="select" style="width:100%;margin-bottom:18px"><option value="circle">Circle</option><option value="rectangle">Rectangle</option><option value="triangle">Triangle (base & height)</option><option value="right">Right triangle</option><option value="trapezoid">Trapezoid</option><option value="polygon">Regular polygon</option><option value="sphere">Sphere</option><option value="cylinder">Cylinder</option><option value="cone">Cone</option></select><div id="geo-fields" class="geo-input-fields"></div><div id="geo-known-hint" class="hint" style="margin-top:10px"></div><div class="row" style="margin:10px 0 5px"><label class="toggle" for="geo-pi-form"><input type="checkbox" id="geo-pi-form" checked> Show exact multiples of π where possible</label></div><div class="hint">Enter known measurements, including expressions such as 6π or √2. Angles in right triangles use the current DEG/RAD setting.</div><div class="row actions"><button class="btn primary" data-action="geometry-go">Calculate dimensions</button></div></div><div class="card"><h3>Measurements</h3><div id="geo-result" class="result empty"><div class="result-label">MEASUREMENTS</div><div class="result-main">Enter shape dimensions.</div></div></div></div><div class="stack"><div class="card"><h3>Shape sketch</h3><p class="sub">A schematic drawing (not necessarily to scale).</p><canvas id="geo-canvas" class="graphic square" width="640" height="520" role="img" aria-label="Shape diagram"></canvas></div><div class="card"><h3>Units</h3><p class="sub" style="margin:0">Enter measurements using the same length unit. Results appear in that unit (length), squared units (area), or cubed units (volume).</p></div></div></div></section>
+ <section class="screen" id="screen-trig"><div class="hero"><div class="eyebrow">WORKSPACE / 06</div><h2>Trigonometry lab</h2><p>Evaluate trig functions and visualize angles on an interactive unit circle.</p></div><div class="layout"><div class="stack"><div class="card"><h3>Angle explorer</h3><p class="sub">Enter the angle as a number, expression, or multiple of π. The DEG/RAD setting controls interpretation.</p><div class="field"><label class="label" for="trig-angle">Angle</label><input class="math-input" id="trig-angle" data-math value="pi/4" readonly></div><div class="row actions"><button class="btn primary" data-action="trig-go">Evaluate angle</button><button class="btn" data-action="trig-deg">Set 45°</button><button class="btn ghost" data-action="trig-rad">Set π/4 rad</button></div><div class="chips"><button class="chip" data-angle="0">0</button><button class="chip" data-angle="30">30°</button><button class="chip" data-angle="45">45°</button><button class="chip" data-angle="60">60°</button><button class="chip" data-angle="90">90°</button><button class="chip" data-angle="180">180°</button></div></div><div class="card"><h3>Trigonometric values</h3><div id="trig-results" class="mini-grid"></div></div></div><div class="stack"><div class="card"><h3>Unit circle</h3><canvas class="graphic square" id="trig-canvas" width="600" height="560" role="img" aria-label="Unit circle"></canvas><div class="hint">Cosine is the x-coordinate; sine is the y-coordinate.</div></div><div class="card"><h3>Helpful identities</h3><div class="formula-panel">sin² θ + cos² θ = 1<br>tan θ = sin θ / cos θ<br>sin(2θ) = 2 sin θ cos θ<br>cos(2θ) = cos² θ − sin² θ</div></div></div></div></section>
+ <section class="screen" id="screen-calculus"><div class="hero"><div class="eyebrow">WORKSPACE / 07</div><h2>Calculus workbench</h2><p>Find derivatives, supported antiderivatives, definite integrals, and numerical limits.</p></div><div class="layout"><div class="stack"><div class="card"><h3>Function analysis</h3><div class="tool-strip" id="calc-modes"><button class="tool-choice active" data-mode="derivative">d/dx</button><button class="tool-choice" data-mode="integral">∫ dx</button><button class="tool-choice" data-mode="definite">∫ₐᵇ</button><button class="tool-choice" data-mode="limit">lim</button><button class="tool-choice" data-mode="tangent">Tangent</button></div><div class="field"><label class="label" for="calculus-input">f(x)</label><input class="math-input" data-math id="calculus-input" value="x^3 + 2x" readonly></div>
+ <div class="two"><div class="field"><label class="label" for="calculus-var">Variable</label><input class="math-input sm" id="calculus-var" data-math value="x" readonly></div><div class="field" id="at-wrap" style="display:none"><label class="label" for="calculus-at">At x =</label><input class="math-input sm" id="calculus-at" data-math value="2" readonly></div></div><div class="two" id="bound-wrap" style="display:none"><div class="field"><label class="label" for="calculus-a">Lower bound</label><input class="math-input sm" id="calculus-a" data-math value="0" readonly></div><div class="field"><label class="label" for="calculus-b">Upper bound</label><input class="math-input sm" id="calculus-b" data-math value="2" readonly></div></div><div class="row actions"><button class="btn primary" data-action="calculus-go">Compute</button><button class="btn" data-action="calculus-graph">Graph f(x)</button></div><div class="chips"><button class="chip" data-set="calculus-input|sin(x^2)">Chain rule</button><button class="chip" data-set="calculus-input|x^3 + 2x">Polynomial</button><button class="chip" data-set="calculus-input|1/x">Log integral</button></div></div><div class="card"><h3>Analysis result</h3><div id="calculus-result" class="result empty"><div class="result-label">AWAITING INPUT</div><div class="result-main">Select a calculus operation.</div></div></div></div><div class="stack"><div class="card"><h3>Calculus rules</h3><div class="formula-panel"><strong>Power rule</strong><br>d(xⁿ)/dx = nxⁿ⁻¹<br><br><strong>Product rule</strong><br>d(uv)/dx = u′v + uv′<br><br><strong>Fundamental theorem</strong><br>∫ₐᵇ f(x) dx = F(b) − F(a)</div></div><div class="card"><h3>Precision & limits</h3><p class="sub" style="margin:0">Symbolic differentiation uses algebraic rules. Antiderivatives use a finite rule set. Definite integrals use numerical quadrature; limits are numerical estimates, not rigorous proofs.</p></div></div></div></section>
+
+ <section class="screen" id="screen-settings">
+  <div class="hero"><div class="eyebrow">PREFERENCES / OFFLINE</div><h2>General settings</h2><p>Personalize MathLab and keep your calculations on this device, without an account or internet connection.</p></div>
+  <div class="settings-layout">
+   <div class="card"><h3>Defaults &amp; preferences</h3>
+    <div class="settings-grid">
+     <div class="field"><label class="label" for="settings-angle">Angle mode</label><select class="select" id="settings-angle"><option value="rad">Radians (RAD)</option><option value="deg">Degrees (DEG)</option></select></div>
+     <div class="field"><label class="label" for="settings-start">Open MathLab to</label><select class="select" id="settings-start"><option value="last">Last opened tool</option><option value="calc">Calculator</option><option value="algebra">Algebra</option><option value="graph">2D Graph</option><option value="graph3d">3D Graph</option><option value="geometry">Geometry</option><option value="trig">Trigonometry</option><option value="calculus">Calculus</option></select></div>
+     <div class="field"><label class="label" for="settings-keyboard">Default keyboard tab</label><select class="select" id="settings-keyboard"><option value="basic">Numbers</option><option value="functions">Functions</option><option value="symbols">Symbols</option></select></div>
+     <div class="field"><label class="label" for="settings-accent">Accent color</label><select class="select" id="settings-accent"><option value="mint">Mint</option><option value="sky">Sky blue</option><option value="violet">Violet</option><option value="amber">Amber</option></select></div>
+     <div class="field"><label class="label" for="settings-density">Interface spacing</label><select class="select" id="settings-density"><option value="normal">Comfortable</option><option value="compact">Compact</option></select></div>
+     <div class="field"><label class="label" for="settings-precision">Graph tap precision</label><select class="select" id="settings-precision"><option value="0">0 decimal places</option><option value="1">1 decimal place</option><option value="2">2 decimal places</option><option value="3">3 decimal places</option><option value="4">4 decimal places</option></select></div>
+    </div>
+    <div class="settings-toggles"><label class="toggle"><input type="checkbox" id="settings-pi" checked> Show exact π expressions by default</label><label class="toggle"><input type="checkbox" id="settings-decimal"> Allow decimal factors by default</label><label class="toggle"><input type="checkbox" id="settings-round" checked> Round tapped graph X positions</label><label class="toggle"><input type="checkbox" id="settings-grid" checked> Show the 2D graph grid</label></div>
+   </div>
+   <div class="card"><h3>Saved workspace</h3><p class="sub">Your expressions, graph functions and camera, shape measurements, selections, and results are stored locally in this browser. Nothing is sent online.</p><label class="toggle" style="margin-bottom:12px"><input type="checkbox" id="settings-autosave" checked> Automatically save my work</label><div class="save-status" id="settings-save-status" role="status">Checking browser storage…</div>
+    <div class="row actions"><button class="btn primary" type="button" id="settings-save-now">Save now</button><button class="btn" type="button" id="settings-export">Export backup (.json)</button><button class="btn" type="button" id="settings-import">Import backup</button></div>
+    <input id="settings-import-file" type="file" accept="application/json,.json" hidden>
+    <div class="settings-warning">Offline browser storage can be cleared by private browsing, browser cleanup, or changing devices. Back up your work before moving the HTML file. Some browsers restrict storage on file:// pages.</div>
+    <button class="btn ghost" type="button" id="settings-reset" style="margin-top:16px;color:#ffc6c8">Clear all saved MathLab data</button>
+   </div>
+  </div>
+ </section>
+</main>
+</div>
+<nav class="mobile-nav" id="mobile-nav" aria-label="Math tools"></nav>
+<button id="bottom-bubble" class="bottom-bubble" aria-label="Open math keyboard">⌨</button>
+<div class="keyboard" id="math-keyboard" aria-label="Custom mathematics keyboard">
+ <div class="key-inner"><div class="key-top"><div class="key-pages"><button class="key-page active" data-page="basic">123</button><button class="key-page" data-page="functions">Functions</button><button class="key-page" data-page="symbols">Symbols</button></div><button class="key-dismiss key-paste" id="keyboard-paste" type="button">⧉ Paste</button><button class="key-dismiss" id="keyboard-hide" aria-label="Hide keyboard">⌄ Hide keyboard</button></div><div id="key-grid" class="key-grid"></div><div class="key-help">Function keys insert one editable symbol · a⁄b creates a fraction · ← / → move the cursor</div></div>
+</div>
+<script>
+'use strict';
+/* MathLab: dependency-free symbolic and numeric engine. All code is embedded for offline use. */
+const $=id=>document.getElementById(id);
+const AST={n:x=>({t:'n',v:Number(x)}),v:x=>({t:'v',v:x}),o:(op,a,b)=>({t:'o',op,a,b}),f:(name,arg)=>({t:'f',name,arg})};
+const N=AST.n,V=AST.v,O=AST.o,F=AST.f;
+const E=1e-10;let modeAngle='rad';try{modeAngle=localStorage.getItem('ml-angle')||'rad'}catch{}
+function nearly(a,b=0){return Number.isFinite(a)&&Number.isFinite(b)&&Math.abs(a-b)<E*Math.max(1,Math.abs(a),Math.abs(b))}
+function nval(z){return z.t==='n'?z.v:null}
+function prettyNum(x){if(nearly(x,Math.PI))return 'π';if(nearly(x,-Math.PI))return '−π';if(nearly(x,Math.E))return 'e';for(let denominator of [2,3,4,6,8,12])for(let numerator=-24;numerator<=24;numerator++){if(numerator===0)continue;if(nearly(x,Math.PI*numerator/denominator)){let pre=numerator===1?'':numerator===-1?'−':String(numerator);return pre+'π/'+denominator;}}return cleanNumber(x);}
+function squareFreeRoot(n){if(!Number.isInteger(n)||n<0||n>1e10)return null;if(n===0)return {coeff:0,rest:1};let factor=1,rem=n;for(let p=2;p*p<=rem;p++){let count=0;while(rem%p===0){rem/=p;count++;}factor*=Math.pow(p,Math.floor(count/2));}return{coeff:factor,rest:n/(factor*factor)};}
+function exactTrig(name,angle){const ratio=angle/Math.PI;let q=Math.round(ratio*12);if(Math.abs(q-ratio*12)>1e-9)return null;q=((q%24)+24)%24;const vals={0:N(0),2:N(.5),3:O('/',F('sqrt',N(2)),N(2)),4:O('/',F('sqrt',N(3)),N(2)),6:N(1)};
+ function sn(k){k=((k%24)+24)%24;let sign=k>12?-1:1;k=k>12?24-k:k;if(k>6)k=12-k;const out=vals[k];return !out?null:sign<0?O('*',N(-1),out):out;}
+ let result=name==='sin'?sn(q):name==='cos'?sn(q+6):null;
+ if(name==='tan'){let numerator=sn(q),denominator=sn(q+6);if(!numerator||!denominator||isNum(denominator,0))return null;result=O('/',numerator,denominator);}
+ return result;
+}
+function cleanNumber(x){if(!Number.isFinite(x))return x>0?'∞':x<0?'−∞':'undefined';if(nearly(x,0))x=0;else if(Math.abs(x)<1e9&&nearly(x,Math.round(x)))x=Math.round(x);return String(Number(x.toPrecision(12)))}
+function safeFunc(name,arg){let r=NaN;const a=arg;
+ switch(name){case 'sin':r=Math.sin(a);break;case 'cos':r=Math.cos(a);break;case 'tan':r=Math.tan(a);if(Math.abs(Math.cos(a))<1e-13)r=NaN;break;case 'asin':r=Math.asin(a);break;case 'acos':r=Math.acos(a);break;case 'atan':r=Math.atan(a);break;case 'asec':r=Math.acos(1/a);break;case 'acsc':r=Math.asin(1/a);break;case 'acot':r=Math.atan2(1,a);break;case 'sinh':r=Math.sinh(a);break;case 'cosh':r=Math.cosh(a);break;case 'tanh':r=Math.tanh(a);break;case 'sec':r=1/Math.cos(a);break;case 'csc':r=1/Math.sin(a);break;case 'cot':r=1/Math.tan(a);break;case 'sqrt':r=Math.sqrt(a);break;case 'abs':r=Math.abs(a);break;case 'ln':r=Math.log(a);break;case 'log':r=Math.log10(a);break;case 'exp':r=Math.exp(a);break;case 'floor':r=Math.floor(a);break;case 'ceil':r=Math.ceil(a);break;}
+ if(['tan','sec','csc','cot'].includes(name)&&Math.abs(name==='tan'||name==='sec'?Math.cos(a):Math.sin(a))<1e-12)return NaN;
+ return r;
+}
+const fnNames=new Set(['sin','cos','tan','asin','acos','atan','sinh','cosh','tanh','sec','csc','cot','asec','acsc','acot','sqrt','abs','ln','log','exp','floor','ceil']);
+
+// Each supported function is ONE codepoint inside a math field. The visible label
+// is drawn separately; caret, delete and left/right movement cannot split its name.
+const ATOM_FUNCTIONS=['sin','cos','tan','sec','csc','cot','asin','acos','atan','asec','acsc','acot','sinh','cosh','tanh','ln','log','exp','abs','floor','ceil'];
+const FUNCTION_ATOMS=Object.fromEntries(ATOM_FUNCTIONS.map((name,i)=>[name,String.fromCharCode(0xe100+i)]));
+const ATOM_NAMES=Object.fromEntries(Object.entries(FUNCTION_ATOMS).map(([name,char])=>[char,name]));
+const atomPattern=new RegExp('['+Object.keys(ATOM_NAMES).join('')+']','g');
+function decodeMathAtoms(s){return String(s).replace(atomPattern,ch=>ATOM_NAMES[ch]);}
+function visibleMathText(s){return decodeMathAtoms(String(s));}
+function encodeMathInput(s){
+ s=String(s).replace(/\btheta\b/gi,'θ').replace(/\bpi\b/gi,'π');
+ return s.replace(/(?<![A-Za-z_])(asin|acos|atan|asec|acsc|acot|sinh|cosh|tanh|sin|cos|tan|sec|csc|cot|sqrt|abs|floor|ceil|exp|log|ln)\s*(?=\()/gi,m=>{
+  let n=m.trim().toLowerCase();return n==='sqrt'?'√':FUNCTION_ATOMS[n]||m;
+ });
+}
+function renderMathChunk(node,value){
+ node.replaceChildren();let buf='';const flush=()=>{if(buf){node.append(document.createTextNode(buf));buf='';}};
+ for(const c of value){const name=ATOM_NAMES[c];if(name){flush();const token=document.createElement('span');token.className='math-atom';token.textContent=name;node.append(token);}else buf+=c;}flush();
+}
+function parse(text){
+ text=decodeMathAtoms(String(text||'')).trim().replace(/[−–—]/g,'-').replace(/×/g,'*').replace(/÷/g,'/').replace(/√\s*\(/g,'sqrt(').replace(/√\s*([0-9]+(?:\.[0-9]+)?|[a-zA-Z])/g,'sqrt($1)').replace(/²/g,'^2').replace(/³/g,'^3').replace(/\s+/g,'');
+ if(!text)throw Error('Enter a math expression.');
+ let raw=[],pat=/((?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?)|([A-Za-z_][A-Za-z_0-9]*)|([+*\-/^(),=!%πθ])/gy;let i=0;
+ while(i<text.length){pat.lastIndex=i;let m=pat.exec(text);if(!m)throw Error('Unrecognized character at position '+(i+1)+': '+text[i]);raw.push({k:m[1]?'num':m[2]?'id':m[3],v:m[0]});i=pat.lastIndex;}
+ // Names are reserved ONLY when they are actual function calls. Otherwise
+ // xy, sinx, ab and other adjacent letters are implicit multiplication.
+ const split=[];for(let k=0;k<raw.length;k++){
+  let t=raw[k],name=t.v.toLowerCase(),isCall=t.k==='id'&&fnNames.has(name)&&raw[k+1]?.v==='(';
+  if(t.k!=='id'||isCall||['pi','theta','e','infinity'].includes(name)||t.v.includes('_')){split.push(t);continue;}
+  let prefix=t.v,fn='';
+  if(raw[k+1]?.v==='('){const matching=[...fnNames].filter(f=>name.endsWith(f)).sort((a,b)=>b.length-a.length)[0];
+    if(matching){fn=matching;prefix=t.v.slice(0,t.v.length-matching.length);}}
+  if(prefix.toLowerCase()==='pi'||prefix.toLowerCase()==='theta'||prefix.toLowerCase()==='e')split.push({k:'id',v:prefix});
+  else for(let piece of prefix.match(/[A-Za-z]|[0-9]+/g)||[])split.push({k:/^\d/.test(piece)?'num':'id',v:piece});
+  if(fn)split.push({k:'id',v:fn});
+ }
+ raw=split;
+ let tks=[];for(let j=0;j<raw.length;j++){
+  let t=raw[j],pr=raw[j-1];if(pr){let end=pr.k==='num'||pr.k==='id'||pr.v===')'||pr.v==='!'||pr.v==='π'||pr.v==='θ';let start=t.k==='num'||t.k==='id'||t.v==='('||t.v==='π'||t.v==='θ';
+   let functionCall=pr.k==='id'&&t.v==='('&&fnNames.has(pr.v.toLowerCase());
+   if(end&&start&&!functionCall)tks.push({k:'*',v:'*'});
+  }tks.push(t);
+ }
+ let pos=0;const peek=()=>tks[pos]?.v;const take=()=>tks[pos++];
+ function expr(min=0){let t=take(),a;if(!t)throw Error('Expression ends unexpectedly.');
+  if(t.k==='num'){a=N(Number(t.v));if(!Number.isFinite(a.v))throw Error('Number is too large.');}
+  else if(t.v==='+'||t.v==='-'){a=expr(25);if(t.v==='-')a=O('*',N(-1),a);}
+  else if(t.v==='('){a=expr(0);if(peek()!==')')throw Error('Missing closing parenthesis.');take();}
+  else if(t.v==='π'){a=N(Math.PI);}
+  else if(t.v==='θ'){a=V('θ');}
+  else if(t.k==='id'){let name=t.v.toLowerCase();if(fnNames.has(name)&&peek()==='('){take();const arg=expr(0);if(peek()!==')')throw Error('Missing ) after '+name+'.');take();a=F(name,arg);}else if(name==='pi')a=N(Math.PI);else if(name==='e')a=N(Math.E);else if(name==='infinity')a=N(Infinity);else if(name==='theta')a=V('θ');else a=V(t.v);}
+  else throw Error('Unexpected token: '+t.v);
+  while(pos<tks.length){let op=peek();if(op==='!'){if(45<min)break;take();a=F('factorial',a);continue;}
+   let prec=op==='='?2:op==='+'||op==='-'?10:op==='*'||op==='/'?20:op==='^'?30:0;if(prec===0||prec<min)break;
+   take();if(op==='='){let b=expr(prec+1);a={t:'eq',a,b};continue;}
+   let b=expr(prec+(op==='^'?0:1));a=O(op,a,b);
+  }
+  return a;
+ }
+ let tree=expr(0);if(pos<tks.length)throw Error('Unexpected token: '+peek());return tree;
+}
+function evaluator(tree,ctx={},opt={}){switch(tree.t){case'n':return tree.v;case'v':if(Object.hasOwn(ctx,tree.v))return ctx[tree.v];throw Error('Provide a value for '+tree.v+'.');case'eq':return evaluator(tree.a,ctx,opt)-evaluator(tree.b,ctx,opt);case'o':{
+ let a=evaluator(tree.a,ctx,opt),b=evaluator(tree.b,ctx,opt),r;switch(tree.op){case'+':r=a+b;break;case'-':r=a-b;break;case'*':r=a*b;break;case'/':r=a/b;break;case'^':r=Math.pow(a,b);break;}return r;}
+ case'f':{let x=evaluator(tree.arg,ctx,opt);if(tree.name==='factorial'){if(x<0||x>170||!Number.isInteger(x))return NaN;let out=1;for(let k=2;k<=x;k++)out*=k;return out;}if(opt.deg&&['sin','cos','tan','sec','csc','cot'].includes(tree.name))x*=Math.PI/180;
+ let y=safeFunc(tree.name,x);if(opt.deg&&['asin','acos','atan','asec','acsc','acot'].includes(tree.name))y*=180/Math.PI;return y;}}
+ throw Error('Unsupported expression.');}
+function keyTree(z){return z.t==='n'?('n'+cleanNumber(z.v)):z.t==='v'?'v'+z.v:z.t==='f'?z.name+'('+keyTree(z.arg)+')':z.t==='eq'?keyTree(z.a)+'='+keyTree(z.b):z.op+'('+keyTree(z.a)+','+keyTree(z.b)+')'}
+function flattened(z,op){return z.t==='o'&&z.op===op?[...flattened(z.a,op),...flattened(z.b,op)]:[z]}
+function nest(op,a){if(!a.length)return N(op==='+'?0:1);return a.slice(1).reduce((s,t)=>O(op,s,t),a[0]);}
+function isNum(z,val){return z.t==='n'&&(val===undefined||nearly(z.v,val))}
+function timesConst(k,t){if(nearly(k,0))return N(0);if(nearly(k,1))return t;return O('*',N(k),t)}
+function numResult(a){return Number.isFinite(a)?N(nearly(a,0)?0:a):null}
+function simplifyOnce(z){
+ if(z.t==='n'||z.t==='v')return z;if(z.t==='eq')return {t:'eq',a:simplifyOnce(z.a),b:simplifyOnce(z.b)};
+ if(z.t==='f'){let a=simplifyOnce(z.arg);if(z.name==='factorial'&&a.t==='n'){let y=evaluator(F('factorial',a));if(Number.isFinite(y))return N(y);}if(a.t==='n'&&z.name!=='factorial'){
+  if(z.name==='sqrt'&&a.v>=0){let sf=squareFreeRoot(a.v);if(sf){if(sf.rest===1)return N(sf.coeff);if(sf.coeff>1)return simplifyOnce(O('*',N(sf.coeff),F('sqrt',N(sf.rest))));return F('sqrt',a);}}
+  if(['sin','cos','tan'].includes(z.name)){let exact=exactTrig(z.name,a.v);if(exact)return simplifyOnce(exact);return F(z.name,a);}
+  if(['asin','acos','atan','asec','acsc','acot','sec','csc','cot'].includes(z.name)&&!nearly(a.v,0))return F(z.name,a);
+  const r=safeFunc(z.name,a.v);if(Number.isFinite(r))return N(r);
+ }if(z.name==='sqrt'&&a.t==='o'&&a.op==='^'&&isNum(a.b,2))return F('abs',a.a);
+ return F(z.name,a);}
+ let a=simplifyOnce(z.a),b=simplifyOnce(z.b),op=z.op;
+ if(a.t==='n'&&b.t==='n'&&!(op==='/'&&nearly(b.v,0))&&!(op==='^'&&a.v<0&&!Number.isInteger(b.v))){let r=evaluator(O(op,a,b));if(Number.isFinite(r))return N(r);}
+ if(op==='-')return simplifyOnce(O('+',a,O('*',N(-1),b)));
+ if(op==='/'){if(isNum(a,0))return N(0);if(isNum(b,1))return a;if(keyTree(a)===keyTree(b))return N(1);
+  if(a.t==='o'&&a.op==='*'&&isNum(a.a)&&isNum(b)&&b.v!==0)return simplifyOnce(O('*',N(a.a.v/b.v),a.b));
+  let cancelled=cancelDivFactors(a,b)||reducePolynomialRatio(a,b);if(cancelled)return cancelled;
+  return O('/',a,b);}
+ if(op==='^'){if(isNum(b,0))return N(1);if(isNum(b,1))return a;if(isNum(a,1))return N(1);if(isNum(a,0)&&b.t==='n'&&b.v>0)return N(0);
+  if(a.t==='o'&&a.op==='^'&&a.b.t==='n'&&b.t==='n')return simplifyOnce(O('^',a.a,N(a.b.v*b.v)));return O('^',a,b);}
+ if(op==='*'){
+  if(a.t==='n'&&b.t==='o'&&b.op==='/'&&b.b.t==='n')return simplifyOnce(O('/',O('*',a,b.a),b.b));
+  let all=flattened(O('*',a,b),'*');let num=1,parts=[];for(let t of all){if(t.t==='n')num*=t.v;else parts.push(t);}
+  if(nearly(num,0))return N(0);
+  let power=new Map();for(let t of parts){const base=t.t==='o'&&t.op==='^'&&t.b.t==='n'?t.a:t;const exp=t.t==='o'&&t.op==='^'&&t.b.t==='n'?t.b.v:1;const key=keyTree(base);if(power.has(key))power.get(key).n+=exp;else power.set(key,{base,n:exp});}
+  let out=[...power.values()].filter(v=>!nearly(v.n,0)).sort((p,q)=>keyTree(p.base).localeCompare(keyTree(q.base))).map(v=>nearly(v.n,1)?v.base:O('^',v.base,N(v.n)));
+  if(!nearly(num,1)||out.length===0)out.unshift(N(num));return nest('*',out);
+ }
+ if(op==='+'){
+  let all=flattened(O('+',a,b),'+'),num=0,map=new Map();
+  for(let t of all){let factors=flattened(t,'*'),co=1,others=[];for(let f of factors){if(f.t==='n')co*=f.v;else others.push(f);}if(!others.length){num+=co;continue;}let core=nest('*',others);let k=keyTree(core);if(map.has(k))map.get(k).co+=co;else map.set(k,{co,core});}
+  let parts=[...map.values()].filter(v=>!nearly(v.co,0)).sort((p,q)=>{const degree=t=>{let vars=[...freeVars(t)];let pp=vars.length===1?poly(t,vars[0]):null;return pp?Math.max(...Object.keys(pp).map(Number)):0;};return degree(q.core)-degree(p.core)||keyTree(p.core).localeCompare(keyTree(q.core));}).map(v=>timesConst(v.co,v.core));if(!nearly(num,0)||!parts.length)parts.push(N(num));return nest('+',parts);
+ }
+ return O(op,a,b);
+}
+function simplify(tree){let z=tree;for(let i=0;i<8;i++){let n=simplifyOnce(z);if(keyTree(n)===keyTree(z))break;z=n;}return z}
+function expanded(z,limit={n:0}){if(++limit.n>1000)throw Error('Expression is too large to expand.');if(z.t==='n'||z.t==='v')return z;if(z.t==='f')return F(z.name,expanded(z.arg,limit));if(z.t==='eq')return{t:'eq',a:expanded(z.a,limit),b:expanded(z.b,limit)};
+ let a=expanded(z.a,limit),b=expanded(z.b,limit);if(z.op==='*'){
+  if(a.t==='o'&&(a.op==='+'||a.op==='-'))return simplify(O(a.op,expanded(O('*',a.a,b),limit),expanded(O('*',a.b,b),limit)));
+  if(b.t==='o'&&(b.op==='+'||b.op==='-'))return simplify(O(b.op,expanded(O('*',a,b.a),limit),expanded(O('*',a,b.b),limit)));}
+ if(z.op==='^'&&b.t==='n'&&Number.isInteger(b.v)&&b.v>=2&&b.v<=8){let r=a;for(let j=1;j<b.v;j++)r=expanded(O('*',r,a),limit);return simplify(r);}return simplify(O(z.op,a,b));}
+function freeVars(z,set=new Set()){if(z.t==='v')set.add(z.v);else if(z.t==='o'||z.t==='eq'){freeVars(z.a,set);freeVars(z.b,set);}else if(z.t==='f')freeVars(z.arg,set);return set}
+function degrees(z,v){let p=poly(z,v);if(!p)return null;return Math.max(...Object.keys(p).map(Number))}
+function poly(z,v){if(z.t==='n')return {0:z.v};if(z.t==='v')return z.v===v?{1:1}:null;if(z.t==='eq')return poly(simplify(O('-',z.a,z.b)),v);if(z.t==='f')return null;
+ let a=poly(z.a,v),b=poly(z.b,v);if(!a||!b)return null;let out={};const add=(k,c)=>{out[k]=(out[k]||0)+c};
+ if(z.op==='+'||z.op==='-'){for(let[k,c]of Object.entries(a))add(k,c);for(let[k,c]of Object.entries(b))add(k,(z.op==='+'?1:-1)*c);}
+ else if(z.op==='*'){for(let[k,c]of Object.entries(a))for(let[h,d]of Object.entries(b))add(+k+(+h),c*d);}
+ else if(z.op==='/'){if(Object.keys(b).some(k=>+k!==0&&Math.abs(b[k])>E)||nearly(b[0]||0,0))return null;for(let[k,c]of Object.entries(a))add(k,c/b[0]);}
+ else if(z.op==='^'){if(Object.keys(b).some(k=>+k!==0&&Math.abs(b[k])>E))return null;let exponent=b[0]||0;if(!Number.isInteger(exponent)||exponent<0||exponent>12)return null;out={0:1};for(let t=0;t<exponent;t++){let old=out;out={};for(let[k,c]of Object.entries(old))for(let[h,d]of Object.entries(a))add(+k+(+h),c*d);}}
+ else return null;
+ for(let k of Object.keys(out)){if(Math.abs(out[k])<1e-10)delete out[k];if(+k>12)return null;}return Object.keys(out).length?out:{0:0};
+}
+function polyTree(p,v){let z=N(0);for(let d of Object.keys(p).map(Number).sort((a,b)=>b-a)){const c=p[d];if(nearly(c,0))continue;let term=d===0?N(c):d===1?V(v):O('^',V(v),N(d));term=d===0?term:timesConst(c,term);z=O('+',z,term);}return simplify(z)}
+function format(z,parent=0){if(z.t==='n')return prettyNum(z.v);if(z.t==='v')return z.v;if(z.t==='eq')return format(z.a)+' = '+format(z.b);if(z.t==='f'){return z.name+'('+format(z.arg)+')';}
+ const precedence={'+':10,'-':10,'*':20,'/':20,'^':30},pr=precedence[z.op]||0;
+ if(z.op==='+'){let terms=flattened(z,'+'),str='';for(let i=0;i<terms.length;i++){let t=terms[i],neg=false;
+   if(t.t==='n'&&t.v<0){neg=true;t=N(-t.v);}else if(t.t==='o'&&t.op==='*'&&t.a.t==='n'&&t.a.v<0){neg=true;t=nearly(t.a.v,-1)?t.b:O('*',N(-t.a.v),t.b);}
+   let term=format(t,11);str+=i===0?(neg?'−':'')+term:(neg?' − ':' + ')+term;}
+  return pr<parent?'('+str+')':str;}
+
+ let a=z.a,b=z.b,sa=format(a,pr),sb=format(b,pr+(z.op==='-'||z.op==='/'?1:0));let s;
+ if(z.op==='*'){
+  if(a.t==='n'&&a.v===-1){s='−'+format(b,25);}else if(a.t==='n'&&b.t==='v')s=sa+sb;else if(a.t==='n'&&b.t==='o'&&b.op==='^'&&b.a.t==='v')s=sa+sb;else if(a.t==='n'&&(b.t==='f'||b.t==='o'&&b.op==='+'))s=sa+(b.t==='o'?'('+format(b)+')':sb);
+  else if(b.t==='o'&&b.op==='+')s=sa+'('+format(b)+')';else s=sa+' · '+sb;
+ }else if(z.op==='^'){s=format(a,pr)+(a.t==='o'&&precedence[a.op]&&precedence[a.op]<pr?'':'')+'^'+(b.t==='o'?'('+format(b)+')':format(b,pr));}
+ else s=sa+' '+z.op+' '+sb;
+ return pr<parent?'('+s+')':s;
+}
+function deriv(z,v){if(z.t==='n')return N(0);if(z.t==='v')return N(z.v===v?1:0);if(z.t==='eq')throw Error('Differentiate an expression, not an equation.');
+ if(z.t==='o'){let a=z.a,b=z.b,da=deriv(a,v),db=deriv(b,v);switch(z.op){case'+':return O('+',da,db);case'-':return O('-',da,db);case'*':return O('+',O('*',da,b),O('*',a,db));case'/':return O('/',O('-',O('*',da,b),O('*',a,db)),O('^',b,N(2)));case'^':
+ if(b.t==='n')return O('*',O('*',b,O('^',a,N(b.v-1))),da);
+ return O('*',O('^',a,b),O('+',O('*',db,F('ln',a)),O('/',O('*',b,da),a)));}}
+ if(z.t==='f'){let u=z.arg,du=deriv(u,v),r;switch(z.name){case'sin':r=F('cos',u);break;case'cos':r=O('*',N(-1),F('sin',u));break;case'tan':r=O('^',F('sec',u),N(2));break;case'asin':r=O('/',N(1),F('sqrt',O('-',N(1),O('^',u,N(2)))));break;case'acos':r=O('/',N(-1),F('sqrt',O('-',N(1),O('^',u,N(2)))));break;case'atan':r=O('/',N(1),O('+',N(1),O('^',u,N(2))));break;case'ln':r=O('/',N(1),u);break;case'log':r=O('/',N(1),O('*',u,F('ln',N(10))));break;case'exp':r=F('exp',u);break;case'sqrt':r=O('/',N(1),O('*',N(2),F('sqrt',u)));break;case'abs':r=O('/',u,F('abs',u));break;case'sinh':r=F('cosh',u);break;case'cosh':r=F('sinh',u);break;case'tanh':r=O('/',N(1),O('^',F('cosh',u),N(2)));break;case'sec':r=O('*',F('sec',u),F('tan',u));break;case'csc':r=O('*',N(-1),O('*',F('csc',u),F('cot',u)));break;case'cot':r=O('*',N(-1),O('^',F('csc',u),N(2)));break;default:throw Error('Derivative of '+z.name+' is not implemented.');}return O('*',r,du);}
+ throw Error('Unsupported derivative.');}
+function linearParts(z,v){let p=poly(z,v);if(!p)return null;let ks=Object.keys(p);if(ks.some(k=>+k>1))return null;return {a:p[1]||0,b:p[0]||0};}
+function anti(z,v){z=simplify(z);if(z.t==='n')return O('*',z,V(v));if(z.t==='v')return z.v===v?O('/',O('^',z,N(2)),N(2)):O('*',z,V(v));
+ if(z.t==='o'){
+ if(z.op==='+'||z.op==='-')return O(z.op,anti(z.a,v),anti(z.b,v));
+ if(z.op==='*'){if(freeVars(z.a).has(v)===false)return O('*',z.a,anti(z.b,v));if(freeVars(z.b).has(v)===false)return O('*',z.b,anti(z.a,v));}
+ if(z.op==='/'&&freeVars(z.b).has(v)===false)return O('/',anti(z.a,v),z.b);
+ if(z.op==='/'&&isNum(z.a,1)&&z.b.t==='v'&&z.b.v===v)return F('ln',F('abs',z.b));
+ if(z.op==='^'&&z.a.t==='v'&&z.a.v===v&&z.b.t==='n'){let k=z.b.v;if(nearly(k,-1))return F('ln',F('abs',z.a));return O('/',O('^',z.a,N(k+1)),N(k+1));}
+ }
+ if(z.t==='f'){let l=linearParts(z.arg,v);if(l&&Math.abs(l.a)>E){switch(z.name){case 'sin':return O('/',O('*',N(-1),F('cos',z.arg)),N(l.a));case 'cos':return O('/',F('sin',z.arg),N(l.a));case 'exp':return O('/',F('exp',z.arg),N(l.a));}}
+ }
+ if(!freeVars(z).has(v))return O('*',z,V(v));throw Error('No antiderivative found using the built-in symbolic rules. Try a definite numerical integral instead.');}
+function factorPolynomial(tree,v){let p=poly(simplify(expanded(tree)),v);if(!p)throw Error('Factoring currently supports polynomials with numerical coefficients in '+v+'.');let deg=Math.max(...Object.keys(p).map(Number));if(deg===0)return{str:format(polyTree(p,v)),note:'Constant expression.'};if(deg===1){let b=p[1]||0,c=p[0]||0;let root=-c/b;return{str:(nearly(b,1)?'':cleanNumber(b))+'('+v+(root<0?' + '+cleanNumber(-root):' − '+cleanNumber(root))+')',note:'Linear factorization (decimal values may be approximations).'};}
+ if(deg!==2)return{str:format(polyTree(p,v)),note:'Factoring supports degree ≤ 2. Use Solve for higher-degree numerical roots.'};let a=p[2],b=p[1]||0,c=p[0]||0,D=b*b-4*a*c;if(D<0)return{str:format(polyTree(p,v)),note:'Irreducible over the real numbers (negative discriminant).'};
+ let rt=Math.sqrt(Math.max(D,0));let r1=(-b+rt)/(2*a),r2=(-b-rt)/(2*a);let fval=r=>v+(r<0?' + '+cleanNumber(-r):' − '+cleanNumber(r));let text=(nearly(a,1)?'':nearly(a,-1)?'−':cleanNumber(a))+'('+fval(r2)+')('+fval(r1)+')';return{str:text,note:nearly(rt,Math.round(rt))?'Real linear factors.':'Real linear factors (roots rounded to 12 significant digits).'};}
+function polynomialRoots(p){let degree=Math.max(...Object.keys(p).map(Number));let f=x=>Object.entries(p).reduce((s,[d,c])=>s+c*Math.pow(x,+d),0);if(degree>8)throw Error('Solving supports degree ≤ 8.');
+ if(degree===0)return[];if(degree===1)return[-(p[0]||0)/p[1]];
+ if(degree===2){let a=p[2],b=p[1]||0,c=p[0]||0,D=b*b-4*a*c;if(D<0)return[];return [...new Set([(-b-Math.sqrt(D))/(2*a),(-b+Math.sqrt(D))/(2*a)].map(x=>Number(x.toPrecision(13))))];}
+ let der={};for(let[k,c]of Object.entries(p))if(+k>0)der[+k-1]=(+k)*c;
+ let critical=polynomialRoots(der);let maxc=Math.max(1,...Object.entries(p).filter(([d])=>+d<degree).map(([d,c])=>Math.abs(c/p[degree])));let bound=1+maxc;let points=[-bound,...critical.filter(x=>x>-bound&&x<bound),bound].sort((a,b)=>a-b);let roots=[];
+ for(let i=0;i<points.length;i++){let a=points[i],fa=f(a);if(Math.abs(fa)<1e-7)roots.push(a);if(i===points.length-1)continue;let b=points[i+1],fb=f(b);if(fa*fb>0)continue;if(fa===0||fb===0)continue;for(let j=0;j<100;j++){let mid=(a+b)/2,fm=f(mid);if(fa*fm<=0){b=mid;fb=fm}else{a=mid;fa=fm;}}roots.push((a+b)/2);}
+ return roots.filter(Number.isFinite).sort((a,b)=>a-b).filter((x,i,a)=>!i||Math.abs(x-a[i-1])>1e-6);
+}
+function solveEq(z,v){const diff=z.t==='eq'?O('-',z.a,z.b):z;const p=poly(simplify(expanded(diff)),v);if(!p)throw Error('Equation solving supports polynomial expressions with numerical coefficients in '+v+'.');let deg=Math.max(...Object.keys(p).map(Number));if(deg===0)return{answer:nearly(p[0]||0,0)?'All real '+v+' satisfy the equation.':'No solution.',note:'Constant equation.'};
+ if(deg===2){let a=p[2],b=p[1]||0,c=p[0]||0,D=b*b-4*a*c;if(D<0){let real=-b/(2*a),imag=Math.sqrt(-D)/(2*Math.abs(a));return{answer:v+' = '+cleanNumber(real)+' ± '+cleanNumber(imag)+'i',note:'Two complex conjugate roots.'};}
+ if(Number.isInteger(a)&&Number.isInteger(b)&&Number.isInteger(c)&&D>0&&!nearly(Math.sqrt(D),Math.round(Math.sqrt(D)))){
+ let form=sign=>{if(nearly(b,0)&&nearly(a,1))return (sign<0?'−':'')+'sqrt('+D+')';return '('+cleanNumber(-b)+(sign<0?' − ':' + ')+'sqrt('+D+')) / '+cleanNumber(2*a);};
+ return{answer:v+'₁ = '+form(-1)+'\n'+v+'₂ = '+form(1),note:'Exact real roots from the quadratic formula.'};
+ }
+ }
+ const roots=polynomialRoots(p);return{answer:roots.length?roots.map((r,i)=>v+(roots.length>1?'₁₂₃₄₅₆₇₈'[Math.min(i,7)]:'')+' = '+cleanNumber(r)).join('\n'):'No real roots.',note:deg<=2?'Quadratic/linear formula; rounded when needed.':'Numerical real roots, including repeated roots when detected.'};}
+function simpsonIntegrate(z,v,a,b){if(!Number.isFinite(a)||!Number.isFinite(b))throw Error('Use finite integration bounds.');if(nearly(a,b))return 0;
+ let sign=b<a?-1:1;if(sign<0)[a,b]=[b,a];
+ const func=x=>{let val=evaluator(z,{[v]:x});return Number.isFinite(val)?val:NaN;};
+ if(![func(a),func(b),func((a+b)/2)].every(Number.isFinite))throw Error('The function is undefined at a bound or midpoint. This interval may be improper.');
+ function samp(x){let y=func(x);if(!Number.isFinite(y))throw Error('A discontinuity was encountered. The integral may not exist.');return y;}
+ function sim(a,b,fa,fb,fc){return (b-a)*(fa+4*fc+fb)/6;}
+ function go(a,b,fa,fb,fm,whole,depth){let m=(a+b)/2,l=(a+m)/2,r=(m+b)/2,fl=samp(l),fr=samp(r),left=sim(a,m,fa,fm,fl),right=sim(m,b,fm,fb,fr),err=left+right-whole;
+ if(depth<=0){if(Math.abs(err)>1e-4*Math.max(1,Math.abs(left+right)))throw Error('The integral did not converge. Check for singularities.');return left+right+err/15;}
+ if(Math.abs(err)<1e-9*Math.max(1,Math.abs(left+right)))return left+right+err/15;
+ return go(a,m,fa,fm,fl,left,depth-1)+go(m,b,fm,fb,fr,right,depth-1);}
+ const fa=samp(a),fb=samp(b),fm=samp((a+b)/2);let answer=sign*go(a,b,fa,fb,fm,sim(a,b,fa,fb,fm),19);
+ if(!Number.isFinite(answer))throw Error('Integral does not converge.');return answer;
+}
+function estimateLimit(z,v,x){if(!Number.isFinite(x))throw Error('Enter a finite limit point.');const h0=Math.max(1,Math.abs(x)),evalAt=xx=>{try{return evaluator(z,{[v]:xx});}catch{return NaN}};
+ let left=[],right=[];for(let k=2;k<=9;k++){let h=h0*Math.pow(0.1,k);left.push(evalAt(x-h));right.push(evalAt(x+h));}
+ const tail=a=>a.slice(-4),a=tail(left),b=tail(right);if([...a,...b].some(v=>Number.isNaN(v)))throw Error('Could not estimate the two-sided limit near this point.');
+ const rising=a=>a.every(t=>t>1e8),falling=a=>a.every(t=>t< -1e8);
+ if((rising(a)&&rising(b))||(falling(a)&&falling(b)))return{ans:rising(a)?'+∞':'−∞',note:'Appears unbounded on both sides; a numerical indication, not a proof.'};
+ let lav=a[a.length-1],rav=b[b.length-1];let changeL=Math.abs(a[a.length-1]-a[a.length-2]);let changeR=Math.abs(b[b.length-1]-b[b.length-2]);let mismatch=Math.abs(lav-rav);let tol=Math.max(2e-4,5e-4*Math.max(1,Math.abs(lav),Math.abs(rav)));
+ if(mismatch>tol)return{ans:'Two-sided limit may not exist',note:'Left ≈ '+cleanNumber(lav)+'\nRight ≈ '+cleanNumber(rav)+'\nThe one-sided estimates differ.'};
+ if(Math.max(changeL,changeR)>Math.max(1e-2,0.02*Math.max(1,Math.abs(lav))))return{ans:'Inconclusive',note:'The numerical samples are not stabilizing near this point.'};
+ return{ans:'≈ '+cleanNumber((lav+rav)/2),note:'Numerical left/right agreement; this does not establish a rigorous limit.'};
+}
+/* Extended CAS: high-degree polynomial conversions, complex roots, and rational cancellation. */
+const MAX_POLY_DEGREE=192; // computational safeguard, not a mathematical degree restriction
+function trimPoly(p){let a=p.slice();while(a.length>1&&Math.abs(a[a.length-1])<1e-13)a.pop();return a.length?a:[0];}
+// Single traversal wrapper; avoid evaluating a large polynomial twice.
+function polynomials(z,v){return polynomialOfOptimized(z,v)}
+function polynomialOfOptimized(z,v){
+ const sum=(a,b,s)=>{let r=new Array(Math.max(a.length,b.length)).fill(0);for(let i=0;i<r.length;i++)r[i]=(a[i]||0)+s*(b[i]||0);return trimPoly(r)};
+ const mul=(a,b)=>{let d=a.length+b.length-2;if(d>MAX_POLY_DEGREE)throw Error('Polynomial degree exceeds '+MAX_POLY_DEGREE+' (offline safety limit).');let r=new Array(d+1).fill(0);for(let i=0;i<a.length;i++)for(let j=0;j<b.length;j++)r[i+j]+=a[i]*b[j];return trimPoly(r)};
+ function w(t){if(t.t==='n')return [t.v];if(t.t==='v')return t.v===v?[0,1]:null;if(t.t==='eq')return w(O('-',t.a,t.b));if(t.t!=='o')return null;
+ let a=w(t.a),b=w(t.b);if(!a||!b)return null;
+ switch(t.op){case '+':return sum(a,b,1);case '-':return sum(a,b,-1);case '*':return mul(a,b);case '/':return b.length===1&&b[0]!==0?trimPoly(a.map(c=>c/b[0])):null;
+ case '^':{if(b.length!==1||!Number.isInteger(b[0])||b[0]<0)return null;if(b[0]*(a.length-1)>MAX_POLY_DEGREE)throw Error('Polynomial degree exceeds '+MAX_POLY_DEGREE+' (offline safety limit).');let n=b[0],out=[1];while(n){if(n%2)out=mul(out,a);n=Math.floor(n/2);if(n)a=mul(a,a);}return out;}}return null;}
+ return w(z);
+}
+function polyFormat(p,v='x'){
+ p=trimPoly(p);let str='';for(let k=p.length-1;k>=0;k--){let c=p[k];if(!Number.isFinite(c))throw Error('Nonfinite polynomial coefficient.');if(Math.abs(c)<1e-11)continue;
+ let sign=c<0?'−':'+',abs=Math.abs(c),num=cleanNumber(abs),term=k===0?num:(nearly(abs,1)?'':num)+(k===1?v:v+'^'+k);
+ str+=(str?(sign==='−'?' − ':' + '):(sign==='−'?'−':''))+term;}
+ return str||'0';
+}
+function divPoly(a,b){a=trimPoly(a);b=trimPoly(b);if(b.length===1&&Math.abs(b[0])<1e-14)throw Error('Polynomial division by zero.');let q=new Array(Math.max(1,a.length-b.length+1)).fill(0),r=a.slice();
+ for(let k=a.length-b.length;k>=0;k--){let c=r[k+b.length-1]/b[b.length-1];q[k]=c;for(let j=0;j<b.length;j++)r[k+j]-=c*b[j];}r=trimPoly(r.slice(0,Math.max(1,b.length-1)));return {q:trimPoly(q),r};}
+function polynomialGCD(a,b){a=trimPoly(a);b=trimPoly(b);let lim=100;while(b.length>1||Math.abs(b[0])>1e-8){if(!lim--)return [1];let {r}=divPoly(a,b);if(r.some(x=>!Number.isFinite(x)))return [1];let scale=Math.max(1,...a.map(Math.abs),...b.map(Math.abs));if(r.every(x=>Math.abs(x)<1e-7*scale))r=[0];a=b;b=r;}
+ if(a.length<2||Math.abs(a.at(-1))<1e-12)return [1];return a.map(c=>c/a.at(-1));}
+function polyAsTree(p,v){let terms=[];for(let k=p.length-1;k>=0;k--){let c=p[k];if(Math.abs(c)<1e-11)continue;let t=k===0?N(c):k===1?V(v):O('^',V(v),N(k));terms.push(k===0?t:nearly(c,1)?t:O('*',N(c),t));}return terms.length?nest('+',terms):N(0)}
+function cancelDivFactors(a,b){
+ let numerator=new Map(),denominator=new Map(),number=1,denNumber=1;
+ const add=(t,s,n=1)=>{if(t.t==='n'){let val=Math.pow(t.v,n);if(s>0)number*=val;else denNumber*=val;return;}
+ if(t.t==='o'&&t.op==='*'){add(t.a,s,n);add(t.b,s,n);return;}
+ if(t.t==='o'&&t.op==='/'){add(t.a,s,n);add(t.b,-s,n);return;}
+ if(t.t==='o'&&t.op==='^'&&t.b.t==='n'&&Number.isInteger(t.b.v)&&Math.abs(t.b.v)<1e5){add(t.a,s*Math.sign(t.b.v),n*Math.abs(t.b.v));return;}
+ let m=s>0?numerator:denominator,key=keyTree(t);if(m.has(key))m.get(key).n+=n;else m.set(key,{t,n});};
+ add(a,1);add(b,-1);if(!Number.isFinite(number/denNumber)||denNumber===0)return null;
+ let canceled=false;for(let [k,entry]of numerator){let opposite=denominator.get(k);if(!opposite)continue;let common=Math.min(entry.n,opposite.n);if(common>0){entry.n-=common;opposite.n-=common;canceled=true;}}
+ if(!canceled)return null;
+ const join=(map,num)=>{let parts=[];if(!nearly(num,1))parts.push(N(num));for(let item of map.values()){if(item.n<=0)continue;parts.push(item.n===1?item.t:O('^',item.t,N(item.n)));}return nest('*',parts)};
+ let num=join(numerator,number/denNumber),den=join(denominator,1);return isNum(den,1)?num:O('/',num,den);
+}
+function reducePolynomialRatio(a,b){const vars=new Set([...freeVars(a),...freeVars(b)]);if(vars.size!==1)return null;let v=[...vars][0];let num=polynomialOfOptimized(a,v),den=polynomialOfOptimized(b,v);if(!num||!den||den.length===1&&Math.abs(den[0])<1e-12)return null;
+ let gcd=polynomialGCD(num,den);if(gcd.length<2)return null;let qa=divPoly(num,gcd),qb=divPoly(den,gcd);
+ if(qa.r.some(x=>Math.abs(x)>1e-6)||qb.r.some(x=>Math.abs(x)>1e-6))return null;
+ let n=polyAsTree(qa.q,v),d=polyAsTree(qb.q,v);return d.t==='n'&&nearly(d.v,1)?n:O('/',n,d);
+}
+function divisionExclusions(z,set=new Set()){if(z.t==='o'){if(z.op==='/')set.add(format(z.b));divisionExclusions(z.a,set);divisionExclusions(z.b,set)}else if(z.t==='f')divisionExclusions(z.arg,set);else if(z.t==='eq'){divisionExclusions(z.a,set);divisionExclusions(z.b,set)}return [...set].filter(x=>x!=='1');}
+function polyEval(p,x){let y=p[p.length-1]||0;for(let i=p.length-2;i>=0;i--)y=y*x+p[i];return y;}
+function polyDiff(p){let d=[];for(let i=1;i<p.length;i++)d.push(i*p[i]);return trimPoly(d.length?d:[0]);}
+function realPolynomialRoots(p){p=trimPoly(p);let d=p.length-1;if(d<1)return [];if(d===1)return[-p[0]/p[1]];
+ if(d===2){let[a,b,c]=p,disc=b*b-4*c*a;if(disc<0)return[];let sq=Math.sqrt(Math.max(0,disc));return [-2*a/(b+Math.sign(b||1)*sq),(-b-Math.sign(b||1)*sq)/(2*c)].filter(Number.isFinite).sort((x,y)=>x-y).filter((x,i,a)=>!i||Math.abs(x-a[i-1])>1e-8*Math.max(1,Math.abs(x)));}
+ let critical=realPolynomialRoots(polyDiff(p));let lead=p[d],bound=1+Math.max(...p.slice(0,-1).map(c=>Math.abs(c/lead))),pts=[-bound,...critical.filter(c=>c>-bound&&c<bound),bound],roots=[];
+ const tol=x=>1e-7*Math.max(1,...p.map((c,i)=>Math.abs(c*Math.pow(Math.abs(x),i))));
+ for(let i=0;i<pts.length;i++){let x=pts[i],fx=polyEval(p,x);if(Number.isFinite(fx)&&Math.abs(fx)<tol(x))roots.push(x);if(i===pts.length-1)break;let y=pts[i+1],fy=polyEval(p,y);if(!Number.isFinite(fx)||!Number.isFinite(fy)||fx*fy>=0)continue;
+ for(let j=0;j<90;j++){let m=(x+y)/2,fm=polyEval(p,m);if(fx*fm<=0){y=m;fy=fm}else{x=m;fx=fm}}roots.push((x+y)/2);}
+ return roots.sort((a,b)=>a-b).filter((x,i,a)=>!i||Math.abs(x-a[i-1])>1e-6*Math.max(1,Math.abs(x)));
+}
+const complex=(re,im=0)=>({re,im}),cadd=(a,b)=>complex(a.re+b.re,a.im+b.im),csub=(a,b)=>complex(a.re-b.re,a.im-b.im),cmul=(a,b)=>complex(a.re*b.re-a.im*b.im,a.re*b.im+a.im*b.re),cabs=a=>Math.hypot(a.re,a.im),cdiv=(a,b)=>{let d=b.re*b.re+b.im*b.im;return complex((a.re*b.re+a.im*b.im)/d,(a.im*b.re-a.re*b.im)/d)};
+function complexPolyEval(p,z){let r=complex(p.at(-1));for(let i=p.length-2;i>=0;i--)r=cadd(cmul(r,z),complex(p[i]));return r}
+function complexPolynomialRoots(poly){let p=trimPoly(poly),degree=p.length-1;if(degree===0)return[];if(degree===1)return[complex(-p[0]/p[1])];
+ // Root-scale the normalized polynomial to reduce overflow.
+ let scale=Math.max(1,...p.slice(0,-1).map((c,i)=>Math.pow(Math.abs(c/p[degree]),1/(degree-i))));if(!Number.isFinite(scale))throw Error('Polynomial coefficients are too large for numerical roots.');
+ let norm=p.map((c,i)=>c/p[degree]/Math.pow(scale,degree-i));let roots=Array.from({length:degree},(_,i)=>complex(1.03*Math.cos(2*Math.PI*(i+.22)/degree),1.03*Math.sin(2*Math.PI*(i+.22)/degree)));
+ let converged=false;
+ for(let iter=0;iter<2600;iter++){
+  let deltaMax=0;for(let i=0;i<degree;i++){let z=roots[i],val=complexPolyEval(norm,z),diff=complexPolyEval(polyDiff(norm),z);if(cabs(diff)<1e-17)continue;let newton=cdiv(val,diff),sum=complex(0);
+   for(let j=0;j<degree;j++)if(j!==i){let dx=csub(z,roots[j]),d=dx.re*dx.re+dx.im*dx.im;if(d>1e-22)sum=cadd(sum,complex(dx.re/d,-dx.im/d));}
+   let den=csub(complex(1),cmul(newton,sum)),corr=cabs(den)<1e-13?newton:cdiv(newton,den);if(!Number.isFinite(corr.re)||!Number.isFinite(corr.im))continue;
+   const m=cabs(corr),lim=2;if(m>lim)corr=complex(corr.re*lim/m,corr.im*lim/m);
+   roots[i]=csub(z,corr);deltaMax=Math.max(deltaMax,cabs(corr));}
+  if(deltaMax<2e-11){converged=true;break;}
+ }
+ roots=roots.map(z=>complex(z.re*scale,z.im*scale));
+ return {roots,converged};
+}
+function integerFactors(num){num=Math.abs(Math.round(num));if(num===0)return [0];let a=[];for(let d=1;d*d<=num&&d<=30000;d++)if(num%d===0){a.push(d);if(num/d!==d)a.push(num/d);}return a.sort((x,y)=>x-y)}
+function extractRationalRoots(p){let remaining=trimPoly(p),roots=[];if(remaining.length<2)return {remaining,roots};let steps=0;
+ while(remaining.length>1&&steps++<MAX_POLY_DEGREE){if(Math.abs(remaining[0])<1e-12){roots.push(0);remaining=trimPoly(remaining.slice(1));continue;}
+ if(remaining.some(c=>!Number.isInteger(c)||Math.abs(c)>2e6))break;
+ let ac=integerFactors(remaining[0]),lc=integerFactors(remaining.at(-1));if(!ac.length||!lc.length)break;let candidates=new Set();for(let a of ac)for(let b of lc){if(b===0)continue;candidates.add(a/b);candidates.add(-a/b);if(candidates.size>900)break;if(candidates.size>900)break;}
+ let found=null;for(let r of candidates){if(Math.abs(polyEval(remaining,r))<1e-8*Math.max(1,Math.abs(r))) {found=r;break;}}
+ if(found===null)break;
+ let divisor=[-found,1],q=divPoly(remaining,divisor);if(q.r.some(x=>Math.abs(x)>1e-5))break;
+ remaining=q.q;roots.push(found);}
+ return {remaining,roots};
+}
+function squareFreeParts(p){
+ let rem=trimPoly(p);if(rem.length<2)return [rem];rem=rem.map(c=>c/rem.at(-1));let parts=[];
+ for(let i=0;i<p.length;i++){if(rem.length<2)break;
+  let gcd=polynomialGCD(rem,polyDiff(rem));if(gcd.length>=rem.length)break;
+  let division=divPoly(rem,gcd),scale=Math.max(1,...rem.map(c=>Math.abs(c)));
+  if(division.r.some(c=>Math.abs(c)>1e-6*scale))break;
+  let base=trimPoly(division.q);if(base.length<2)break;parts.push(base);rem=trimPoly(gcd);
+ }
+ return parts.length&&rem.length===1?parts:[p];
+}
+function fullPolynomialRoots(p){p=trimPoly(p);let n=p.length-1;if(n===0)return{roots:[],approx:false};if(n>MAX_POLY_DEGREE)throw Error('Degree exceeds the offline numerical safety limit.');
+ let roots=[],converged=true,allExact=true;
+ for(let part of squareFreeParts(p)){
+  let {remaining,roots:exact}=extractRationalRoots(part);roots.push(...exact.map(re=>({re,im:0,exact:true})));
+  let d=remaining.length-1;if(d===1){roots.push({...complex(-remaining[0]/remaining[1]),exact:false});allExact=false;}
+  else if(d===2){let[a,b,c]=remaining,disc=b*b-4*c*a;if(disc>=0){let rt=Math.sqrt(disc);roots.push({...complex((-b-rt)/(2*c)),exact:false},{...complex((-b+rt)/(2*c)),exact:false});}else{let re=-b/(2*c),im=Math.sqrt(-disc)/(2*Math.abs(c));roots.push({...complex(re,-im),exact:false},{...complex(re,im),exact:false});}allExact=false;}
+  else if(d>2){let result=complexPolynomialRoots(remaining);converged=converged&&result.converged;roots.push(...result.roots.map(r=>({...r,exact:false})));allExact=false;}
+ }
+ if(roots.length!==n)throw Error('Numerical root decomposition was incomplete. Try expanding the expression or reduce degree.');
+ roots.sort((a,b)=>a.re-b.re||a.im-b.im);for(let r of roots){if(Math.abs(r.im)<2e-7*Math.max(1,Math.abs(r.re)))r.im=0;if(Math.abs(r.re)<1e-10)r.re=0;}
+ return {roots,approx:!allExact,converged};
+}
+function fmtComplex(r){if(Math.abs(r.im)<1e-8)return cleanNumber(r.re);let a=cleanNumber(Math.abs(r.im)),im=nearly(Math.abs(r.im),1)?'i':a+'i';if(Math.abs(r.re)<1e-10)return (r.im<0?'−':'')+im;return cleanNumber(r.re)+(r.im<0?' − ':' + ')+im;}
+function linearFactor(r,v){return '('+v+(r>=0?' − '+cleanNumber(r):' + '+cleanNumber(-r))+')'}
+function numericalFactorization(p,v){let roots=fullPolynomialRoots(p),r=roots.roots,fac=[],used=new Set(),lead=p.at(-1);
+ for(let i=0;i<r.length;i++){if(used.has(i))continue;let a=r[i];used.add(i);
+ if(Math.abs(a.im)<1e-7){fac.push(linearFactor(a.re,v));continue;}
+ let partner=-1,best=Infinity;for(let j=0;j<r.length;j++)if(!used.has(j)){let dist=Math.hypot(a.re-r[j].re,a.im+r[j].im);if(dist<best){best=dist;partner=j;}}
+ if(partner>=0){used.add(partner);let b=r[partner],re=(a.re+b.re)/2,im=(Math.abs(a.im)+Math.abs(b.im))/2,quadratic=[re*re+im*im,-2*re,1];fac.push('('+polyFormat(quadratic,v)+')');}else fac.push('('+v+' − ('+fmtComplex(a)+'))');}
+ let grouped=[];for(let factor of fac){let g=grouped.find(g=>g.str===factor);if(g)g.count++;else grouped.push({str:factor,count:1});}
+ return {str:(nearly(lead,1)?'':nearly(lead,-1)?'−':cleanNumber(lead))+(grouped.map(g=>g.str+(g.count>1?'^'+g.count:'')).join('')||'1'),note:'Factors over the real numbers, including irreducible quadratics. Non-rational factors are numerical approximations.'+(roots.converged===false?' Solver convergence was incomplete; verify this factorization.':'')};
+}
+function polyVertex(p,v){let deg=p.length-1;if(deg!==2)throw Error('Vertex form a(x − h)^2 + k is defined for quadratics (degree 2). This polynomial has degree '+deg+'. Use Standard or Factor for other degrees.');let a=p[2],h=-p[1]/(2*a),k=polyEval(p,h);return (nearly(a,1)?'':nearly(a,-1)?'−':cleanNumber(a))+'('+v+(h>=0?' − '+cleanNumber(h):' + '+cleanNumber(-h))+')^2'+(nearly(k,0)?'':k>=0?' + '+cleanNumber(k):' − '+cleanNumber(-k));}
+function showPolynomial(mode,z,v,decimalFactors=false){let p=polynomialOfOptimized(z,v);if(!p)p=polynomialOfOptimized(simplify(z),v);if(!p)throw Error('This tool requires a polynomial in '+v+' with numeric coefficients and nonnegative integer exponents.');let deg=p.length-1,answer,note='Degree '+deg+' · leading coefficient '+cleanNumber(p.at(-1))+'\n';let excluded=divisionExclusions(z);if(excluded.length)note+='Original denominator restrictions: '+excluded.map(x=>'('+x+') ≠ 0').join(', ')+'.\n';
+ switch(mode){case'standard':answer=polyFormat(p,v);note+='Standard form, descending powers.';break;
+ case'vertex':answer=polyVertex(p,v);note+='Vertex (h, k) = ('+cleanNumber(-p[1]/(2*p[2]))+', '+cleanNumber(polyEval(p,-p[1]/(2*p[2])))+').';break;
+ case'factor':{let fact=decimalFactors?numericalFactorization(p,v):exactPolynomialFactorization(p,v);answer=fact.str;note+=fact.note;break;}
+ case'roots':case'solve':{if(deg===0){answer=nearly(p[0],0)?'Every complex '+v+' is a root.':'No roots.';note+='Constant polynomial.';break;}
+ let rs=fullPolynomialRoots(p),groups=[];for(let r of rs.roots){let item=groups.find(g=>Math.abs(g.r.re-r.re)<1e-5*Math.max(1,Math.abs(r.re))&&Math.abs(g.r.im-r.im)<1e-5*Math.max(1,Math.abs(r.im)));if(item)item.count++;else groups.push({r,count:1});}
+ answer=groups.map((g,i)=>v+(groups.length>1?(i<9?'₁₂₃₄₅₆₇₈₉'[i]:'₍'+String(i+1).replace(/[0-9]/g,d=>'₀₁₂₃₄₅₆₇₈₉'[+d])+'₎'):'')+' = '+fmtComplex(g.r)+(g.count>1?'  (multiplicity '+g.count+')':'')).join('\n');note+=rs.approx?'All '+deg+' complex roots, counting multiplicity; non-rational roots are numerical approximations.':'Exact rational roots.';if(rs.converged===false)note+=' The complex solver did not fully converge; results may be unreliable.';break;}}
+ return {answer,note};
+}
+
+/* V4 symbolic rearrangement: linear in selected unknown, coefficients can be expressions. */
+function linearInVariable(expr, variable){
+ const depends=z=>freeVars(z).has(variable);
+ if(!depends(expr))return {a:N(0),b:expr};
+ if(expr.t==='v'&&expr.v===variable)return {a:N(1),b:N(0)};
+ if(expr.t!=='o')return null;
+ const x=linearInVariable(expr.a,variable),y=linearInVariable(expr.b,variable);
+ if(!x||!y)return null;
+ const sm=z=>simplify(z),plus=(a,b)=>sm(O('+',a,b)),minus=(a,b)=>sm(O('-',a,b)),mul=(a,b)=>sm(O('*',a,b)),div=(a,b)=>sm(O('/',a,b));
+ if(expr.op==='+')return {a:plus(x.a,y.a),b:plus(x.b,y.b)};
+ if(expr.op==='-')return {a:minus(x.a,y.a),b:minus(x.b,y.b)};
+ if(expr.op==='*'){
+  if(depends(expr.a)&&depends(expr.b))return null;
+  if(depends(expr.a))return {a:mul(x.a,expr.b),b:mul(x.b,expr.b)};
+  if(depends(expr.b))return {a:mul(y.a,expr.a),b:mul(y.b,expr.a)};
+ }
+ if(expr.op==='/'){
+  if(depends(expr.b))return null;
+  return {a:div(x.a,expr.b),b:div(x.b,expr.b)};
+ }
+ if(expr.op==='^'&&expr.b.t==='n'&&expr.b.v===1)return x;
+ return null;
+}
+function solveSymbolicallyFor(eq,variable){
+ if(eq.t!=='eq')throw Error('Use an equation containing = to isolate a variable.');
+ let left=linearInVariable(eq.a,variable),right=linearInVariable(eq.b,variable);
+ if(!left||!right)throw Error('This equation is nonlinear in '+variable+'. Symbolic rearrangement currently isolates linear occurrences; use polynomial Solve for numeric coefficients.');
+ let coefficient=simplify(O('-',left.a,right.a)),other=simplify(O('-',right.b,left.b));
+ if(coefficient.t==='n'&&nearly(coefficient.v,0))return {answer:isNum(other,0)?'Identity: infinitely many values of '+variable:'No solution for '+variable,note:'The selected variable cancels out.'};
+ let isolated=coefficient.t==='o'&&coefficient.op==='/'&&isNum(coefficient.a,1)?simplify(O('*',other,coefficient.b)):simplify(O('/',other,coefficient)),answer=variable+' = '+format(isolated);
+ let restrictions=divisionExclusions(eq);let note='Symbolically isolated '+variable+'; other variables remain parameters. Assume any denominators and the coefficient of '+variable+' are nonzero.';
+ if(restrictions.length)note+=' Original denominator restrictions: '+restrictions.map(x=>'('+x+') ≠ 0').join(', ')+'.';
+ return {answer,note};
+}
+/* Exact-first polynomial factoring over rational coefficients, without fabricated decimal roots. */
+function gcdInt(a,b){a=Math.abs(Math.round(a));b=Math.abs(Math.round(b));while(b){let t=a%b;a=b;b=t;}return a||1;}
+function lcmInt(a,b){return a/gcdInt(a,b)*b;}
+function coeffAsRational(x){
+ if(Math.abs(x)<1e-11)return [0,1];
+ let pair=rationalCoefficient(x);return pair&&Math.abs(pair[0])<=1e9?pair:null;
+}
+function primitiveIntegerCoeffs(p){
+ let rationals=p.map(coeffAsRational);if(rationals.some(x=>!x))return null;
+ let denominator=1;for(let f of rationals){denominator=lcmInt(denominator,f[1]);if(!Number.isSafeInteger(denominator)||denominator>1000000)return null;}
+ let ints=rationals.map(f=>f[0]*(denominator/f[1]));if(ints.some(n=>!Number.isSafeInteger(n)||Math.abs(n)>2e8))return null;
+ let gcd=ints.reduce((g,c)=>gcdInt(g,c),0);return ints.map(c=>c/gcd);
+}
+function exactCoeffText(x){let frac=coeffAsRational(x);if(!frac)return null;const [n,d]=frac;return d===1?String(n):'('+n+'/'+d+')';}
+function polyFormatExact(p,v){
+ let out='';for(let k=p.length-1;k>=0;k--){let n=p[k];if(Math.abs(n)<1e-9)continue;let coeff=exactCoeffText(Math.abs(n));if(coeff===null)return null;let piece=k===0?coeff:(Math.abs(n-1)<1e-9||Math.abs(n+1)<1e-9?'':coeff+(coeff.includes('/')?'*':''))+(k===1?v:v+'^'+k);
+ out+=(out?(n<0?' - ':' + '):(n<0?'-':''))+piece;}
+ return out||'0';
+}
+function exactRootCandidates(p){
+ let ints=primitiveIntegerCoeffs(p);if(!ints)return [];
+ let last=ints.at(-1),constant=ints[0],possible=[];
+ if(!last)return [];
+ if(constant===0)return [{num:0,den:1}];
+ let a=integerFactors(constant),b=integerFactors(last),seen=new Set();
+ for(let n of a)for(let d of b){if(!d)continue;let g=gcdInt(n,d),num=n/g,den=d/g;for(let sign of [-1,1]){let key=(sign*num)+'/'+den;if(!seen.has(key)){seen.add(key);possible.push({num:sign*num,den});}}if(possible.length>4000)return possible;}
+ return possible.sort((u,v)=>Math.abs(u.num/u.den)-Math.abs(v.num/v.den));
+}
+function radicalQuadratic(p,v){
+ if(p.length!==3)return null;
+ let a=p[2],b=p[1],c=p[0],disc=b*b-4*a*c;
+ if(!(disc>0))return null;
+ let ints=primitiveIntegerCoeffs(p);if(!ints)return null;
+ let [C,B,A]=ints,D=B*B-4*A*C;
+ if(!(D>0)||!Number.isSafeInteger(D)||D>1e10)return null;
+ let sf=squareFreeRoot(D);if(!sf||sf.rest===1)return null;
+ let q=sf.coeff,root=sf.rest,den=2*A;
+ // Keep the radicals exact. Rational factors were already removed by trial division.
+ let radical=(q===1?'':q+'*')+'sqrt('+root+')';
+ let rootA,rootB;
+ if(B===0){
+  const r=coeffAsRational(q/Math.abs(den));
+  if(r){const factor=r[0]===1&&r[1]===1?'':r[1]===1?r[0]+'*':'('+r[0]+'/'+r[1]+')*';rootA=(den<0?'-':'')+factor+'sqrt('+root+')';rootB=(den<0?'':'-')+factor+'sqrt('+root+')';}
+  else{rootA='('+radical+')/'+den;rootB='-('+radical+')/'+den;}
+ }
+ else{
+  let m=-B;
+  rootA='('+m+' + '+radical+')/'+den;
+  rootB='('+m+' - '+radical+')/'+den;
+ }
+ let wrapRoot=r=>r.startsWith('-')?'('+v+' + '+r.slice(1)+')':'('+v+' - '+(r.includes('/')?'('+r+')':r)+')';
+ let factor1=wrapRoot(rootA),factor2=wrapRoot(rootB);
+ return {factors:[factor1,factor2],residual:[a]};
+}
+function exactEvenSplit(p){
+ let n=p.length-1;if(n<4||n%2!==0)return null;
+ if(p.some((c,i)=>i%2===1&&Math.abs(c)>1e-10))return null;
+ let half=p.filter((c,i)=>i%2===0);
+ for(let {num,den} of exactRootCandidates(half)){
+  let fac=[-num,0,den],q=divPoly(p,fac),scale=Math.max(1,...p.map(c=>Math.abs(c)));
+  if(q.q.length>0&&q.q.length<p.length&&q.r.every(c=>Math.abs(c)<1e-7*scale))return {a:fac,b:q.q};
+ }
+ return null;
+}
+function rationalSquareRoot(n){
+ if(!(n>=0)||!Number.isFinite(n))return null;
+ const r=Math.sqrt(n),f=coeffAsRational(r);return f&&Math.abs((f[0]/f[1])**2-n)<1e-10*Math.max(1,n)?f[0]/f[1]:null;
+}
+function exactBiquadraticSplit(p){
+ if(p.length!==5||Math.abs(p[1])>1e-10||Math.abs(p[3])>1e-10||Math.abs(p[4])<1e-12)return null;
+ const a=p[4],b=p[2]/a,c=p[0]/a;
+ for(let sign of [1,-1]){
+  let square=rationalSquareRoot(c);if(square===null)continue;
+  let r=sign*square,q=rationalSquareRoot(2*r-b);
+  if(q===null)continue;
+  let left=[a*r,a*q,a],right=[r,-q,1];
+  let all=[...left,...right];if(all.every(x=>coeffAsRational(x)))return {a:left,b:right};
+ }
+ return null;
+}
+function exactPolynomialFactorization(input,v){
+ let original=trimPoly(input),p=original.slice(),factors=[],steps=0,limit=Math.min(MAX_POLY_DEGREE,250);
+ while(p.length>1&&steps++<limit){
+  if(Math.abs(p[0])<1e-11){factors.push('('+v+')');p=trimPoly(p.slice(1));continue;}
+  let found=false;
+  for(let {num,den} of exactRootCandidates(p)){
+   let x=num/den,scale=Math.max(1,...p.map(c=>Math.abs(c)));
+   if(Math.abs(polyEval(p,x))>2e-8*scale*Math.max(1,Math.pow(Math.abs(x),Math.min(p.length-1,6))))continue;
+   let q=divPoly(p,[-num,den]);
+   if(q.r.some(c=>Math.abs(c)>1e-7*scale))continue;
+   let f=den===1?(num>=0?'('+v+' - '+num+')':'('+v+' + '+(-num)+')'):(num>=0?'('+den+v+' - '+num+')':'('+den+v+' + '+(-num)+')');
+   factors.push(f);p=q.q;found=true;break;
+  }
+  if(!found)break;
+ }
+ let split=exactBiquadraticSplit(p)||exactEvenSplit(p);
+ if(split){
+  let first=exactPolynomialFactorization(split.a,v),second=exactPolynomialFactorization(split.b,v);
+  let prefix=factors.length?factors.join('*')+'*':'';
+  return {str:prefix+first.str+'*'+second.str,note:'Exact factoring in powers of '+v+' with rational and radical subfactors. No decimal coefficients were introduced; any irreducible residual factors remain exact.'};
+ }
+ let extra=radicalQuadratic(p,v);if(extra){factors.push(...extra.factors);p=extra.residual;}
+ // Preserve the exact unfactored remainder over the rational numbers.
+ let rest=polyFormatExact(p,v);
+ if(rest===null)return {str:polyFormat(original,v),note:'Exact rational factorization could not be completed without approximation. Enable Decimal factors to allow approximate roots.'};
+ let scale='';if(p.length===1){if(!nearly(p[0],1)){scale=exactCoeffText(p[0])||cleanNumber(p[0]);}}else{
+  if(factors.length)factors.push('('+rest+')');
+ }
+ let grouped=[];for(let part of factors){let e=grouped.find(e=>e.s===part);if(e)e.n++;else grouped.push({s:part,n:1});}
+ let result=(scale?scale+(factors.length?'*':''):'')+grouped.map(e=>e.s+(e.n>1?'^'+e.n:'')).join('*');
+ if(!result)result=rest;
+ if(!scale&&grouped.length===1&&grouped[0].n===1&&result.startsWith('(')&&result.endsWith(')'))result=result.slice(1,-1);
+ return {str:result,note:'Exact-first factorization over rational coefficients'+(extra?' with exact radical quadratic factors':'')+'. No decimal approximations were introduced. Higher-degree polynomials with no rational linear factors may retain an unfactored rational factor; enable Decimal factors for numerical real factors.'};
+}
+/* In-app clipboard works with file://, airplane mode and non-secure mobile browsers. */
+let mathClipboard='';
+function inputSafeMath(text){
+ return decodeMathAtoms(String(text)).replace(/[−–—]/g,'-').replace(/×/g,'*').replace(/÷/g,'/').replace(/π/g,'pi').replace(/²/g,'^2').replace(/³/g,'^3').replace(/√\s*([0-9]+(?:\.[0-9]+)?)/g,'sqrt($1)').trim();
+}
+function extractPasteValue(line,useExact=false){
+ let text=String(line).trim();if(text.includes('≈'))text=useExact?text.split('≈')[0]:text.split('≈').at(-1);
+ if(/\s[=:]\s?/.test(text))text=text.split(/\s[=:]\s?/).at(-1);
+ else if(text.includes(': '))text=text.split(': ').at(-1);
+ text=text.replace(/\s+u(?:\^?[23]|[²³])?\s*$/,'').replace(/\s+°$/,'').trim();
+ return inputSafeMath(text);
+}
+function initClipboard(){try{mathClipboard=restoredWorkspace?.clipboard||localStorage.getItem('ml-math-clipboard')||'';}catch{}updateClipPreview();}
+function updateClipPreview(){let el=$('clipboard-preview');if(el){el.textContent=mathClipboard?('⧉ '+mathClipboard):'Clipboard empty';el.title=mathClipboard||'Copy any result first';}}
+function clipboardNotice(message){let old=$('mathlab-toast');if(old)old.remove();let el=document.createElement('div');el.id='mathlab-toast';el.className='clip-toast';el.textContent=message;document.body.append(el);clearTimeout(clipboardNotice.timer);clipboardNotice.timer=setTimeout(()=>el.remove(),2300);}
+function copyText(value){
+ if(!String(value||'').trim())return;
+ mathClipboard=inputSafeMath(value);try{localStorage.setItem('ml-math-clipboard',mathClipboard);}catch{}
+ updateClipPreview();clipboardNotice('Copied to MathLab clipboard — tap a field, then Paste');
+ if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(mathClipboard).catch(()=>{});
+ // Internal clipboard is authoritative; OS clipboard may not be available in offline file:// mode.
+}
+function pasteMathClipboard(){
+ if(!mathClipboard){clipboardNotice('Copy a result first');return;}
+ let el=focusedMath;
+ if(!el||!el.closest('.screen')?.classList.contains('active'))el=document.querySelector('.screen.active [data-math]');
+ if(!el){clipboardNotice('Open a math input before pasting');return;}
+ focusedMath=el;try{el.focus({preventScroll:true})}catch{el.focus()}
+ showKeyboard(el);handleKey(mathClipboard);
+ clipboardNotice('Pasted into '+(el.getAttribute('aria-label')||el.id||'math input'));
+}
+/* Dependency-free 3D surface renderer: colored mesh with orbit/pan/pinch navigation. */
+const graph3dState={tree:null,mesh:[],resolution:34,range:6,zMin:-1,zMax:1,zClip:2,yaw:-0.7,elevation:0.55,zoom:1,offsetX:0,offsetY:0,pointers:new Map(),moved:false,probe:null};
+function graph3dProjection(w,h){
+ const S=graph3dState,theta=S.yaw,e=S.elevation,c=Math.cos(theta),s=Math.sin(theta),ce=Math.cos(e),se=Math.sin(e),zoom=Math.min(w,h)*0.36*S.zoom,depthScale=Math.max(0.001,S.zClip),lift=Number($('graph3d-height').value);
+ return (x,y,z)=>{
+  let X=x/S.range,Y=y/S.range,Z=Math.max(-3,Math.min(3,z/depthScale))*lift;
+  let across=X*c-Y*s,forward=X*s+Y*c;
+  return {x:w/2+S.offsetX+across*zoom,y:h*.56+S.offsetY-(Z*ce-forward*se)*zoom,depth:Z*se+forward*ce};
+ };
+}
+function graph3dProbe(x,y){const S=graph3dState;let r=NaN;try{r=evaluator(S.tree,{x,y},{deg:modeAngle==='deg'});}catch{}return r;}
+function plotGraph3D(){
+ try{
+  let expr=$('graph3d-input').value.trim();if(!expr)throw Error('Enter a surface expression.');
+  let t=parse(expr);if(t.t==='eq'){if(t.a.t==='v'&&t.a.v==='z')t=t.b;else throw Error('Write z = f(x,y), or enter f(x,y) alone.');}
+  if([...freeVars(t)].some(v=>v!=='x'&&v!=='y'))throw Error('3D surfaces accept x and y only.');
+  let rt=parse($('graph3d-range').value);if(freeVars(rt).size)throw Error('Enter a numeric X/Y range.');let range=evaluator(rt,{}, {deg:modeAngle==='deg'});if(!Number.isFinite(range)||range<=0||range>10000)throw Error('Range must be between 0 and 10,000.');
+  let S=graph3dState,n=Number($('graph3d-quality').value),mesh=[],valid=[];
+  for(let j=0;j<=n;j++)for(let i=0;i<=n;i++){
+   let x=range*(2*i/n-1),y=range*(2*j/n-1),z=NaN;
+   try{z=evaluator(t,{x,y},{deg:modeAngle==='deg'});}catch{}
+   if(Number.isFinite(z)&&Math.abs(z)<1e12)valid.push(z);else z=NaN;
+   mesh.push({x,y,z});
+  }
+  if(valid.length<4)throw Error('The surface is undefined over most of the selected region.');
+  let sorted=valid.map(Math.abs).sort((a,b)=>a-b);let zClip=Math.max(1e-7,sorted[Math.floor(sorted.length*.9)]||1);
+  S.tree=t;S.mesh=mesh;S.range=range;S.resolution=n;S.zMin=Math.min(...valid);S.zMax=Math.max(...valid);S.zClip=zClip;S.probe=null;$('graph3d-probe-copy').hidden=true;
+  $('graph3d-status').textContent='Plotted '+valid.length+' valid surface samples · z range '+cleanNumber(S.zMin)+' to '+cleanNumber(S.zMax)+' · '+modeAngle.toUpperCase()+' trig · drag to orbit';
+  drawGraph3D();
+ }catch(err){$('graph3d-status').textContent='Error: '+(err.message||err);}
+}
+function graph3dFill(z){
+ let S=graph3dState,v=Math.max(0,Math.min(1,(z-S.zMin)/Math.max(1e-10,S.zMax-S.zMin)));
+ let scheme=$('graph3d-color').value;
+ if(scheme==='mono')return 'hsl(211 18% '+(32+v*47)+'%)';
+ if(scheme==='blue')return 'hsl('+(215-v*30)+' 85% '+(29+v*36)+'%)';
+ if(scheme==='mint')return 'hsl('+(174-v*47)+' 65% '+(23+v*48)+'%)';
+ return 'hsl('+(238-202*v)+' 80% '+(32+v*36)+'%)';
+}
+function drawGraph3D(){
+ let cv=$('graph3d-canvas'),setup=setupCanvas(cv);if(!setup)return;
+ let {g,w,h}=setup,S=graph3dState,P=graph3dProjection(w,h),n=S.resolution;
+ g.fillStyle='#0b1728';g.fillRect(0,0,w,h);
+ if($('graph3d-axes').checked){
+  g.lineWidth=1;g.strokeStyle='#34506f';
+  for(let i=-4;i<=4;i++){
+   let t=i*S.range/4,edges=[[[t,-S.range,0],[t,S.range,0]],[[-S.range,t,0],[S.range,t,0]]];
+   for(let [a,b] of edges){let aa=P(...a),bb=P(...b);g.beginPath();g.moveTo(aa.x,aa.y);g.lineTo(bb.x,bb.y);g.stroke();}
+  }
+ }
+ let coords=S.mesh.map(p=>Number.isFinite(p.z)?P(p.x,p.y,p.z):null),tris=[];
+ for(let j=0;j<n;j++)for(let i=0;i<n;i++){
+  let q=j*(n+1)+i,ind=[[q,q+1,q+n+1],[q+1,q+n+2,q+n+1]];
+  for(let [a,b,c] of ind){let pa=coords[a],pb=coords[b],pc=coords[c];if(!pa||!pb||!pc)continue;
+   if(Math.max(Math.abs(S.mesh[a].z),Math.abs(S.mesh[b].z),Math.abs(S.mesh[c].z))>S.zClip*6)continue;
+   let z=(S.mesh[a].z+S.mesh[b].z+S.mesh[c].z)/3;
+   tris.push({a:pa,b:pb,c:pc,z,depth:(pa.depth+pb.depth+pc.depth)/3});
+  }
+ }
+ tris.sort((a,b)=>a.depth-b.depth);
+ const wire=$('graph3d-wire').checked;
+ for(let t of tris){g.beginPath();g.moveTo(t.a.x,t.a.y);g.lineTo(t.b.x,t.b.y);g.lineTo(t.c.x,t.c.y);g.closePath();g.fillStyle=graph3dFill(t.z);g.fill();if(wire){g.strokeStyle='#09192f70';g.lineWidth=.42;g.stroke();}}
+ if($('graph3d-axes').checked){
+  const origin=P(0,0,0),axes=[{end:P(S.range*1.12,0,0),name:'x',col:'#ffbe86'},{end:P(0,S.range*1.12,0),name:'y',col:'#82e6cb'},{end:P(0,0,S.zClip*1.4),name:'z',col:'#c7a2ff'}];
+  g.lineWidth=2;g.font='bold 13px ui-monospace,monospace';for(let a of axes){g.strokeStyle=a.col;g.fillStyle=a.col;g.beginPath();g.moveTo(origin.x,origin.y);g.lineTo(a.end.x,a.end.y);g.stroke();g.fillText(a.name,a.end.x+5,a.end.y-5);}
+ }
+ if(S.probe){let p=P(S.probe.x,S.probe.y,S.probe.z);g.strokeStyle='#fff4ae';g.fillStyle='#fff4ae';g.lineWidth=2;g.beginPath();g.arc(p.x,p.y,5,0,2*Math.PI);g.fill();g.stroke();}
+ $('graph3d-camera').textContent='Azimuth: '+Math.round(S.yaw*180/Math.PI)+'° · Elevation: '+Math.round(S.elevation*180/Math.PI)+'° · Zoom: '+S.zoom.toFixed(2)+'× · Mesh: '+tris.length+' triangles';
+}
+function resetGraph3D(){let S=graph3dState;S.yaw=-.7;S.elevation=.55;S.zoom=1;S.offsetX=0;S.offsetY=0;S.probe=null;$('graph3d-probe-copy').hidden=true;drawGraph3D();}
+function viewGraph3D(which){let S=graph3dState;if(which==='top'){S.yaw=0;S.elevation=Math.PI/2;}else if(which==='front'){S.yaw=0;S.elevation=0;}else if(which==='side'){S.yaw=Math.PI/2;S.elevation=0;}else{S.yaw=-.7;S.elevation=.55;}S.offsetX=0;S.offsetY=0;drawGraph3D();}
+function zoomGraph3D(f){let S=graph3dState;S.zoom=Math.max(.12,Math.min(13,S.zoom*f));drawGraph3D();}
+function probeGraph3D(px,py){
+ let cv=$('graph3d-canvas'),b=cv.getBoundingClientRect(),S=graph3dState,P=graph3dProjection(b.width,b.height),closest=null,dist=Infinity;
+ for(let item of S.mesh){if(!Number.isFinite(item.z))continue;let p=P(item.x,item.y,item.z),d=(p.x-px)**2+(p.y-py)**2;if(d<dist){closest=item;dist=d;}}
+ if(closest&&dist<900){S.probe=closest;$('graph3d-probe-copy').hidden=false;$('graph3d-status').textContent='Probe: x = '+cleanNumber(closest.x)+' · y = '+cleanNumber(closest.y)+' · z = '+cleanNumber(closest.z);drawGraph3D();}
+}
+function initGraph3DEvents(){
+ let cv=$('graph3d-canvas'),S=graph3dState;
+ let pos=e=>{let b=cv.getBoundingClientRect();return {x:e.clientX-b.left-cv.clientLeft,y:e.clientY-b.top-cv.clientTop};};
+ cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);S.pointers.set(e.pointerId,pos(e));S.moved=false;S.isPanning=e.shiftKey||e.ctrlKey||e.button===1||e.button===2;});
+ cv.addEventListener('contextmenu',e=>e.preventDefault());
+ cv.addEventListener('pointermove',e=>{
+  if(!S.pointers.has(e.pointerId))return;
+  let prior=S.pointers.get(e.pointerId),current=pos(e),dx=current.x-prior.x,dy=current.y-prior.y;
+  if(Math.hypot(dx,dy)>.8)S.moved=true;
+  if(S.pointers.size===1){
+   if(S.isPanning){S.offsetX+=dx;S.offsetY+=dy;}
+   else{S.yaw+=dx*.009;S.elevation=Math.max(-1.5,Math.min(1.57,S.elevation-dy*.009));}
+  }else if(S.pointers.size===2){
+   let other=[...S.pointers.entries()].find(([id])=>id!==e.pointerId)[1];
+   let od=Math.hypot(prior.x-other.x,prior.y-other.y),nd=Math.hypot(current.x-other.x,current.y-other.y);
+   S.offsetX+=dx*.5;S.offsetY+=dy*.5;
+   if(od>3&&nd>3)S.zoom=Math.max(.12,Math.min(13,S.zoom*(nd/od)));
+  }
+  S.pointers.set(e.pointerId,current);drawGraph3D();
+ });
+ const done=e=>{if(!S.pointers.has(e.pointerId))return;let loc=S.pointers.get(e.pointerId),single=S.pointers.size===1;S.pointers.delete(e.pointerId);if(single&&!S.moved&&e.type==='pointerup')probeGraph3D(loc.x,loc.y);};
+ cv.addEventListener('pointerup',done);cv.addEventListener('pointercancel',done);
+ cv.addEventListener('wheel',e=>{e.preventDefault();zoomGraph3D(e.deltaY>0?.86:1.16);},{passive:false});
+}
+
+let lastCalcAnswer='',algebraMode='simplify',calculusMode='derivative',activeScreen='calc',history=[];
+try{history=JSON.parse(localStorage.getItem('ml-history')||'[]');if(!Array.isArray(history))history=[]}catch{history=[]}
+function storeHistory(expression,answer){history.unshift({expression,answer});history=history.slice(0,18);try{localStorage.setItem('ml-history',JSON.stringify(history));}catch{}renderHistory()}
+function renderHistory(){let el=$('history');el.replaceChildren();if(!history.length){let p=document.createElement('p');p.className='sub';p.textContent='No calculations yet. Your work stays on this device.';el.append(p);return;}
+ for(let row of history){let b=document.createElement('button');b.className='hist-row';let a=document.createElement('div'),c=document.createElement('div');a.className='hist-expression';a.textContent=row.expression;c.className='hist-answer';c.textContent=row.answer;b.append(a,c);b.addEventListener('click',()=>{setInput('calc-input',row.expression);switchScreen('calc');doCalculate()});el.append(b);}}
+function setResult(id,answer,note='',err=false,label='RESULT'){let box=$(id);box.className='result'+(err?' error':'');box.replaceChildren();let l=document.createElement('div');l.className='result-label';l.textContent=err?'INPUT ERROR':label;let m=document.createElement('div');m.className='result-main'+(String(answer).length>110?' smaller':'');m.textContent=String(answer);box.append(l,m);if(note){let n=document.createElement('div');n.className='result-note';n.textContent=note;box.append(n)}if(!err){let tools=document.createElement('div');tools.className='copy-tools';let all=document.createElement('button');all.type='button';all.textContent='⧉ Copy result';all.addEventListener('click',()=>copyText(String(answer)));tools.append(all);const rows=String(answer).split('\n').filter(Boolean);if(rows.length>1){rows.slice(0,8).forEach((line,i)=>{let btn=document.createElement('button');btn.type='button';btn.textContent='Copy '+(i+1);btn.title=line;btn.addEventListener('click',()=>copyText(extractPasteValue(line)));tools.append(btn);
+ if(line.includes('π')&&line.includes('≈')){let exact=document.createElement('button');exact.type='button';exact.textContent='Exact '+(i+1);exact.title='Copy the exact π expression';exact.addEventListener('click',()=>copyText(extractPasteValue(line,true)));tools.append(exact);}
+ });}else if(/[=:≈]/.test(String(answer))){let btn=document.createElement('button');btn.type='button';btn.textContent='Copy value';btn.addEventListener('click',()=>copyText(extractPasteValue(String(answer))));tools.append(btn);}box.append(tools)}return answer;}
+function guarded(resultId,callback){try{callback()}catch(err){setResult(resultId,err.message||String(err),'Check the expression and try again.',true)}}
+function doCalculate(simplifyOnly=false){guarded('calc-result',()=>{let source=$('calc-input').value,z=parse(source);if(z.t==='eq')throw Error('Use Algebra → Solve to work with equations.');let simplified=simplify(z),variables=[...freeVars(simplified)],answer,note='';if(simplifyOnly||variables.length){answer=format(simplified);note=variables.length?'Symbolic result; variables: '+variables.join(', '):'Simplified expression.';}else{let value=evaluator(z,{}, {deg:modeAngle==='deg'});if(!Number.isFinite(value))throw Error('This expression is undefined in the real numbers.');answer=cleanNumber(value);note='Numeric value · '+(modeAngle==='deg'?'Degrees':'Radians')+' for trigonometric functions';let exact=format(simplify(z));if(exact!==answer&&/[a-z√]/i.test(exact)&&exact.length<110)note+='\nSymbolic form: '+exact;}
+ lastCalcAnswer=answer;setResult('calc-result',answer,note,false,simplifyOnly?'SIMPLIFIED':'ANSWER');storeHistory(visibleMathText(source),answer);});}
+function doAlgebra(){guarded('algebra-result',()=>{let input=$('algebra-input').value,z=parse(input),v=$('algebra-var').value.trim()||'x';if(!/^[A-Za-z_][A-Za-z_0-9]*$/.test(v))throw Error('Variable must be a simple name such as x.');
+ let answer,note='';if(algebraMode==='solve'&&z.t==='eq'&&[...freeVars(z)].some(name=>name!==v)){let solved=solveSymbolicallyFor(z,v);answer=solved.answer;note=solved.note;}else if(['standard','vertex','factor','roots','solve'].includes(algebraMode)){
+  let target=z;if(z.t==='eq'){if(z.a.t==='v'&&z.a.v==='y')target=z.b;else if(z.b.t==='v'&&z.b.v==='y')target=z.a;else if(isNum(z.b,0))target=z.a;else if(isNum(z.a,0))target=z.b;else target=O('-',z.a,z.b);}
+  let allowDecimals=$('algebra-decimal-factors').checked||/(?:\d+\.\d*|\.\d+)/.test(input);let result=showPolynomial(algebraMode,target,v,allowDecimals);answer=result.answer;note=result.note;
+ }else if(algebraMode==='simplify'||algebraMode==='expand'){
+  let result=simplify(expanded(z));answer=format(result);note=algebraMode==='simplify'?'CAS simplification, like terms and fraction cancellation.':'Products and integer powers distributed, then simplified.';
+  const restrictions=divisionExclusions(z);if(restrictions.length&&keyTree(result)!==keyTree(z))note+='\nOriginal denominator restrictions: '+restrictions.map(x=>'('+x+') ≠ 0').join(', ')+'.';
+ }
+ setResult('algebra-result',answer,note,false,algebraMode.toUpperCase());});}
+function doCalculus(){guarded('calculus-result',()=>{let z=parse($('calculus-input').value),v=$('calculus-var').value.trim()||'x';if(!/^[A-Za-z_][A-Za-z_0-9]*$/.test(v))throw Error('Choose a simple variable name such as x.');if(z.t==='eq')throw Error('Provide a function, not an equation.');let result,note='';let valueOf=id=>{let p=parse($(id).value),xs=freeVars(p);if(xs.size)throw Error('Bounds and points must evaluate to numbers.');let n=evaluator(p);if(!Number.isFinite(n))throw Error('Enter a finite numeric point or bound.');return n};
+ if(calculusMode==='derivative'){let d=simplify(deriv(z,v));result='d/d'+v+' = '+format(d);note='Symbolic derivative; trigonometric differentiation assumes radians.';}
+ if(calculusMode==='integral'){let a=simplify(anti(z,v));result='∫ f('+v+') d'+v+' = '+format(a)+' + C';note='Antiderivative from built-in rules. Check the domain and additive constant.';}
+ if(calculusMode==='definite'){let a=valueOf('calculus-a'),b=valueOf('calculus-b'),answer=simpsonIntegrate(z,v,a,b);result='∫['+cleanNumber(a)+', '+cleanNumber(b)+'] = '+cleanNumber(answer);note='Adaptive Simpson numerical integration. Singular and improper integrals may require additional analysis.';}
+ if(calculusMode==='limit'){let x=valueOf('calculus-at'),l=estimateLimit(z,v,x);result='lim '+v+'→'+cleanNumber(x)+': '+l.ans;note=l.note;}
+ if(calculusMode==='tangent'){let at=valueOf('calculus-at'),d=simplify(deriv(z,v)),y=evaluator(z,{[v]:at}),slope=evaluator(d,{[v]:at});if(!Number.isFinite(y)||!Number.isFinite(slope))throw Error('Function or derivative undefined at this point.');result='y = '+cleanNumber(slope)+'('+v+' − '+cleanNumber(at)+') + '+cleanNumber(y);note='Point ('+cleanNumber(at)+', '+cleanNumber(y)+') · slope '+cleanNumber(slope)+'\nSymbolic derivative: '+format(d);}
+ setResult('calculus-result',result,note,false,calculusMode.toUpperCase());});}
+function updateCalculusMode(m){calculusMode=m;document.querySelectorAll('#calc-modes [data-mode]').forEach(e=>e.classList.toggle('active',e.dataset.mode===m));$('at-wrap').style.display=['limit','tangent'].includes(m)?'block':'none';$('bound-wrap').style.display=m==='definite'?'grid':'none';}
+function updateAlgebraMode(m){algebraMode=m;document.querySelectorAll('#algebra-modes [data-mode]').forEach(e=>e.classList.toggle('active',e.dataset.mode===m));}
+function setInput(id,text){let el=$(id);text=encodeMathInput(text);el.value=text;el.dispatchEvent(new Event('input',{bubbles:true}));el.setSelectionRange(text.length,text.length);updateMathEditor(el);}
+const screens=[['calc','Calculator','⌗'],['algebra','Algebra','𝑥'],['graph','Graph','⌁'],['graph3d','3D Graph','⬡'],['geometry','Geometry','△'],['trig','Trig','◉'],['calculus','Calculus','∫'],['settings','Settings','⚙']];
+function createNav(){for(let [id,name,ic]of screens){for(let host of (id==='settings'?[$('side-nav')]:[$('side-nav'),$('mobile-nav')])){let button=document.createElement('button');button.className=host.id==='side-nav'?'nav-btn':'mobile-btn';button.dataset.screen=id;button.innerHTML='<span class="ic"></span><span></span>';button.children[0].textContent=ic;button.children[1].textContent=name;button.addEventListener('click',()=>switchScreen(id));host.append(button);}}}
+function switchScreen(id){activeScreen=id;document.querySelectorAll('.screen').forEach(e=>e.classList.toggle('active',e.id==='screen-'+id));document.querySelectorAll('[data-screen]').forEach(e=>e.classList.toggle('active',e.dataset.screen===id));$('crumb-name').textContent=screens.find(s=>s[0]===id)?.[1]||id;hideKeyboard();window.scrollTo({top:0,behavior:'instant'});if(id==='graph')requestAnimationFrame(drawGraph);if(id==='graph3d')requestAnimationFrame(drawGraph3D);if(id==='trig')requestAnimationFrame(drawTrig);if(id==='geometry')requestAnimationFrame(drawGeometry);}
+// Native software keyboard is intentionally disabled: all expression inputs are readonly,
+// and this custom cursor-aware math keypad manages edits without launching a system IME.
+let focusedMath=null,keyboardPage='basic',keyboardVisible=false;
+const keyData={
+ // The first three columns NEVER move: 7/8/9, 4/5/6, 1/2/3, then 0/. /π.
+ basic:[
+ ['7','7'],['8','8'],['9','9'],['÷','÷','op'],['(','(','op'],[')',')','op'],
+ ['4','4'],['5','5'],['6','6'],['×','×','op'],['x','x','fn'],['^','^','op'],
+ ['1','1'],['2','2'],['3','3'],['−','−','op'],['√','ROOT','fn'],['⌫','BACK','warn'],
+ ['0','0'],['.','.'],['π','π','fn'],['+','+','op'],['←','LEFT','fn'],['→','RIGHT','fn'],
+ ['sin','FUNC:sin','fn'],['cos','FUNC:cos','fn'],['tan','FUNC:tan','fn'],['ln','FUNC:ln','fn'],['e','e','fn'],['↵','EXEC','accent'],
+ ['a⁄b','FRACTION','fn'],['⇥','NEXT_SLOT','fn'],['y','y','fn'],['=','=','op'],['⌦','DEL','warn'],['Clear','CLEAR','warn']
+ ],
+ functions:[
+ ['sin','FUNC:sin','fn'],['cos','FUNC:cos','fn'],['tan','FUNC:tan','fn'],['sec','FUNC:sec','fn'],['csc','FUNC:csc','fn'],['cot','FUNC:cot','fn'],
+ ['asin','FUNC:asin','fn'],['acos','FUNC:acos','fn'],['atan','FUNC:atan','fn'],['asec','FUNC:asec','fn'],['acsc','FUNC:acsc','fn'],['acot','FUNC:acot','fn'],
+ ['sinh','FUNC:sinh','fn'],['cosh','FUNC:cosh','fn'],['tanh','FUNC:tanh','fn'],['√','ROOT','fn'],['abs','FUNC:abs','fn'],['ln','FUNC:ln','fn'],
+ ['log','FUNC:log','fn'],['exp','FUNC:exp','fn'],['floor','FUNC:floor','fn'],['ceil','FUNC:ceil','fn'],['π','π','fn'],
+ ['(','(','op'],[')',')','op'],['^','^','op'],['×','×','op'],['÷','÷','op'],['−','−','op'],['+','+','op'],
+ ['a⁄b','FRACTION','fn'],['⇥','NEXT_SLOT','fn'],['←','LEFT','fn'],['→','RIGHT','fn'],['⌫','BACK','warn'],['↵','EXEC','accent']
+ ],
+ symbols:[
+ ['x','x','fn'],['y','y','fn'],['z','z','fn'],['t','t','fn'],['n','n','fn'],['θ','θ','fn'],
+ ['π','π','fn'],['e','e','fn'],['i','i','fn'],['=','=','op'],['^','^','op'],['!','!','op'],
+ ['(','(','op'],[')',')','op'],['÷','÷','op'],['×','×','op'],['−','−','op'],['+','+','op'],
+ ['7','7'],['8','8'],['9','9'],['4','4'],['5','5'],['6','6'],
+ ['1','1'],['2','2'],['3','3'],['0','0'],['.','.'],['√','ROOT','fn'],
+ ['a⁄b','FRACTION','fn'],['⇥','NEXT_SLOT','fn'],['←','LEFT','fn'],['→','RIGHT','fn'],['⌫','BACK','warn'],['↵','EXEC','accent']
+ ]
+};
+function drawKeys(){let grid=$('key-grid');grid.replaceChildren();for(let [title,value,kind,cursor]of keyData[keyboardPage]){let b=document.createElement('button');b.className='key '+(kind||'');b.textContent=title;b.type='button';b.setAttribute('aria-label',title==='⌫'?'Backspace':title==='↵'?'Run current tool':title);b.addEventListener('pointerdown',ev=>ev.preventDefault());b.addEventListener('click',()=>handleKey(value,cursor));grid.append(b)}document.querySelectorAll('.key-page').forEach(e=>e.classList.toggle('active',e.dataset.page===keyboardPage));}
+/* Always-visible caret for all custom-typed math fields, including dynamic Y= rows. */
+const mathEditors=new WeakMap();let mathTouchActivating=false;
+function registerMathInput(el){if(!el||mathEditors.has(el))return;el.value=encodeMathInput(el.value);el.readOnly=true;el.setAttribute('inputmode','none');let wrapper=document.createElement('div');wrapper.className='math-editor';el.parentNode.insertBefore(wrapper,el);wrapper.append(el);
+ const visual=document.createElement('div');visual.className='math-visual'+(el.classList.contains('sm')?' small':'');visual.setAttribute('aria-hidden','true');const copy=document.createElement('div');copy.className='math-copy';const before=document.createElement('span'),caret=document.createElement('span'),selected=document.createElement('span'),after=document.createElement('span');caret.className='math-caret';selected.className='math-selected';copy.append(before,caret,selected,after);visual.append(copy);wrapper.append(visual);
+ mathEditors.set(el,{wrapper,visual,copy,before,caret,selected,after});
+ el.addEventListener('input',()=>updateMathEditor(el));
+ el.addEventListener('copy',event=>{if(!event.clipboardData)return;const from=el.selectionStart||0,to=el.selectionEnd||el.value.length;event.clipboardData.setData('text/plain',decodeMathAtoms(el.value.slice(from,to)));event.preventDefault();});
+ // iOS/Android can ignore selectionStart on readonly inputs. Set the position ourselves on touch.
+ el.addEventListener('pointerdown',event=>{
+   if(event.pointerType!=='touch'&&event.pointerType!=='pen')return;
+   event.preventDefault();
+   focusedMath=el;
+   mathTouchActivating=true;
+   try{el.focus({preventScroll:true});}catch{el.focus();}
+   mathTouchActivating=false;
+   moveMathCaretToTouch(el,event.clientX);
+   // Do not move the keyboard under a finger before its touch/click completes.
+   setTimeout(()=>{if(focusedMath===el)showKeyboard(el);},90);
+ });
+ el.addEventListener('click',()=>requestAnimationFrame(()=>updateMathEditor(el)));
+ el.addEventListener('pointerup',()=>requestAnimationFrame(()=>updateMathEditor(el)));
+ updateMathEditor(el);}
+function moveMathCaretToTouch(el,clientX){
+ const view=mathEditors.get(el);if(!view)return;
+ const text=el.value,style=getComputedStyle(el),ctx=moveMathCaretToTouch.measure||(moveMathCaretToTouch.measure=document.createElement('canvas').getContext('2d'));
+ ctx.font=style.fontWeight+' '+style.fontSize+' '+style.fontFamily;
+ const space=parseFloat(style.letterSpacing)||0,target=clientX-view.copy.getBoundingClientRect().left;
+ let closest=0,distance=Infinity;
+ for(let i=0;i<=text.length;i++){
+   let w=ctx.measureText(visibleMathText(text.slice(0,i))).width+visibleMathText(text.slice(0,i)).length*space,d=Math.abs(w-target);
+   if(d<distance){distance=d;closest=i;}else if(w>target&&d>distance)break;
+ }
+ el.setSelectionRange(closest,closest);updateMathEditor(el);
+}
+function updateMathEditor(el){let view=mathEditors.get(el);if(!view)return;const {wrapper,visual,copy,before,selected,after}=view;let start=el.selectionStart??el.value.length,end=el.selectionEnd??start;
+ renderMathChunk(before,el.value.slice(0,start));renderMathChunk(selected,el.value.slice(start,end));renderMathChunk(after,el.value.slice(end));wrapper.classList.toggle('focused',focusedMath===el&&keyboardVisible);
+ if(!el.value){before.textContent='';after.textContent=el.placeholder||'';after.classList.add('math-placeholder');}else after.classList.remove('math-placeholder');
+ const f=window.getComputedStyle(el);visual.style.fontFamily=f.fontFamily;visual.style.fontSize=f.fontSize;visual.style.letterSpacing=f.letterSpacing;visual.style.fontWeight=f.fontWeight;
+ requestAnimationFrame(()=>{if(!mathEditors.has(el)||!visual.isConnected)return;let available=visual.clientWidth-(parseFloat(getComputedStyle(visual).paddingLeft)||0)-(parseFloat(getComputedStyle(visual).paddingRight)||0),caretPos=before.getBoundingClientRect().width;
+ const total=copy.scrollWidth;let current=Number(copy.dataset.offset||0);if(caretPos-current>available-7)current=caretPos-available+7;if(caretPos-current<5)current=Math.max(0,caretPos-5);current=Math.min(current,Math.max(0,total-available+2));copy.style.transform='translateX('+(-Math.max(0,current))+'px)';copy.dataset.offset=Math.max(0,current);});}
+function refreshMathEditors(){document.querySelectorAll('[data-math]').forEach(registerMathInput);document.querySelectorAll('[data-math]').forEach(updateMathEditor)}
+function showKeyboard(target){if(target)focusedMath=target;if(!focusedMath)focusedMath=$('calc-input');registerMathInput(focusedMath);keyboardVisible=true;$('math-keyboard').classList.add('visible');$('mobile-nav').classList.add('hide');$('bottom-bubble').classList.remove('visible');document.documentElement.style.setProperty('--keyboard',Math.ceil($('math-keyboard').getBoundingClientRect().height+12)+'px');
+ document.querySelectorAll('[data-math]').forEach(updateMathEditor);if(target)requestAnimationFrame(()=>{let box=target.getBoundingClientRect(),kb=$('math-keyboard').getBoundingClientRect();if(box.bottom>kb.top-12)window.scrollBy({top:box.bottom-kb.top+20,behavior:'smooth'});});}
+function hideKeyboard(){keyboardVisible=false;$('math-keyboard').classList.remove('visible');$('mobile-nav').classList.remove('hide');document.documentElement.style.setProperty('--keyboard','0px');$('bottom-bubble').classList.toggle('visible',!!focusedMath);if(focusedMath)updateMathEditor(focusedMath);}
+function handleKey(token,cursor=0){const el=focusedMath||$('calc-input');if(!el)return;registerMathInput(el);
+ if(token==='PASTE'){pasteMathClipboard();return;}
+ if(token==='EXEC'){hideKeyboard();if(activeScreen==='calc')doCalculate();else if(activeScreen==='algebra')doAlgebra();else if(activeScreen==='calculus')doCalculus();else if(activeScreen==='trig')doTrig();else if(activeScreen==='geometry')doGeometry();else if(activeScreen==='graph')plotGraph();else if(activeScreen==='graph3d')plotGraph3D();return;}
+ const left=el.selectionStart??el.value.length,right=el.selectionEnd??left;let next=left;const emit=()=>{el.setSelectionRange(next,next);el.dispatchEvent(new Event('input',{bubbles:true}));updateMathEditor(el)};
+ if(token==='LEFT'||token==='RIGHT'){next=token==='LEFT'?Math.max(0,left-1):Math.min(el.value.length,right+1);el.setSelectionRange(next,next);updateMathEditor(el);return;}
+ if(token==='CLEAR'){el.value='';next=0;emit();return;}
+ if(token==='DEL'){let stop=right!==left?right:left+1;el.value=el.value.slice(0,left)+el.value.slice(stop);next=left;emit();return;}
+ if(token==='BACK'){
+  let begin=right!==left?left:Math.max(0,left-1),end=right;
+  // A fresh function/root template is one logical expression, not half a name.
+  if(left===right&&left>0&&el.value[left-1]==='('&&el.value[left]===')'&&(ATOM_NAMES[el.value[left-2]]||el.value[left-2]==='√')){begin=left-2;end=left+1;}
+  el.value=el.value.slice(0,begin)+el.value.slice(end);next=begin;emit();return;}
+
+ if(token==='NEXT_SLOT'){if(el.value.slice(0,left).endsWith('/(')&&el.value[left]===')'){updateMathEditor(el);return;}let slash=el.value.indexOf('/(',left),open=slash>=0?slash+1:el.value.indexOf('(',left);next=open>=0?open+1:Math.min(el.value.length,left+1);el.setSelectionRange(next,next);updateMathEditor(el);return;}
+ if(token==='FRACTION'){
+ let chosen=el.value.slice(left,right);let insert='('+chosen+')/()';next=left+(chosen?insert.length-1:1);el.value=el.value.slice(0,left)+insert+el.value.slice(right);emit();return;}
+ let value=token;
+ if(token.startsWith('FUNC:')){const name=token.slice(5);value=FUNCTION_ATOMS[name]+'()';cursor=1;}
+ else if(token==='ROOT'){value='√()';cursor=1;}
+ else value=encodeMathInput(value);
+ next=left+value.length-(cursor||0);el.value=el.value.slice(0,left)+value+el.value.slice(right);emit();
+}
+function setupKeyboard(){
+ $('keyboard-paste').addEventListener('pointerdown',e=>e.preventDefault());$('keyboard-paste').addEventListener('click',()=>handleKey('PASTE'));
+ document.addEventListener('keydown',e=>{let target=document.activeElement;if(!target?.hasAttribute('data-math')||e.altKey||e.metaKey||e.ctrlKey)return;
+ if(e.key==='Backspace'||e.key==='Delete'){e.preventDefault();focusedMath=target;handleKey(e.key==='Backspace'?'BACK':'DEL');}
+ else if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();focusedMath=target;handleKey(e.key==='ArrowLeft'?'LEFT':'RIGHT');}
+ else if(e.key==='Enter'){e.preventDefault();focusedMath=target;handleKey('EXEC');}
+ else if(e.key.length===1&&/^[a-zA-Z0-9+*\-/^().,=!√πθ×÷−]$/.test(e.key)){e.preventDefault();focusedMath=target;handleKey(e.key);}
+ });
+ document.querySelectorAll('[data-math]').forEach(registerMathInput);
+ document.addEventListener('focusin',e=>{if(!e.target?.hasAttribute('data-math'))return;focusedMath=e.target;if(!mathTouchActivating)showKeyboard(e.target);});
+ document.addEventListener('click',e=>{if(!e.target?.hasAttribute('data-math'))return;focusedMath=e.target;showKeyboard(e.target);requestAnimationFrame(()=>updateMathEditor(e.target));});
+ document.addEventListener('selectionchange',()=>{if(focusedMath)updateMathEditor(focusedMath)});
+ document.querySelectorAll('.key-page').forEach(e=>{e.addEventListener('pointerdown',ev=>ev.preventDefault());e.addEventListener('click',()=>{keyboardPage=e.dataset.page;drawKeys();});});
+ $('keyboard-hide').addEventListener('click',hideKeyboard);$('keyboard-toggle').addEventListener('click',()=>keyboardVisible?hideKeyboard():showKeyboard());$('bottom-bubble').addEventListener('click',()=>showKeyboard(focusedMath));drawKeys();
+ window.addEventListener('resize',()=>{if(keyboardVisible){document.documentElement.style.setProperty('--keyboard',Math.ceil($('math-keyboard').getBoundingClientRect().height+12)+'px')}refreshMathEditors();});
+}
+
+function setAngleMode(m){modeAngle=m;if($('settings-angle'))$('settings-angle').value=m;if($('geo-shape')?.value==='right'&&$('geo-known-hint'))$('geo-known-hint').textContent='Choose two different measurements: two sides, or one side plus an acute angle. Angles follow '+m.toUpperCase()+' mode.';try{localStorage.setItem('ml-angle',m)}catch{}$('angle-toggle').textContent=m.toUpperCase();if(activeScreen==='trig')doTrig();if(graph.trees.length){graph.trace=null;graph.mark=null;drawGraph();$('graph-coord').textContent='Trig functions plotted in '+m.toUpperCase()+' mode · tap to trace';}if(graph3dState.tree)plotGraph3D();}
+function doTrig(){try{let a=parse($('trig-angle').value);if(freeVars(a).size)throw Error('Angle must be numeric.');let value=evaluator(a);if(!Number.isFinite(value))throw Error('Angle is undefined.');let rad=modeAngle==='deg'?value*Math.PI/180:value;let data=[['Sin',Math.sin(rad)],['Cos',Math.cos(rad)],['Tan',Math.abs(Math.cos(rad))<1e-12?NaN:Math.tan(rad)],['Cot',Math.abs(Math.sin(rad))<1e-12?NaN:Math.cos(rad)/Math.sin(rad)],['Sec',Math.abs(Math.cos(rad))<1e-12?NaN:1/Math.cos(rad)],['Csc',Math.abs(Math.sin(rad))<1e-12?NaN:1/Math.sin(rad)]];
+ let host=$('trig-results');host.replaceChildren();for(let [name,value]of data){let box=document.createElement('div');box.className='mini-stat';let key=document.createElement('div');key.className='k';key.textContent=name;let val=document.createElement('div');val.className='v';val.textContent=Number.isFinite(value)?cleanNumber(value):'undefined';box.append(key,val);
+ if(Number.isFinite(value)){let copy=document.createElement('button');copy.className='tiny-btn';copy.style.marginTop='10px';copy.textContent='⧉ Copy';copy.setAttribute('aria-label','Copy '+name+' result');copy.addEventListener('click',()=>copyText(cleanNumber(value)));box.append(copy)}host.append(box);}drawTrig(rad);
+ }catch(e){$('trig-results').textContent=e.message;drawTrig(0);}}
+function setupCanvas(canvas){let bounds=canvas.getBoundingClientRect();if(!bounds.width||!bounds.height)return null;let w=bounds.width,h=bounds.height,dpr=Math.min(window.devicePixelRatio||1,2);let realW=Math.round(w*dpr),realH=Math.round(h*dpr);if(canvas.width!==realW||canvas.height!==realH){canvas.width=realW;canvas.height=realH;}let g=canvas.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,w,h);return {g,w,h};}
+function drawTrig(rad){let cv=$('trig-canvas'),s=setupCanvas(cv);if(!s)return;const {g,w,h}=s;let angle=Number.isFinite(rad)?rad:(()=>{try{let n=evaluator(parse($('trig-angle').value));return modeAngle==='deg'?n*Math.PI/180:n;}catch{return Math.PI/4}})();if(!Number.isFinite(angle))angle=0;
+ let cx=w/2,cy=h/2,r=Math.min(w,h)*.36;g.fillStyle='#0b1728';g.fillRect(0,0,w,h);g.strokeStyle='#334762';g.lineWidth=1;g.beginPath();g.moveTo(13,cy);g.lineTo(w-13,cy);g.moveTo(cx,13);g.lineTo(cx,h-13);g.stroke();
+ g.strokeStyle='#6281ac';g.lineWidth=2;g.beginPath();g.arc(cx,cy,r,0,Math.PI*2);g.stroke();g.fillStyle='#97b3d2';g.font='12px ui-monospace,monospace';g.fillText('1',cx+r+8,cy-6);g.fillText('−1',cx-r-24,cy-6);g.fillText('y',cx+7,15);g.fillText('x',w-16,cy-8);
+ let x=cx+Math.cos(angle)*r,y=cy-Math.sin(angle)*r;g.save();g.setLineDash([5,5]);g.strokeStyle='#80e7be';g.beginPath();g.moveTo(x,y);g.lineTo(x,cy);g.stroke();g.strokeStyle='#aba6ff';g.beginPath();g.moveTo(x,y);g.lineTo(cx,y);g.stroke();g.restore();
+ g.strokeStyle='#f4c47d';g.lineWidth=2;g.beginPath();g.moveTo(cx,cy);g.lineTo(x,y);g.stroke();g.fillStyle='#80e7be';g.beginPath();g.arc(x,y,5,0,Math.PI*2);g.fill();g.strokeStyle='#c8d8ef';g.lineWidth=1.8;g.beginPath();g.arc(cx,cy,r*.2,-Math.min(0,angle),-Math.max(0,angle),angle>0);g.stroke();g.fillStyle='#c8d8ef';g.fillText('('+cleanNumber(Math.cos(angle))+', '+cleanNumber(Math.sin(angle))+')',Math.max(9,Math.min(w-182,x+8)),Math.max(18,Math.min(h-8,y-12)));
+}
+const shapes={circle:[['r','Radius',3]],rectangle:[['w','Width',5],['h','Height',3]],triangle:[['b','Base',6],['h','Height',4]],right:[['a','Leg a',3],['b','Leg b',4]],trapezoid:[['a','Parallel side a',7],['b','Parallel side b',4],['h','Height',3]],polygon:[['n','Number of sides',6],['s','Side length',3]],sphere:[['r','Radius',3]],cylinder:[['r','Radius',3],['h','Height',6]],cone:[['r','Radius',3],['h','Height',5]]};
+const circleMeasures=[['r','Radius (r)'],['d','Diameter (d)'],['C','Circumference (C)'],['A','Area (A)']];
+const rightMeasures=[['a','Leg a (opposite ∠A)'],['b','Leg b (opposite ∠B)'],['c','Hypotenuse c'],['A','Acute angle A (opposite a)'],['B','Acute angle B (opposite b)']];
+let geometryCache={},geoActiveType=null;
+function cacheCurrentGeometry(){if(!geoActiveType)return;let type=geoActiveType,rec={};if(type==='circle'){
+ rec.measure=$('geo-circle-measure')?.value||'r';rec.value=$('geo-circle-value')?.value||'';
+ }else if(type==='right'){
+ for(let k of ['first','second']){rec[k+'Type']=$('geo-right-'+k+'-type')?.value||'';rec[k+'Value']=$('geo-right-'+k+'-value')?.value||'';}
+ }else for(let [key] of shapes[type]){rec[key]=$('geo-'+key)?.value||'';}geometryCache[type]=rec;}
+function geoField(id,label,value){let div=document.createElement('div');div.className='field';let lbl=document.createElement('label');lbl.className='label';lbl.htmlFor=id;lbl.textContent=label;
+ let inp=document.createElement('input');inp.id=id;inp.className='math-input sm';inp.value=value;inp.readOnly=true;inp.dataset.math='';inp.inputMode='none';inp.autocomplete='off';div.append(lbl,inp);return div;}
+function geoSelect(id,label,items,value){let div=document.createElement('div');div.className='field';let lbl=document.createElement('label');lbl.className='label';lbl.htmlFor=id;lbl.textContent=label;
+ let select=document.createElement('select');select.className='select';select.id=id;for(let [key,name] of items){let opt=document.createElement('option');opt.value=key;opt.textContent=name;select.append(opt);}if(items.some(e=>e[0]===value))select.value=value;div.append(lbl,select);return div;}
+function updateGeometry(){let type=$('geo-shape').value,host=$('geo-fields');if(geoActiveType)cacheCurrentGeometry();host.replaceChildren();const old=geometryCache[type]||{};
+ if(type==='circle'){
+  const pair=document.createElement('div');pair.className='geo-pair';pair.append(geoSelect('geo-circle-measure','Known measurement',circleMeasures,old.measure||'r'),geoField('geo-circle-value','Measurement value',old.value??'3'));host.append(pair);
+  $('geo-known-hint').textContent='Supply any one measurement: radius, diameter, circumference, or area. You can enter 6π, 9π, 1/2, √(16), or a decimal.';
+ }else if(type==='right'){
+  let pair=document.createElement('div');pair.className='geo-pair';for(let [i,name,defType,defVal] of [[0,'First known measurement','a','3'],[1,'Second known measurement','b','4']]){
+   let key=i===0?'first':'second',card=document.createElement('div');card.className='geo-measure-card';card.append(geoSelect('geo-right-'+key+'-type',name,rightMeasures,old[key+'Type']||defType),geoField('geo-right-'+key+'-value','Value',old[key+'Value']??defVal));pair.append(card);
+  }host.append(pair);$('geo-known-hint').textContent='Choose two different measurements: two sides, or one side plus an acute angle. A is opposite leg a and B is opposite leg b. Two angles alone do not fix the scale. Angles follow '+modeAngle.toUpperCase()+' mode.';
+ }else{
+  const pair=document.createElement('div');pair.className='two';for(let [id,label,def] of shapes[type])pair.append(geoField('geo-'+id,label,old[id]??String(def)));host.append(pair);$('geo-known-hint').textContent='Provide each required positive measurement. The current shape is preserved when you switch tools.';
+ }
+ geoActiveType=type;host.querySelectorAll('[data-math]').forEach(registerMathInput);drawGeometry();}
+function numberFromGeometryText(text,description){let z=parse(text);if(freeVars(z).size)throw Error(description+' must contain numbers, π, or known functions, not variables.');let n=evaluator(z);if(!Number.isFinite(n)||n<=0)throw Error(description+' must be a positive, finite number.');return n;}
+function solveRightTriangle(){const first=$('geo-right-first-type').value,second=$('geo-right-second-type').value;if(first===second)throw Error('Choose two different known measurements.');const vals={};vals[first]=numberFromGeometryText($('geo-right-first-value').value,'First measurement');vals[second]=numberFromGeometryText($('geo-right-second-value').value,'Second measurement');
+ const isAngle=k=>k==='A'||k==='B',angles=[first,second].filter(isAngle),sides=[first,second].filter(k=>!isAngle(k));if(angles.length===2)throw Error('Two angles determine only the shape, not its size. Enter at least one side length and one acute angle.');
+ const rad=v=>modeAngle==='deg'?v*Math.PI/180:v;
+ let a,b,c,A;
+ if(angles.length){A=rad(vals.A??((modeAngle==='deg'?90:Math.PI/2)-vals.B));if(!(A>0&&A<Math.PI/2))throw Error('Acute angles must be strictly between 0 and '+(modeAngle==='deg'?'90°':'π/2 radians')+'.');let side=sides[0],v=vals[side];c=side==='c'?v:side==='a'?v/Math.sin(A):v/Math.cos(A);a=c*Math.sin(A);b=c*Math.cos(A);
+ }else{a=vals.a;b=vals.b;c=vals.c;
+  if(a!=null&&b!=null)c=Math.hypot(a,b);
+  else if(c!=null&&a!=null){if(c<=a)throw Error('The hypotenuse must be longer than either leg.');b=Math.sqrt((c-a)*(c+a));}
+  else if(c!=null&&b!=null){if(c<=b)throw Error('The hypotenuse must be longer than either leg.');a=Math.sqrt((c-b)*(c+b));}
+  A=Math.atan2(a,b);
+ }
+ if(![a,b,c,A].every(Number.isFinite)||Math.min(a,b,c)<=0)throw Error('The measurements do not define a valid finite right triangle.');return {a,b,c,A,B:Math.PI/2-A};}
+function getGeometryValues(){let s=$('geo-shape').value;if(s==='right')return solveRightTriangle();if(s==='circle'){
+  const measure=$('geo-circle-measure').value,raw=$('geo-circle-value').value,n=numberFromGeometryText(raw,'Known circle measurement');
+  const r=measure==='r'?n:measure==='d'?n/2:measure==='C'?n/(2*Math.PI):Math.sqrt(n/Math.PI);
+  if(!Number.isFinite(r)||r<=0)throw Error('Circle measurement is too large or too small.');return {r,measure,given:n,raw};
+ }
+ let o={};for(let [name]of shapes[s])o[name]=numberFromGeometryText($('geo-'+name).value,name);return o;}
+function rationalText(x){let q=rationalCoefficient(x);if(!q)return cleanNumber(x);return q[1]===1?String(q[0]):q[0]+'/'+q[1];}
+function exactCircleForms(v){const raw=decodeMathAtoms(v.raw),hasPi=/π|\bpi\b/i.test(raw);let coeff=hasPi?rationalCoefficient(v.given/Math.PI):null;
+ const M=v.measure,K=coeff?coeff[0]/coeff[1]:null;
+ const q=rationalCoefficient(v.given),n=q?q[0]/q[1]:v.given;
+ if(M==='C'&&K!==null){let r=K/2;return{r:rationalText(r),d:rationalText(2*r),C:piMultiple(K),A:piMultiple(r*r)};}
+ if(M==='A'&&K!==null){let r=Math.sqrt(K);let root=Number.isSafeInteger(K)&&K>=0?squareFreeRoot(K):null;let text=root?(root.rest===1?String(root.coeff):(root.coeff===1?'':String(root.coeff))+'√'+root.rest):'√('+rationalText(K)+')';return{r:text,d:root&&root.rest===1?String(2*root.coeff):'2('+text+')',C:root&&root.rest===1?piMultiple(2*r):'2π('+text+')',A:piMultiple(K)};}
+ if(M==='C'&&!hasPi){let t=rationalText(n);return{r:'('+rationalText(n/2)+')/π',d:'('+t+')/π',C:t,A:'('+rationalText(n*n/4)+')/π'};}
+ if(M==='A'&&!hasPi){let t=rationalText(n);return{r:'√(('+t+')/π)',d:'2√(('+t+')/π)',C:'2√(('+t+')π)',A:t};}
+ if(M==='r'||M==='d'){
+  let exactRaw=/√|sqrt|\^|\bexp\b|\bln\b/i.test(raw);let t=hasPi?(coeff?piMultiple(M==='d'?K/2:K):'('+raw+')'+(M==='d'?'/2':'')):(exactRaw?(M==='d'?'('+raw+')/2':raw):rationalText(v.r));
+  return {r:t,d:(hasPi||exactRaw)?'2('+t+')':rationalText(v.r*2),C:(hasPi||exactRaw)?'2π('+t+')':piMultiple(2*v.r),A:(hasPi||exactRaw)?'π('+t+')²':piMultiple(v.r*v.r)};
+ }
+ let t=rationalText(v.r);return{r:t,d:rationalText(v.r*2),C:piMultiple(2*v.r),A:piMultiple(v.r*v.r)};}
+/* π display keeps simple rational coefficients exact and marks other coefficients approximate. */
+function rationalCoefficient(x){
+ if(!Number.isFinite(x))return null;
+ for(let denominator=1;denominator<=1000;denominator++){
+  let numerator=Math.round(x*denominator);
+  if(Math.abs(numerator)>1e12)break;
+  if(Math.abs(numerator/denominator-x)<=1e-11*Math.max(1,Math.abs(x))){
+   let a=Math.abs(numerator),b=denominator;while(b){let t=a%b;a=b;b=t;}
+   let gcd=a||1;return [numerator/gcd,denominator/gcd];
+  }
+ }
+ return null;
+}
+function piMultiple(coefficient){
+ let fraction=rationalCoefficient(coefficient);
+ if(!fraction)return '≈ '+cleanNumber(coefficient)+'π';
+ let [num,den]=fraction;if(!num)return '0';
+ let lead=num<0?'−':'',n=Math.abs(num);
+ if(den===1)return lead+(n===1?'':n)+'π';
+ return lead+(n===1?'':n)+'π/'+den;
+}
+function conePiArea(r,h){
+ // r²π + r√(r²+h²)π. For integer dimensions, preserve the radical exactly.
+ let rad=r*r+h*h;
+ if(Number.isSafeInteger(r)&&Number.isSafeInteger(h)&&Number.isSafeInteger(rad)&&rad>0&&rad<=1e10){
+  const sf=squareFreeRoot(rad);
+  if(sf){if(sf.rest===1)return piMultiple(r*r+r*sf.coeff);
+   let k=r*sf.coeff;
+   return 'π('+cleanNumber(r*r)+' + '+(k===1?'':cleanNumber(k))+'√'+cleanNumber(sf.rest)+')';
+  }
+ }
+ let rationalSlant=rationalCoefficient(Math.hypot(r,h));
+ if(rationalSlant)return piMultiple(r*(r+Math.hypot(r,h)));
+ return '≈ '+cleanNumber(r*(r+Math.hypot(r,h)))+'π';
+}
+function doGeometry(){guarded('geo-result',()=>{
+ let v=getGeometryValues(),s=$('geo-shape').value,lines=[],piMode=$('geo-pi-form').checked;
+ const add=(name,val,unit,pi=null)=>{const decimal=cleanNumber(val)+(unit?' '+unit:'');lines.push(name+': '+(piMode&&pi!==null?(typeof pi==='string'?pi:piMultiple(pi))+' '+(unit||'')+' ≈ ':'')+decimal);};
+ switch(s){
+ case'circle':{
+  const forms=exactCircleForms(v);add('Radius',v.r,'u',forms.r);add('Diameter',2*v.r,'u',forms.d);
+  add('Circumference',2*Math.PI*v.r,'u',forms.C);add('Area',Math.PI*v.r*v.r,'u²',forms.A);
+  break;}
+ case'rectangle':add('Area',v.w*v.h,'u²');add('Perimeter',2*(v.w+v.h),'u');add('Diagonal',Math.hypot(v.w,v.h),'u');break;
+ case'triangle':add('Area',v.b*v.h/2,'u²');add('Height',v.h,'u');break;
+ case'right':{
+  const deg=x=>x*180/Math.PI,angle=x=>modeAngle==='deg'?cleanNumber(deg(x))+'°':cleanNumber(x)+' rad ('+cleanNumber(deg(x))+'°)';
+  add('Leg a',v.a,'u');add('Leg b',v.b,'u');add('Hypotenuse c',v.c,'u');add('Area',v.a*v.b/2,'u²');add('Perimeter',v.a+v.b+v.c,'u');
+  lines.push('Angle A: '+angle(v.A),'Angle B: '+angle(v.B),'Right angle C: 90° (π/2 rad)');
+  lines.push('sin(A): '+cleanNumber(v.a/v.c),'cos(A): '+cleanNumber(v.b/v.c),'tan(A): '+cleanNumber(v.a/v.b));
+  break;}
+ case'trapezoid':add('Area',(v.a+v.b)*v.h/2,'u²');add('Midsegment',(v.a+v.b)/2,'u');break;
+ case'polygon':if(!Number.isInteger(v.n)||v.n<3||v.n>1000)throw Error('The polygon must have 3 to 1000 whole-number sides.');add('Perimeter',v.n*v.s,'u');add('Apothem',v.s/(2*Math.tan(Math.PI/v.n)),'u');add('Area',v.n*v.s*v.s/(4*Math.tan(Math.PI/v.n)),'u²');break;
+ case'sphere':add('Volume',4*Math.PI*v.r**3/3,'u³',4*v.r**3/3);add('Surface area',4*Math.PI*v.r**2,'u²',4*v.r**2);break;
+ case'cylinder':add('Volume',Math.PI*v.r**2*v.h,'u³',v.r**2*v.h);add('Surface area',2*Math.PI*v.r*(v.r+v.h),'u²',2*v.r*(v.r+v.h));add('Lateral area',2*Math.PI*v.r*v.h,'u²',2*v.r*v.h);break;
+ case'cone':add('Slant height',Math.hypot(v.r,v.h),'u');add('Volume',Math.PI*v.r**2*v.h/3,'u³',v.r**2*v.h/3);add('Surface area',Math.PI*v.r*(v.r+Math.hypot(v.r,v.h)),'u²',conePiArea(v.r,v.h));break;
+ }
+ setResult('geo-result',lines.join('\n'),piMode?'Exact forms are shown where recognized. Decimals are approximations; u denotes your chosen length unit.':'u denotes your chosen length unit.',false,s.toUpperCase());drawGeometry();
+});}
+function drawGeometry(){let s=setupCanvas($('geo-canvas'));if(!s)return;let {g,w,h}=s;g.fillStyle='#0b1728';g.fillRect(0,0,w,h);let cx=w/2,cy=h/2,r=Math.min(w,h)*.31,type=$('geo-shape').value;g.strokeStyle='#83dccc';g.fillStyle='#6de7c21c';g.lineWidth=3;g.lineJoin='round';g.beginPath();
+ if(type==='circle'||type==='sphere'){g.arc(cx,cy,r,0,Math.PI*2);g.fill();g.stroke();if(type==='sphere'){g.save();g.setLineDash([5,6]);g.strokeStyle='#8d9cfa';g.beginPath();g.ellipse(cx,cy,r,r*.30,0,0,Math.PI*2);g.stroke();g.restore();}}
+ else if(type==='rectangle'){g.rect(cx-r*1.18,cy-r*.67,r*2.36,r*1.34);g.fill();g.stroke();}
+ else if(type==='triangle'||type==='right'){g.moveTo(cx-r,cy+r*.72);g.lineTo(type==='right'?cx-r:cx+r*.45,cy-r*.9);g.lineTo(cx+r,cy+r*.72);g.closePath();g.fill();g.stroke();}
+ else if(type==='trapezoid'){g.moveTo(cx-r,cy+r*.7);g.lineTo(cx+r,cy+r*.7);g.lineTo(cx+r*.55,cy-r*.7);g.lineTo(cx-r*.55,cy-r*.7);g.closePath();g.fill();g.stroke();}
+ else if(type==='polygon'){let n=6;try{let val=parse($('geo-n')?.value||'6');let q=evaluator(val);if(Number.isInteger(q)&&q>=3&&q<=100)n=q;}catch{}n=Math.min(n,100);for(let i=0;i<n;i++){let x=cx+r*Math.cos(i*2*Math.PI/n-Math.PI/2),y=cy+r*Math.sin(i*2*Math.PI/n-Math.PI/2);i===0?g.moveTo(x,y):g.lineTo(x,y)}g.closePath();g.fill();g.stroke();}
+ else{let y0=cy+r*.76,top=cy-r*.75;g.beginPath();g.ellipse(cx,y0,r,r*.29,0,0,Math.PI*2);g.fill();g.stroke();g.beginPath();if(type==='cone'){g.moveTo(cx,top);g.lineTo(cx-r,y0);g.moveTo(cx,top);g.lineTo(cx+r,y0);}else{g.moveTo(cx-r,y0);g.lineTo(cx-r,top);g.moveTo(cx+r,y0);g.lineTo(cx+r,top);}g.stroke();if(type==='cylinder'){g.beginPath();g.ellipse(cx,top,r,r*.29,0,0,Math.PI*2);g.fill();g.stroke();}}
+ g.fillStyle='#a3b8d5';g.font='13px ui-monospace,monospace';g.textAlign='center';g.fillText(type.toUpperCase(),cx,h-16);}
+/* Multi-function Y= graphing and TI-style CALC menu. */
+const graphColors=['#80e7be','#9c9bff','#ffbd79','#66c8ff','#ff7fa9','#d8dd72','#d59bff','#75e4dc','#ff9b71','#89baff','#9ff08c','#edbcff'];
+let graphNextId=3,graphCalcMode='value';
+const graphPicking={active:false,mode:null,stage:0,values:[],guides:[]};
+const graph={cx:0,cy:0,span:10,trees:[],functions:[{id:1,text:'sin(x)',enabled:true},{id:2,text:'cos(x)',enabled:true}],trace:null,mark:null,pointers:new Map(),dragging:false,last:null,moved:false};
+function graphRowsToState(){for(let row of $('graph-functions').querySelectorAll('.y-row')){let item=graph.functions.find(x=>String(x.id)===row.dataset.id);if(item){item.text=row.querySelector('.math-input').value;item.enabled=row.querySelector('input[type=checkbox]').checked;}}}
+function renderGraphRows(){let box=$('graph-functions');box.replaceChildren();for(let i=0;i<graph.functions.length;i++){
+ let item=graph.functions[i],row=document.createElement('div');row.className='y-row';row.dataset.id=item.id;
+ let visible=document.createElement('input');visible.type='checkbox';visible.checked=item.enabled;visible.setAttribute('aria-label','Show Y'+(i+1));visible.addEventListener('change',()=>{item.enabled=visible.checked;updateGraphChoices();});
+ let name=document.createElement('label');name.htmlFor='graph-y-'+item.id;name.textContent='Y'+(i+1);name.style.color=graphColors[i%graphColors.length];
+ let inp=document.createElement('input');inp.id='graph-y-'+item.id;inp.className='math-input sm';inp.value=item.text;inp.readOnly=true;inp.dataset.math='';inp.autocomplete='off';inp.setAttribute('aria-label','Y'+(i+1)+' function');inp.addEventListener('input',()=>{item.text=inp.value;updateGraphChoices();});
+ let del=document.createElement('button');del.className='y-delete';del.type='button';del.textContent='×';del.setAttribute('aria-label','Remove Y'+(i+1));del.disabled=graph.functions.length===1;del.addEventListener('click',()=>{graphRowsToState();graph.functions=graph.functions.filter(f=>f.id!==item.id);graph.trees=[];renderGraphRows();plotGraph();});
+ row.append(visible,name,inp,del);box.append(row);registerMathInput(inp);
+ }updateGraphChoices();}
+function graphAdd(){if(graph.functions.length>=12){$('graph-coord').textContent='Maximum 12 Y= entries for readable graphing.';return;}graphRowsToState();graph.functions.push({id:graphNextId++,text:'',enabled:true});renderGraphRows();let rows=$('graph-functions').querySelectorAll('.math-input');if(rows.length){let last=rows[rows.length-1];last.focus({preventScroll:true});showKeyboard(last);}}
+function setGraphPreset(a,b){graph.functions=[{id:graphNextId++,text:a,enabled:true},{id:graphNextId++,text:b||'',enabled:true}];renderGraphRows();plotGraph();}
+function setGraphSingle(text){graph.functions=[{id:graphNextId++,text,enabled:true}];renderGraphRows();switchScreen('graph');plotGraph();}
+function updateGraphChoices(){const sel=$('graph-calc-function'),other=$('graph-calc-other'),a=sel.value,b=other.value;const available=graph.functions.map((f,i)=>({key:String(f.id),name:'Y'+(i+1)+'  '+(f.text||'(empty)'),valid:!!f.text.trim()&&f.enabled})).filter(f=>f.valid);
+ for(let el of [sel,other]){el.replaceChildren();for(let f of available){let op=document.createElement('option');op.value=f.key;op.textContent=f.name.slice(0,65);el.append(op);}}
+ if(available.some(f=>f.key===a))sel.value=a;if(available.some(f=>f.key===b))other.value=b;
+ if(other.value===sel.value&&available.length>1){let alternate=available.find(f=>f.key!==sel.value);if(alternate)other.value=alternate.key;}}
+function updateGraphCalcUI(mode){cancelGraphPick();graphCalcMode=mode;document.querySelectorAll('[data-graph-calc]').forEach(b=>b.classList.toggle('active',b.dataset.graphCalc===mode));
+ let interval=['zero','intersect','max','min'].includes(mode);$('graph-at-wrap').style.display=interval?'none':'grid';$('graph-interval-wrap').style.display=interval?'grid':'none';$('graph-guess-wrap').style.display=interval?'block':'none';$('graph-other-wrap').style.display=mode==='intersect'?'block':'none';
+ if(interval){let span=graph.span;setInput('graph-calc-low',cleanNumber(graph.cx-span));setInput('graph-calc-high',cleanNumber(graph.cx+span));} // updated when switching CALC operation
+}
+function graphTapDigits(){return $('graph-tap-round').checked?Number($('graph-tap-precision').value):null;}
+function graphTapNumber(number){let digits=graphTapDigits();return digits===null?Number(cleanNumber(number)):Number(number.toFixed(digits));}
+function graphTapLabel(number){let digits=graphTapDigits();return digits===null?cleanNumber(number):Number(number).toFixed(digits);}
+function pickSteps(){return ['value','derivative'].includes(graphCalcMode)?['x value']:['left bound','right bound','guess'];}
+function updateGraphPickStatus(){
+ const status=$('graph-pick-status'),banner=$('graph-pick-banner'),cv=$('graph-canvas');
+ cv.classList.toggle('picking',graphPicking.active);
+ $('graph-pick-cancel').hidden=!graphPicking.active;
+ if(!graphPicking.active){status.classList.remove('active');banner.hidden=true;status.textContent='Tap Pick points to choose '+(['value','derivative'].includes(graphCalcMode)?'x':'the left bound, right bound, and guess')+' directly on the graph.';return;}
+ const steps=pickSteps(),stage=Math.min(graphPicking.stage,steps.length-1);
+ const prompt='Tap the graph for '+steps[stage]+' ('+(stage+1)+' of '+steps.length+'). Drag to pan; pinch to zoom.';
+ status.classList.add('active');status.textContent=prompt;banner.hidden=false;banner.textContent='◎ CALC PICKER · '+prompt;
+}
+function cancelGraphPick(){graphPicking.active=false;graphPicking.stage=0;graphPicking.mode=null;graphPicking.values=[];if($('graph-pick-status'))updateGraphPickStatus();if($('graph-canvas'))drawGraph();}
+function beginGraphPick(){
+ if(!graph.trees.length){plotGraph();if(!graph.trees.length){$('graph-pick-status').textContent='Plot at least one function first.';return;}}
+ hideKeyboard();graphPicking.active=true;graphPicking.mode=graphCalcMode;graphPicking.stage=0;graphPicking.values=[];graphPicking.guides=[];updateGraphPickStatus();drawGraph();
+ $('graph-canvas').scrollIntoView({block:'center',behavior:'smooth'});
+}
+function commitGraphTap(x){
+ x=graphTapNumber(x);
+ if(graphPicking.active){
+  if(graphPicking.mode!==graphCalcMode){cancelGraphPick();return;}
+  const stages=pickSteps(),stage=graphPicking.stage;
+  if(stage===1&&x===graphPicking.values[0]){$('graph-pick-banner').textContent='Pick a different x for the right bound.';return;}
+  graphPicking.values.push(x);graphPicking.stage++;
+  if(stages.length===1){setInput('graph-calc-at',cleanNumber(x));graphPicking.guides=[{x,label:'x'}];cancelGraphPick();calculateOnGraph();return;}
+  if(stage===0){setInput('graph-calc-low',cleanNumber(x));graphPicking.guides=[{x,label:'L'}];}
+  if(stage===1){let [left,right]=graphPicking.values;if(left>right){[left,right]=[right,left];setInput('graph-calc-low',cleanNumber(left));}
+   setInput('graph-calc-high',cleanNumber(right));graphPicking.guides=[{x:left,label:'L'},{x:right,label:'R'}];}
+  if(stage===2){setInput('graph-calc-guess',cleanNumber(x));graphPicking.guides.push({x,label:'G'});cancelGraphPick();calculateOnGraph();return;}
+  updateGraphPickStatus();drawGraph();return;
+ }
+ // Ordinary tracing also respects coordinate rounding. No CALC bounds changed unless picking.
+ graph.trace=x;
+ let name=['value','derivative'].includes(graphCalcMode)?'graph-calc-at':'graph-calc-guess';setInput(name,cleanNumber(x));
+ let values=graph.trees.map(f=>{let y=graphEval(f.tree,x);return Number.isFinite(y)?f.label+'='+cleanNumber(y):null}).filter(Boolean);
+ $('graph-coord').textContent='x='+graphTapLabel(x)+(values.length?' · '+values.join(' · '):'');drawGraph();
+}
+function plotGraph(){try{
+ graphRowsToState();let next=[];for(let i=0;i<graph.functions.length;i++){const f=graph.functions[i];if(!f.enabled||!f.text.trim())continue;
+ let tree=parse(f.text.trim());if(tree.t==='eq'){if(tree.a.t==='v'&&tree.a.v==='y')tree=tree.b;else throw Error('Y'+(i+1)+': enter just the expression, not an equation.');}
+ if([...freeVars(tree)].some(v=>v!=='x'))throw Error('Y'+(i+1)+': graphs support variable x only.');next.push({...f,label:'Y'+(i+1),color:graphColors[i%graphColors.length],tree});}
+ graph.trees=next;graph.trace=null;graph.mark=null;graphPicking.guides=[];cancelGraphPick();$('graph-coord').textContent=next.length?'Plotted '+next.length+' function'+(next.length===1?'':'s')+' · '+modeAngle.toUpperCase()+' trig · drag to pan · tap to trace':'Enter and enable a Y= function.';
+ renderGraphLegend();drawGraph();
+ }catch(e){$('graph-coord').textContent=e.message;}}
+function renderGraphLegend(){let host=$('graph-legend');host.replaceChildren();for(let f of graph.trees){let x=document.createElement('span'),sw=document.createElement('span');sw.className='swatch';sw.style.background=f.color;x.append(sw,document.createTextNode(f.label));host.append(x);}}
+function niceStep(range){let raw=range/6,pow=Math.pow(10,Math.floor(Math.log10(raw))),s=raw/pow;return(s<=1?1:s<=2?2:s<=5?5:10)*pow;}
+function graphTransform(w,h){const sy=graph.span*h/w;return {w,h,sy,toX:x=>w/2+(x-graph.cx)*w/(2*graph.span),toY:y=>h/2-(y-graph.cy)*w/(2*graph.span),fromX:px=>graph.cx+(px-w/2)*2*graph.span/w,fromY:py=>graph.cy+(h/2-py)*2*graph.span/w};}
+function graphEval(tree,x){try{return evaluator(tree,{x},{deg:modeAngle==='deg'});}catch{return NaN}}
+function drawGraph(){let cv=$('graph-canvas'),setup=setupCanvas(cv);if(!setup)return;let {g,w,h}=setup,T=graphTransform(w,h);g.fillStyle='#0b1728';g.fillRect(0,0,w,h);
+ if($('graph-grid').checked){let step=niceStep(graph.span*2),xs=Math.ceil((graph.cx-graph.span)/step)*step,ys=Math.ceil((graph.cy-T.sy)/step)*step;g.font='11px ui-monospace,monospace';g.textAlign='center';g.lineWidth=1;
+ for(let x=xs,n=0;x<=graph.cx+graph.span+step*.1&&n++<60;x+=step){let px=T.toX(x);g.strokeStyle=nearly(x,0)?'#5a799b':'#243650';g.beginPath();g.moveTo(px,0);g.lineTo(px,h);g.stroke();g.fillStyle='#93a7c3';g.fillText(cleanNumber(x),px+15,Math.max(12,Math.min(h-7,T.toY(0)+16)));}
+ for(let y=ys,n=0;y<=graph.cy+T.sy+step*.1&&n++<60;y+=step){let py=T.toY(y);g.strokeStyle=nearly(y,0)?'#5a799b':'#243650';g.beginPath();g.moveTo(0,py);g.lineTo(w,py);g.stroke();if(!nearly(y,0)){g.fillStyle='#93a7c3';g.textAlign='left';g.fillText(cleanNumber(y),Math.max(5,Math.min(w-50,T.toX(0)+7)),py-5);}}}
+ else{g.strokeStyle='#4f6a8c';g.lineWidth=1.3;g.beginPath();g.moveTo(T.toX(0),0);g.lineTo(T.toX(0),h);g.moveTo(0,T.toY(0));g.lineTo(w,T.toY(0));g.stroke();}
+ for(let f of graph.trees){g.strokeStyle=f.color;g.lineWidth=2.4;g.lineJoin='round';g.lineCap='round';g.beginPath();let prior=null;
+ for(let px=0;px<=w;px+=1.35){let y=graphEval(f.tree,T.fromX(px)),py=T.toY(y);if(!Number.isFinite(y)||!Number.isFinite(py)||Math.abs(py)>1e5){prior=null;continue;}
+ if(prior&&Math.abs(py-prior.y)<h*.66)g.lineTo(px,py);else g.moveTo(px,py);prior={y:py};}g.stroke();}
+ if(graphPicking.guides.length){g.save();g.lineWidth=2;g.setLineDash([8,6]);g.font='bold 12px ui-monospace,monospace';for(let guide of graphPicking.guides){let px=T.toX(guide.x);if(px<0||px>w)continue;g.strokeStyle=guide.label==='G'?'#f1b6ee':'#f8d37c';g.beginPath();g.moveTo(px,0);g.lineTo(px,h);g.stroke();g.fillStyle=guide.label==='G'?'#f1b6ee':'#f8d37c';g.fillText(guide.label+' '+graphTapLabel(guide.x),Math.min(w-80,Math.max(5,px+5)),20+((guide.label==='R')?17:0));}g.restore();}
+ if(graph.trace!==null){let px=T.toX(graph.trace);g.save();g.setLineDash([4,5]);g.strokeStyle='#f2c885';g.lineWidth=1;g.beginPath();g.moveTo(px,0);g.lineTo(px,h);g.stroke();g.restore();for(let f of graph.trees){let y=graphEval(f.tree,graph.trace),py=T.toY(y);if(!Number.isFinite(py)||py<0||py>h)continue;g.fillStyle=f.color;g.beginPath();g.arc(px,py,4.5,0,Math.PI*2);g.fill();}}
+ if(graph.mark){let px=T.toX(graph.mark.x),py=T.toY(graph.mark.y);if(Number.isFinite(px)&&Number.isFinite(py)&&px>=0&&px<=w&&py>=0&&py<=h){g.fillStyle='#111c30';g.strokeStyle='#ffe597';g.lineWidth=2.5;g.beginPath();g.arc(px,py,7,0,2*Math.PI);g.fill();g.stroke();g.fillStyle='#ffe597';g.font='12px ui-monospace,monospace';g.textAlign='left';let title='('+cleanNumber(graph.mark.x)+', '+cleanNumber(graph.mark.y)+')';g.fillText(title,Math.min(px+10,Math.max(5,w-170)),Math.max(13,py-11));}}
+}
+function zoomGraph(factor,px=null,py=null){let cv=$('graph-canvas'),b=cv.getBoundingClientRect();if(!b.width)return;let old=graphTransform(b.width,b.height),x=old.fromX(px===null?b.width/2:px),y=old.fromY(py===null?b.height/2:py);graph.span=Math.max(.002,Math.min(1e7,graph.span*factor));let newer=graphTransform(b.width,b.height);graph.cx+=x-newer.fromX(px===null?b.width/2:px);graph.cy+=y-newer.fromY(py===null?b.height/2:py);drawGraph();}
+function derivativeAt(f,x){let h=1e-4*Math.max(1,Math.abs(x));let a=f(x-2*h),b=f(x-h),c=f(x+h),d=f(x+2*h);if(![a,b,c,d].every(Number.isFinite))return NaN;return (a-8*b+8*c-d)/(12*h);}
+function bisection(f,a,b){let fa=f(a),fb=f(b);for(let i=0;i<90;i++){let m=(a+b)/2,fm=f(m);if(!Number.isFinite(fm))return NaN;if(fa*fm<=0){b=m;fb=fm;}else{a=m;fa=fm;}if(b-a<1e-12*Math.max(1,Math.abs(m)))break;}return (a+b)/2;}
+function goldenSearch(f,a,b,which){const g=(Math.sqrt(5)-1)/2;let c=b-(b-a)*g,d=a+(b-a)*g;let score=x=>{let y=f(x);return Number.isFinite(y)?which*y:Infinity;};for(let i=0;i<95;i++){if(score(c)<score(d)){b=d;d=c;c=b-(b-a)*g;}else{a=c;c=d;d=a+(b-a)*g;}if(b-a<1e-10*Math.max(1,Math.abs(a)))break;}return (a+b)/2;}
+function searchCalc(f,lo,hi,mode){let width=hi-lo,n=900,ys=new Array(n+1),xs=new Array(n+1),found=[];
+ for(let i=0;i<=n;i++){xs[i]=lo+width*i/n;ys[i]=f(xs[i]);}
+ if(mode==='zero'){
+ for(let i=0;i<n;i++){let a=ys[i],b=ys[i+1];if(!Number.isFinite(a)||!Number.isFinite(b))continue;if(Math.abs(a)<1e-10)found.push(xs[i]);if(a*b<0){let root=bisection(f,xs[i],xs[i+1]);if(Number.isFinite(root)&&Math.abs(f(root))<1e-5*Math.max(1,Math.abs(a),Math.abs(b)))found.push(root);}}
+ for(let i=1;i<n;i++){let a=ys[i-1],b=ys[i],c=ys[i+1];if([a,b,c].every(Number.isFinite)&&Math.abs(b)<=Math.abs(a)&&Math.abs(b)<=Math.abs(c)){
+ let x=goldenSearch(t=>Math.abs(f(t)),xs[i-1],xs[i+1],1),value=f(x);if(Number.isFinite(value)&&Math.abs(value)<1e-6*Math.max(1,Math.abs(a),Math.abs(c)))found.push(x);}}
+ }else{
+ const isMax=mode==='max';for(let i=1;i<n;i++){let a=ys[i-1],b=ys[i],c=ys[i+1];if(![a,b,c].every(Number.isFinite))continue;if((isMax&&b>=a&&b>=c)||(!isMax&&b<=a&&b<=c)){
+ let x=goldenSearch(f,xs[i-1],xs[i+1],isMax?-1:1),y=f(x);if(Number.isFinite(y)&&x>lo+width*1e-8&&x<hi-width*1e-8)found.push(x);}}
+ }
+ return found.sort((a,b)=>a-b).filter((x,i,a)=>!i||Math.abs(x-a[i-1])>1e-5*Math.max(1,Math.abs(x)));
+}
+function graphCalcValue(id){let tree=parse($(id).value);if(freeVars(tree).size)throw Error('Enter a numeric value for '+id+'.');let val=evaluator(tree,{}, {deg:modeAngle==='deg'});if(!Number.isFinite(val))throw Error('Enter a finite number for '+id+'.');return val;}
+function calculateOnGraph(){guarded('graph-calc-result',()=>{
+ // Always use currently visible Y= inputs, without requiring a second Plot click to calculate.
+ graphRowsToState();let chosen=graph.functions.find(f=>String(f.id)===$('graph-calc-function').value);if(!chosen||!chosen.enabled||!chosen.text.trim())throw Error('Choose an enabled Y= function.');let tree=parse(chosen.text);if(tree.t==='eq')throw Error('Enter an expression in the Y= list.');let func=x=>graphEval(tree,x),x,y,note='';let label=graphCalcMode.toUpperCase();
+ if(graphCalcMode==='value'||graphCalcMode==='derivative'){
+ x=graphCalcValue('graph-calc-at');y=func(x);if(!Number.isFinite(y))throw Error('Function is undefined at that x.');if(graphCalcMode==='derivative'){let slope=derivativeAt(func,x);if(!Number.isFinite(slope))throw Error('Cannot estimate a derivative at this point.');let h=1e-5*Math.max(1,Math.abs(x)),left=(y-func(x-h))/h,right=(func(x+h)-y)/h;if(!Number.isFinite(left)||!Number.isFinite(right)||Math.abs(left-right)>Math.max(.01,.01*Math.abs(slope)))throw Error('The derivative may not exist at this x: left and right slopes differ.');note='Numerical slope of tangent at ('+cleanNumber(x)+', '+cleanNumber(y)+').';setResult('graph-calc-result','dy/dx ≈ '+cleanNumber(slope),note,false,label);}else setResult('graph-calc-result','f('+cleanNumber(x)+') = '+cleanNumber(y),'Point: ('+cleanNumber(x)+', '+cleanNumber(y)+')',false,label);
+ }else{
+ let lo=graphCalcValue('graph-calc-low'),hi=graphCalcValue('graph-calc-high'),guess=graphCalcValue('graph-calc-guess');if(!(lo<hi))throw Error('Lower bound must be less than upper bound.');if(hi-lo>1e10)throw Error('Choose a smaller search interval.');
+ let target=func,other=null;if(graphCalcMode==='intersect'){let selected=graph.functions.find(f=>String(f.id)===$('graph-calc-other').value);if(!selected||selected.id===chosen.id)throw Error('Choose a different second function.');let second=parse(selected.text);other=x=>graphEval(second,x);target=x=>func(x)-other(x);}
+ let candidates=searchCalc(target,lo,hi,['zero','intersect'].includes(graphCalcMode)?'zero':graphCalcMode);if(!candidates.length)throw Error('No '+(graphCalcMode==='intersect'?'intersection':graphCalcMode==='zero'?'zero':'local '+graphCalcMode)+' found within these bounds. Try a wider interval.');
+ candidates.sort((a,b)=>Math.abs(a-guess)-Math.abs(b-guess));x=candidates[0];y=func(x);
+ if(graphCalcMode==='zero'){if(Math.abs(y)>1e-5)throw Error('Candidate is not close enough to zero.');note=candidates.length+' candidate zero(s) found; the closest to your guess was selected.';}
+ else if(graphCalcMode==='intersect'){note=candidates.length+' intersection(s) found in the bounds; the closest to your guess was selected.';}
+ else note='Local '+graphCalcMode+' inside your bounds. '+candidates.length+' candidate(s) found.';
+ setResult('graph-calc-result','x = '+cleanNumber(x)+'\ny = '+cleanNumber(y),note,false,label);
+ }
+ graph.mark={x,y};graph.trace=x;drawGraph();$('graph-coord').textContent=label+' · x = '+cleanNumber(x)+' · y = '+cleanNumber(y);
+ });}
+function initGraphEvents(){let cv=$('graph-canvas');const pos=e=>{let b=cv.getBoundingClientRect();return {x:(e.clientX-b.left-cv.clientLeft)*b.width/Math.max(1,cv.clientWidth),y:(e.clientY-b.top-cv.clientTop)*b.height/Math.max(1,cv.clientHeight)};};cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);graph.pointers.set(e.pointerId,pos(e));graph.moved=false;graph.last={x:e.clientX,y:e.clientY};graph.dragging=true;});
+ cv.addEventListener('pointermove',e=>{if(!graph.pointers.has(e.pointerId))return;let bounds=cv.getBoundingClientRect(),last=graph.pointers.get(e.pointerId),cur=pos(e);graph.pointers.set(e.pointerId,cur);
+ if(graph.pointers.size===1){let dx=cur.x-last.x,dy=cur.y-last.y;if(Math.hypot(dx,dy)>1)graph.moved=true;graph.cx-=dx*2*graph.span/bounds.width;graph.cy+=dy*2*graph.span/bounds.width;drawGraph();}
+ else if(graph.pointers.size===2){let pts=[...graph.pointers.values()],id=[...graph.pointers.keys()].indexOf(e.pointerId),other=pts[1-id];let pd=Math.hypot(last.x-other.x,last.y-other.y),nd=Math.hypot(cur.x-other.x,cur.y-other.y);if(pd>4&&nd>4)zoomGraph(Math.max(.8,Math.min(1.2,pd/nd)),(cur.x+other.x)/2,(cur.y+other.y)/2);graph.moved=true;}});
+ const done=e=>{if(!graph.pointers.has(e.pointerId))return;let p=graph.pointers.get(e.pointerId),wasSingle=graph.pointers.size===1;graph.pointers.delete(e.pointerId);if(wasSingle&&!graph.moved&&e.type==='pointerup'){let b=cv.getBoundingClientRect(),T=graphTransform(b.width,b.height);commitGraphTap(T.fromX(p.x));}if(!graph.pointers.size)graph.dragging=false;};
+ cv.addEventListener('pointerup',done);cv.addEventListener('pointercancel',done);cv.addEventListener('wheel',e=>{e.preventDefault();let q=pos(e);zoomGraph(e.deltaY>0?1.15:1/1.15,q.x,q.y);},{passive:false});
+ $('graph-grid').addEventListener('change',drawGraph);window.addEventListener('resize',()=>{if(activeScreen==='graph')drawGraph();if(activeScreen==='trig')drawTrig();if(activeScreen==='geometry')drawGeometry();});}
+
+
+
+/* V6: autosave all work. No network access. Storage errors are handled gracefully. */
+const WORKSPACE_KEY='mathlab.workspace.v6';let restoredWorkspace=null,restoringWorkspace=false,navigatingWorkspace=false,saveTimer=0;
+const defaultPrefs={angle:'rad',start:'last',keyboard:'basic',accent:'mint',density:'normal',pi:true,decimal:false,round:true,grid:true,precision:'2',autosave:true};
+function readStorage(){try{let raw=localStorage.getItem(WORKSPACE_KEY);if(!raw)return null;let obj=JSON.parse(raw);return obj&&obj.version===6?obj:null;}catch{return null;}}
+function setSaveStatus(message){let box=$('settings-save-status');if(box)box.textContent=message;}
+function readPreferences(){const get=id=>$(id),val=id=>get(id)?.value,check=id=>!!get(id)?.checked;
+ return {angle:modeAngle,start:val('settings-start'),keyboard:val('settings-keyboard'),accent:val('settings-accent'),density:val('settings-density'),pi:check('geo-pi-form'),decimal:check('algebra-decimal-factors'),round:check('graph-tap-round'),grid:check('graph-grid'),precision:val('graph-tap-precision'),autosave:check('settings-autosave')};}
+function syncPreferences(from='tools'){
+ if(from==='settings'){
+  let a=$('settings-angle').value;if(a!==modeAngle)setAngleMode(a);
+  $('geo-pi-form').checked=$('settings-pi').checked;$('algebra-decimal-factors').checked=$('settings-decimal').checked;
+  $('graph-tap-round').checked=$('settings-round').checked;$('graph-grid').checked=$('settings-grid').checked;
+  $('graph-tap-precision').value=$('settings-precision').value;
+  keyboardPage=$('settings-keyboard').value;drawKeys();doGeometry();drawGraph();
+ }else{
+  $('settings-angle').value=modeAngle;$('settings-pi').checked=$('geo-pi-form').checked;$('settings-decimal').checked=$('algebra-decimal-factors').checked;
+  $('settings-round').checked=$('graph-tap-round').checked;$('settings-grid').checked=$('graph-grid').checked;$('settings-precision').value=$('graph-tap-precision').value;
+ }
+ const palette={mint:'#6de7c2',sky:'#76c7ff',violet:'#c2a6ff',amber:'#f9ce82'};
+ document.documentElement.style.setProperty('--mint',palette[$('settings-accent').value]||palette.mint);
+ document.body.dataset.density=$('settings-density').value;
+ scheduleWorkspaceSave();}
+function captureWorkspace(){cacheCurrentGeometry();let inputs={};document.querySelectorAll('input[data-math]').forEach(el=>{if(el.id&&!el.id.startsWith('geo-'))inputs[el.id]=el.value;});
+ let controls={};document.querySelectorAll('input[type=checkbox][id],input[type=range][id],select[id]').forEach(el=>{if((el.id==='geo-shape'||!el.id.startsWith('geo-'))&&!el.id.startsWith('settings-'))controls[el.id]=el.type==='checkbox'?el.checked:el.value;});
+ let results={};for(let id of ['calc-result','algebra-result','geo-result','graph-calc-result','calculus-result']){let box=$(id),main=box?.querySelector('.result-main');if(main)results[id]={main:main.textContent,label:box.querySelector('.result-label')?.textContent||'RESULT',note:box.querySelector('.result-note')?.textContent||'',error:box.classList.contains('error'),empty:box.classList.contains('empty')};}
+ return {version:6,savedAt:Date.now(),activeScreen,preferences:readPreferences(),inputs,controls,geometryCache:structuredCloneSafe(geometryCache),graph:{functions:graph.functions.map(f=>({id:f.id,text:f.text,enabled:f.enabled})),nextId:graphNextId,cx:graph.cx,cy:graph.cy,span:graph.span,calcMode:graphCalcMode,trace:graph.trace,mark:graph.mark},graph3d:{yaw:graph3dState.yaw,elevation:graph3dState.elevation,zoom:graph3dState.zoom,offsetX:graph3dState.offsetX,offsetY:graph3dState.offsetY},modes:{algebra:algebraMode,calculus:calculusMode},clipboard:mathClipboard,history,results};}
+function structuredCloneSafe(value){return JSON.parse(JSON.stringify(value));}
+function writeWorkspace(force=false){if(restoringWorkspace||navigatingWorkspace)return false;if(!force&&!$('settings-autosave').checked)return false;
+ try{let value=captureWorkspace();localStorage.setItem(WORKSPACE_KEY,JSON.stringify(value));setSaveStatus('Saved locally · '+new Date(value.savedAt).toLocaleString()+' · this browser only');return true;
+ }catch(err){setSaveStatus('Unable to save to browser storage ('+(err?.message||'storage unavailable')+'). Use Export backup instead.');return false;}}
+function scheduleWorkspaceSave(){if(restoringWorkspace||!$('settings-autosave')?.checked)return;clearTimeout(saveTimer);saveTimer=setTimeout(()=>writeWorkspace(),240);}
+function restoreWorkspace(obj){restoringWorkspace=true;
+ try{let P={...defaultPrefs,...obj?.preferences};
+  if(!obj){P.angle=['rad','deg'].includes(modeAngle)?modeAngle:'rad';}
+  modeAngle=P.angle==='deg'?'deg':'rad';
+  for(let [key,value] of Object.entries(P)){
+   let el=$('settings-'+key);if(!el)continue;if(el.type==='checkbox')el.checked=!!value;else el.value=String(value);
+  }
+  $('geo-pi-form').checked=!!P.pi;$('algebra-decimal-factors').checked=!!P.decimal;$('graph-tap-round').checked=!!P.round;$('graph-grid').checked=!!P.grid;$('graph-tap-precision').value=String(P.precision);
+  if(obj?.controls)for(let [id,value] of Object.entries(obj.controls)){let el=$(id);if(!el)continue;if(el.type==='checkbox')el.checked=!!value;else el.value=String(value);}
+  if(obj?.inputs)for(let [id,value]of Object.entries(obj.inputs)){let el=$(id);if(el&&el.hasAttribute('data-math'))el.value=String(value);}
+  geometryCache=obj?.geometryCache&&typeof obj.geometryCache==='object'?obj.geometryCache:{};
+  if(obj?.graph?.functions?.length){graph.functions=obj.graph.functions.slice(0,12).map((f,i)=>({id:Number(f.id)||i+1,text:String(f.text||''),enabled:!!f.enabled}));graphNextId=Math.max(...graph.functions.map(f=>f.id),Number(obj.graph.nextId)||0)+1;
+   for(let k of ['cx','cy','span'])if(Number.isFinite(obj.graph[k]))graph[k]=obj.graph[k];if(graph.span<=.0001||graph.span>1e9)graph.span=10;
+   graph.trace=obj.graph.trace||null;graph.mark=obj.graph.mark||null;}
+  if(obj?.graph3d)for(let k of ['yaw','elevation','zoom','offsetX','offsetY'])if(Number.isFinite(obj.graph3d[k]))graph3dState[k]=obj.graph3d[k];
+  if(obj?.modes?.algebra)algebraMode=obj.modes.algebra;if(obj?.modes?.calculus)calculusMode=obj.modes.calculus;
+  if(Array.isArray(obj?.history))history=obj.history.slice(0,18);if(typeof obj?.clipboard==='string')mathClipboard=obj.clipboard;
+  restoredWorkspace=obj;keyboardPage=['basic','functions','symbols'].includes(P.keyboard)?P.keyboard:'basic';
+  syncPreferences('tools');$('angle-toggle').textContent=modeAngle.toUpperCase();
+ }catch(err){setSaveStatus('Some saved preferences could not be restored: '+err.message);}finally{restoringWorkspace=false;}}
+function restoreSavedResults(obj){for(let [id,r] of Object.entries(obj?.results||{})){if(!$(id)||!r||r.empty)continue;setResult(id,r.main,r.note,r.error,r.label);}}
+function exportWorkspace(){let raw=JSON.stringify(captureWorkspace(),null,2),blob=new Blob([raw],{type:'application/json'});let url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='MathLab-backup-'+new Date().toISOString().slice(0,10)+'.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);setSaveStatus('Backup created. Store the JSON file somewhere safe.');}
+function setupSettings(){
+ $('settings-button').addEventListener('click',()=>switchScreen('settings'));
+ for(let id of ['settings-angle','settings-start','settings-keyboard','settings-accent','settings-density','settings-pi','settings-decimal','settings-round','settings-grid','settings-precision'])$(id).addEventListener('change',()=>syncPreferences('settings'));
+ $('settings-autosave').addEventListener('change',()=>{if($('settings-autosave').checked)writeWorkspace(true);else{clearTimeout(saveTimer);writeWorkspace(true);setSaveStatus('Auto-save paused. Use Save now or Export backup to keep changes.');}});
+ $('settings-save-now').addEventListener('click',()=>writeWorkspace(true));
+ $('settings-export').addEventListener('click',exportWorkspace);
+ $('settings-import').addEventListener('click',()=>$('settings-import-file').click());
+ $('settings-import-file').addEventListener('change',async e=>{let file=e.target.files?.[0];if(!file)return;try{let obj=JSON.parse(await file.text());if(obj.version!==6||!obj.inputs||!obj.preferences)throw Error('Not a compatible MathLab v6 backup.');if(!confirm('Replace current MathLab work with this backup?'))return;navigatingWorkspace=true;clearTimeout(saveTimer);localStorage.setItem(WORKSPACE_KEY,JSON.stringify(obj));location.reload();}catch(err){setSaveStatus('Import failed: '+err.message);}finally{e.target.value='';}});
+ $('settings-reset').addEventListener('click',()=>{if(!confirm('Clear all saved MathLab input, history, preferences, and graphs on this device?'))return;navigatingWorkspace=true;clearTimeout(saveTimer);try{for(let key of [WORKSPACE_KEY,'ml-history','ml-angle','ml-math-clipboard'])localStorage.removeItem(key);}catch{}location.reload();});
+ document.addEventListener('input',e=>{if(e.target?.matches('input, select'))scheduleWorkspaceSave();});
+ document.addEventListener('change',e=>{if(e.target?.matches('input, select')){if(e.target.id==='algebra-decimal-factors'||e.target.id==='geo-pi-form'||e.target.id==='graph-tap-round'||e.target.id==='graph-grid'||e.target.id==='graph-tap-precision')syncPreferences('tools');scheduleWorkspaceSave();}});
+ document.addEventListener('click',()=>scheduleWorkspaceSave());
+ document.addEventListener('pointerup',()=>scheduleWorkspaceSave());
+ document.addEventListener('wheel',()=>scheduleWorkspaceSave(),{passive:true});
+ document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')writeWorkspace();});window.addEventListener('pagehide',()=>writeWorkspace());
+ if(restoredWorkspace?.savedAt)setSaveStatus('Restored locally · last saved '+new Date(restoredWorkspace.savedAt).toLocaleString());
+ else setSaveStatus('Local auto-save is ready. Your work will be saved in this browser.');
+}
+function connectActions(){document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>{let action=b.dataset.action;switch(action){case'calculate':doCalculate();break;case'simplify-calc':doCalculate(true);break;case'copy-calc':copyText(lastCalcAnswer);break;case'clipboard-paste':pasteMathClipboard();break;case'graph3d-plot':plotGraph3D();break;case'graph3d-reset':resetGraph3D();break;case'graph3d-home':viewGraph3D('home');break;case'graph3d-top':viewGraph3D('top');break;case'graph3d-front':viewGraph3D('front');break;case'graph3d-side':viewGraph3D('side');break;case'graph3d-zoom-in':zoomGraph3D(1.3);break;case'graph3d-zoom-out':zoomGraph3D(1/1.3);break;case'clear-history':history=[];try{localStorage.removeItem('ml-history')}catch{}renderHistory();break;case'algebra-go':doAlgebra();break;case'algebra-graph':{let text=$('algebra-input').value;try{let z=parse(text);if(z.t==='eq')throw Error();setGraphSingle(text);}catch{setResult('algebra-result','Graph a single expression rather than an equation.','',true);}break;}
+ case'graph-plot':plotGraph();break;case'graph-add':graphAdd();break;case'graph-calculate':calculateOnGraph();break;case'graph-pick':beginGraphPick();break;case'graph-pick-cancel':cancelGraphPick();break;case'graph-zoom-in':zoomGraph(.7);break;case'graph-zoom-out':zoomGraph(1.4);break;case'graph-reset':graph.cx=0;graph.cy=0;graph.span=10;graph.trace=null;drawGraph();break;
+ case'geometry-go':doGeometry();break;case'trig-go':doTrig();break;case'trig-deg':setAngleMode('deg');setInput('trig-angle','45');doTrig();break;case'trig-rad':setAngleMode('rad');setInput('trig-angle','pi/4');doTrig();break;case'calculus-go':doCalculus();break;case'calculus-graph':setGraphSingle($('calculus-input').value);break;}}));
+ document.querySelectorAll('[data-set]').forEach(el=>el.addEventListener('click',()=>{let split=el.dataset.set.indexOf('|'),id=el.dataset.set.slice(0,split),value=el.dataset.set.slice(split+1);setInput(id,value);if(id==='calc-input')doCalculate();}));
+ document.querySelectorAll('[data-preset]').forEach(el=>el.addEventListener('click',()=>{let [f,g]=el.dataset.preset.split('|');setGraphPreset(f,g||'');}));
+ document.querySelectorAll('[data-angle]').forEach(el=>el.addEventListener('click',()=>{setAngleMode('deg');setInput('trig-angle',el.dataset.angle);doTrig();}));
+ document.querySelectorAll('#algebra-modes [data-mode]').forEach(el=>el.addEventListener('click',()=>updateAlgebraMode(el.dataset.mode)));
+ document.querySelectorAll('#calc-modes [data-mode]').forEach(el=>el.addEventListener('click',()=>updateCalculusMode(el.dataset.mode)));
+ document.querySelectorAll('[data-graph-calc]').forEach(b=>b.addEventListener('click',()=>updateGraphCalcUI(b.dataset.graphCalc)));
+ document.querySelectorAll('[data-graph3d-copy]').forEach(b=>b.addEventListener('click',()=>{let pt=graph3dState.probe;if(pt)copyText(cleanNumber(pt[b.dataset.graph3dCopy]));}));
+ document.querySelectorAll('[data-surface]').forEach(b=>b.addEventListener('click',()=>{setInput('graph3d-input',b.dataset.surface);plotGraph3D();}));
+ initGraph3DEvents();for(const id of ['graph3d-quality','graph3d-wire','graph3d-axes','graph3d-color'])$(id).addEventListener('change',()=>id==='graph3d-quality'?plotGraph3D():drawGraph3D());$('graph3d-height').addEventListener('input',()=>{$('graph3d-height-value').textContent=Number($('graph3d-height').value).toFixed(1)+'×';drawGraph3D();});
+ $('geo-shape').addEventListener('change',()=>{updateGeometry();doGeometry()});$('geo-pi-form').addEventListener('change',doGeometry);$('graph-tap-round').addEventListener('change',()=>{drawGraph();});$('graph-tap-precision').addEventListener('change',()=>{drawGraph();});$('angle-toggle').addEventListener('click',()=>setAngleMode(modeAngle==='deg'?'rad':'deg'));
+}
+createNav();restoreWorkspace(readStorage());initClipboard();setupKeyboard();renderGraphRows();connectActions();initGraphEvents();renderHistory();updateGeometry();doGeometry();doTrig();plotGraph();plotGraph3D();$('angle-toggle').textContent=modeAngle.toUpperCase();$('graph3d-height-value').textContent=Number($('graph3d-height').value).toFixed(1)+'×';
+updateAlgebraMode(algebraMode);updateCalculusMode(calculusMode);updateGraphCalcUI(restoredWorkspace?.graph?.calcMode||'value');restoreSavedResults(restoredWorkspace);setupSettings();
+const startup=$('settings-start').value==='last'?(restoredWorkspace?.activeScreen||'calc'):$('settings-start').value;
+if(screens.some(x=>x[0]===startup))switchScreen(startup);else switchScreen('calc');scheduleWorkspaceSave();
+// Lightweight test hooks used by MathLab's offline self-tests.
+window.MathLab={parse,simplify,expanded,format,deriv,anti,evaluator,solveEq,poly,factorPolynomial,polynomialRoots,simpsonIntegrate,estimateLimit,solveSymbolicallyFor,exactPolynomialFactorization,graph3dState,solveRightTriangle,exactCircleForms,captureWorkspace,readStorage};
+</script>
+</body>
+</html>
